@@ -1,0 +1,47 @@
+.main {
+  width: calc(100% - 300px);
+  left: 300px;
+}
+
+.w-75 {
+  width: 300px;
+}
+
+.swiper-button-next {
+  color: #afafaf !important;
+}
+
+.swiper-button-prev {
+  color: #afafaf !important;
+}
+
+.right--8 {
+  right: -8rem;
+}
+
+.ck-editor__editable[role="textbox"] {
+  /* editing area */
+  min-height: 200px;
+}
+.ck-content .image {
+  /* block images */
+  max-width: 80%;
+  margin: 20px auto;
+}
+
+.tag-wrapper.ReactTags__tag {
+  padding: 10px;
+  background-color: #eee;
+  border: rgb(73, 73, 73) 2px solid;
+  margin-right: 5px;
+}
+
+.ReactTags__selected {
+  margin-bottom: 15px;
+}
+
+.ReactTags__tagInputField {
+  background-color: #eee;
+  padding: 10px;
+  width: 26%;
+}
