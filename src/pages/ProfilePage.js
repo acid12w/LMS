@@ -5,7 +5,7 @@ import { uiActions } from "../store/ui-slice";
 import { useUpdateUserProfileMutation } from "../store/authApiSlice";
 
 import { SideNav } from "../components/UI/SideNav";
-import { Roller } from "react-awesome-spinners";
+// import { Roller } from "react-awesome-spinners";
 
 // import profile from "../assets/avatar.png";
 
@@ -69,7 +69,8 @@ const onHandleSubmit = (e) => {
 if(!userProfile) {
     return (
         <div className="h-screen flex justify-center items-center">
-          <Roller color="lightgray" />
+          {/* <Roller color="lightgray" /> */}
+          <p>...</p>
         </div>
       );
 }

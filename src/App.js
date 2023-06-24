@@ -6,7 +6,7 @@ import "./App.css";
 import { Footer } from "./components/Layout/Footer";
 import { MainNaviagtion } from "./components/Layout/MainNaviagtion";
 
-import { Roller } from "react-awesome-spinners";
+// import { Roller } from "react-awesome-spinners";
 import RequireAuth from "./pages/RequireAuth";
 import Alert from "./components/UI/Alert";
 
@@ -29,7 +29,8 @@ function App() {
       <Suspense
         fallback={
           <div className="h-screen flex justify-center items-center">
-            <Roller color="lightgray" />
+            {/* <Roller color="lightgray" /> */}
+            <p>...</p>
           </div>
         }
       >

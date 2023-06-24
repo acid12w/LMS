@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Cards from "../components/Card/Cards";
 
 import { useGetAllcoursesQuery } from "../store/courseApiSlice";
-import { Roller } from "react-awesome-spinners";
+// import { Roller } from "react-awesome-spinners";
 
 const SearchPage = () => {
   const location = useLocation();
@@ -14,7 +14,8 @@ const SearchPage = () => {
   if (!data) {
     return (
       <div className="h-screen flex justify-center items-center">
-        <Roller color="lightgray" />
+        {/* <Roller color="lightgray" /> */}
+        <p>...</p>
       </div>
     );
   } 

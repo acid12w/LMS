@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import YoutubeEmbed from "../components/UI/YoutubeEmbeded";
 import { useGetAllcoursesQuery } from "../store/courseApiSlice";
 
-import { Roller } from "react-awesome-spinners";
+// import { Roller } from "react-awesome-spinners";
 
 const parse = require("html-react-parser");
 
@@ -14,7 +14,7 @@ const CourseOverviewPage = () => {
   if (!data) {
     return (
       <div className="h-screen flex justify-center items-center"> 
-        <Roller color="lightgray" />
+        {/* <Roller color="lightgray" /> */}<p>...</p>
       </div>
     );
   }

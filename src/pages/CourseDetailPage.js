@@ -12,7 +12,7 @@ import { CourseNav } from "../components/Courses/CourseNav";
 
 import { GiRoundStar } from "react-icons/gi";
 import { StarRaing } from "../components/UI/StarRaing";
-import { Roller } from "react-awesome-spinners";
+// import { Roller } from "react-awesome-spinners";
 
 import { useGetCourseByIdQuery } from "../store/courseApiSlice";
 import { useGetLessonQuery } from "../store/lessonApiSlice";
@@ -37,7 +37,7 @@ const CourseDetail = () => {
   if (!courseData || !lessons) {
     return (
       <div className="h-screen flex justify-center items-center">
-        <Roller color="lightgray" />
+        {/* <Roller color="lightgray" /> */}<p>...</p>
       </div>
     );
   } 
