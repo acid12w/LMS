@@ -30,7 +30,7 @@ function App() {
         fallback={
           <div className="h-screen flex justify-center items-center">
             {/* <Roller color="lightgray" /> */}
-            <p>...</p>
+            <p>...ƒ</p>
           </div>
         }
       >
