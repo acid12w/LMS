@@ -3,7 +3,7 @@ import { setCredentials, logout } from '../store/Auth-slice';
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://lms-api-rt1y.onrender.com/mycourses',
+    baseUrl: 'https://lms-api-rt1y.onrender.com',
 
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
