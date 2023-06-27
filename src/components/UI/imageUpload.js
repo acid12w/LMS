@@ -3,6 +3,7 @@ import { useAddThumbNailMutation } from "../../store/uploadApiSlice";
 
 import { IoIosClose } from "react-icons/io";
 import { Roller } from "react-awesome-spinners";
+// import { Roller } from "react-awesome-spinners";
 
 export const ImageUpload = ({setImageUrl }) => {
 
@@ -42,7 +43,12 @@ export const ImageUpload = ({setImageUrl }) => {
       </div>
       {isLoading.isLoading && (
         <div className="absolute right-1/3">
+
           <Roller color="lightgray" />
+
+          {/* <Roller color="lightgray" /> */}
+          <p>...</p>
+
         </div>
       )}
 

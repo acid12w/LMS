@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAddCourseMutation } from "../../store/courseApiSlice";
 
+
 import { WithContext as ReactTags } from "react-tag-input";
+
+// import { WithContext as ReactTags } from "react-tag-input";
 
 import TextEditor from "../UI/TextEditor";
 
@@ -205,6 +208,7 @@ export const CourseForm = () => {
         <div className="Tag mb-4">
           <h1 className="mb-4"> Tags </h1>
           <div>
+
             <ReactTags
               tags={tags}
               //   suggestions={suggestions}
@@ -215,6 +219,7 @@ export const CourseForm = () => {
               handleTagClick={handleTagClick}
               inputFieldPosition="bottom"
               autocomplete
+
             />
           </div>
         </div>

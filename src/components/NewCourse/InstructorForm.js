@@ -10,7 +10,11 @@ import { storage } from "../../firebase/firebase";
 import { v4 } from "uuid";
 
 import { IoIosClose } from "react-icons/io";
+
 import { Roller } from "react-awesome-spinners";
+
+// import { Roller } from "react-awesome-spinners";
+
 
 import TextEditor from "../UI/TextEditor";
 
@@ -96,7 +100,12 @@ export const InstructorForm = ({
         </div>
         {isloading && (
           <div className="absolute right-1/3">
+
             <Roller color="lightgray" />
+
+            {/* <Roller color="lightgray" /> */}
+            <p>...</p>
+
           </div>
         )}
 

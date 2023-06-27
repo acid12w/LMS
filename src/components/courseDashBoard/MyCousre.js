@@ -4,7 +4,10 @@ import { MyCousreDetails } from "./MycourseDetails";
 
 import { RiEditBoxLine } from "react-icons/ri";
 import { TiDocumentDelete } from "react-icons/ti";
+
 import { Roller } from "react-awesome-spinners";
+
+
 import { FiEye } from "react-icons/fi";
 
 
@@ -16,9 +19,13 @@ export const MyCousre = ({ myCourses }) => {
   };
 
   if (myCourses.length <= 0) {
+
     return  <div className="h-screen flex justify-center items-center">
     <Roller color="lightgray" />
   </div>
+
+    return <div>No courses found</div>;
+
   }
 
   return (

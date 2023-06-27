@@ -1,4 +1,8 @@
+
 import { Roller } from "react-awesome-spinners";
+
+// import { Roller } from "react-awesome-spinners";
+
 
 import { CommentForm } from "./CommentForm";
 import { Comment } from "./Comment";
@@ -17,6 +21,8 @@ export const Comments = ({ lessonId }) => {
     return (
       <div className="h-screen flex justify-center items-center">
         <Roller color="lightgray" />
+        {/* <Roller color="lightgray" /> */}
+        <p>...</p>
       </div>
     );
   } 

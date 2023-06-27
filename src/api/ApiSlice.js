@@ -4,6 +4,7 @@ import { setCredentials, logout } from '../store/Auth-slice';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'https://lms-api-rt1y.onrender.com/mycourses',
+
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
@@ -18,6 +19,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
     console.log(result);
+
     if (result?.error?.data?.statusCode === 401) {
         console.log(result.error);
         // send refresh token to get new access token 

@@ -1,6 +1,10 @@
 import profile from "../../assets/avatar.png";
 import { useGetUserProfileQuery } from "../../store/authApiSlice";
+
 import { Roller } from "react-awesome-spinners";
+
+// import { Roller } from "react-awesome-spinners";
+
 
 const parse = require("html-react-parser");
 
@@ -12,7 +16,12 @@ export const Overview = ({
   const {data} = useGetUserProfileQuery(instructorId);
   
   if(!data){
+
     return <Roller color="lightgray" />;
+
+    // return <Roller color="lightgray" />;
+    return <p>...</p>
+
   }
   
   const {bio, username, profileUrl} = data;
