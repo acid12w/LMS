@@ -1,8 +1,6 @@
 import profile from "../../assets/avatar.png";
 import { useGetUserProfileQuery } from "../../store/authApiSlice";
 
-import { Roller } from "react-awesome-spinners";
-
 // import { Roller } from "react-awesome-spinners";
 
 
@@ -17,9 +15,6 @@ export const Overview = ({
   
   if(!data){
 
-    return <Roller color="lightgray" />;
-
-    // return <Roller color="lightgray" />;
     return <p>...</p>
 
   }

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAddCourseMutation } from "../../store/courseApiSlice";
 
-
 import { WithContext as ReactTags } from "react-tag-input";
 
 // import { WithContext as ReactTags } from "react-tag-input";
