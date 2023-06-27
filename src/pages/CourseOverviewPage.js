@@ -3,11 +3,6 @@ import YoutubeEmbed from "../components/UI/YoutubeEmbeded";
 import { useGetAllcoursesQuery } from "../store/courseApiSlice";
 
 
-import { Roller } from "react-awesome-spinners";
-
-// import { Roller } from "react-awesome-spinners";
-
-
 const parse = require("html-react-parser");
 
 const CourseOverviewPage = () => {
@@ -16,15 +11,7 @@ const CourseOverviewPage = () => {
   const param = useParams();  
 
   if (!data) {
-    return (
-      <div className="h-screen flex justify-center items-center"> 
-
-        <Roller color="lightgray" />
-
-        {/* <Roller color="lightgray" /> */}<p>...</p>
-
-      </div>
-    );
+    return <p>...</p>;
   }
 
   const currentCourse = data.find((data) => data._id === param.id);

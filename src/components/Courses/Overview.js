@@ -1,9 +1,6 @@
 import profile from "../../assets/avatar.png";
 import { useGetUserProfileQuery } from "../../store/authApiSlice";
 
-// import { Roller } from "react-awesome-spinners";
-
-
 const parse = require("html-react-parser");
 
 export const Overview = ({
