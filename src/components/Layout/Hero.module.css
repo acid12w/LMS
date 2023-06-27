@@ -1,0 +1,33 @@
+.hero {
+  text-align: center;
+  height: 60vh;
+  background-image: url("../../assets/hero-2.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #ababab;
+  position: relative;
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 65%;
+  transform: translate(-50%, -50%);
+}
+
+.heroBox {
+  /* margin: auto;
+  width: 50%; */
+  height: 100%;
+}
+
+.buttonWhite {
+  border-style: none;
+  border-radius: 5px;
+  font-weight: 500;
+  color: black;
+  padding: 0.8rem;
+  background-color: #fff;
+  font-size: 1rem;
+}
