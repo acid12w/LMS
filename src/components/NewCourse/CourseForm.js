@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAddCourseMutation } from "../../store/courseApiSlice";
 
-import { WithContext as ReactTags } from "react-tag-input";
-
 // import { WithContext as ReactTags } from "react-tag-input";
 
 import TextEditor from "../UI/TextEditor";
@@ -204,7 +202,7 @@ export const CourseForm = () => {
             )}
           </div>
         </div>
-        <div className="Tag mb-4">
+        {/* <div className="Tag mb-4">
           <h1 className="mb-4"> Tags </h1>
           <div>
 
@@ -221,9 +219,7 @@ export const CourseForm = () => {
 
             />
           </div>
-        </div>
-
-        
+        </div> */}
         <div className="mb-12">
           <TextEditor handleChange={handleData} />
         </div>
