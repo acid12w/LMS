@@ -1,11 +1,15 @@
+import { useSelector, } from "react-redux";
 import CardOverView from "../components/Card/CardOverView";
 import Hero from "../components/Layout/Hero";
 import StartedCourses from "../components/StartedCourses/StartedCourses";
 
 import { useGetAllcoursesQuery } from "../store/courseApiSlice";
 
-
 const Home = () => {
+
+  const userId = useSelector(
+    (state) => state.auth.user.userId
+  );
 
   const {data} = useGetAllcoursesQuery();
 

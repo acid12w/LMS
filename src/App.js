@@ -9,6 +9,7 @@ import { MainNaviagtion } from "./components/Layout/MainNaviagtion";
 
 import RequireAuth from "./pages/RequireAuth";
 import Alert from "./components/UI/Alert";
+import { PersistLogin } from "./pages/PersistLogin";
 
 const Home = React.lazy(() => import("./pages/HomePage"));
 const SearchPage = React.lazy(() => import("./pages/SearchPage"));
@@ -19,6 +20,9 @@ const LoginPage = React.lazy(() => import("./pages/LoginPage"));
 const MyCoursePage = React.lazy(() => import("./pages/MyCoursePage"));
 const CourseOverview = React.lazy(() => import("./pages/CourseOverviewPage"));
 const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
+const Unauthorized = React.lazy(() => import("./pages/Unauthorized"));  
+
+
 
 function App() {
   const alert = useSelector((state) => state.ui.Alert);
@@ -28,7 +32,7 @@ function App() {
       <MainNaviagtion />
       <Suspense
         fallback={
-            <p>...</p>
+            <p>...Loading</p>
         }
       >
         <Alert
@@ -37,23 +41,26 @@ function App() {
           message={alert?.message}
         />
         <Routes>
-          <Route path="/home" element={<Home />} />
-          
-          <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/course-overview/:id" element={<CourseOverview />} />
           <Route path="/user" element={<LoginPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="unauthorized" element={<Unauthorized />} />
 
-          <Route element={<RequireAuth />}>
-            <Route
-              path="/course/:courseName/:lesson/:id/*"
-              element={<CourseDetail />}
-            />
-            <Route path="/new-course" element={<NewCourse />} />
-            <Route path="/my-course/*" element={<MyCoursePage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+          <Route element={<PersistLogin/>}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Navigate to="/home" />} />  
+            <Route element={<RequireAuth allowedRole={["student"]}/>}>
+              <Route
+                path="/:courseName/:id/:lesson/*"
+                element={<CourseDetail /> } 
+              />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Route>
+            <Route element={<RequireAuth allowedRole={["Instructor"]}/>}>
+              <Route path="/new-course" element={<NewCourse />} />
+              <Route path="/my-course/*" element={<MyCoursePage />} />
+            </Route>
           </Route>
-         
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

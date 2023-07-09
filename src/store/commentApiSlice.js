@@ -21,8 +21,8 @@ export const commentApiSlice = apiSlice.injectEndpoints({
                 body: data.reply
             }),
             invalidatesTags: ['Comment'],
-        }),
+        })
     }),
 })
 
-export const { useGetAllCommentsQuery, useAddCommentMutation, useAddReplyMutation } = commentApiSlice;
+export const { useGetAllCommentsQuery, useAddCommentMutation, useAddReplyMutation, useGetUserCourseQuery } = commentApiSlice;

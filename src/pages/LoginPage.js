@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {Signup} from '../components/Auth/Signup'
 // import { Login } from "../components/Auth/Login";
 
-
 import { uiActions } from "../store/ui-slice";
 import { setCredentials } from "../store/Auth-slice";
 import { useLoginMutation } from "../store/authApiSlice";
@@ -47,10 +46,10 @@ const LoginPage = () => {
       if (isLogin) {
         
         const userData = await login({username: email, password}).unwrap();
+
+        const { username : currentUsername, bio, userId, accessToken, userRole } = userData;
         
-        const { username : currentUsername, bio, userId, accessToken, myCourses } = userData;
-        
-        dispatch(setCredentials({ token : {accessToken }, user:{ email, currentUsername, bio, userId, myCourses }}));
+        dispatch(setCredentials({ token : {accessToken }, user:{ email, currentUsername, bio, userId, userRole }}));
         navigate("/", { replace: true });
       } else {
         if (password !== password2) {

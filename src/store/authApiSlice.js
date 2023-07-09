@@ -17,6 +17,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 body: {...credentials}
             })
         }),
+        getReauth: builder.query({
+            query: () => '/auth/refresh',
+        }),
         getUserProfile: builder.query({
             query: (id) => `/auth/profile/${id}`
         }),
@@ -37,6 +40,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
 export const {
     useSignupMutation,
     useLoginMutation,
+    useGetReauthQuery,
     useGetUserProfileQuery,
     useGetUserCourseQuery,
     useUpdateUserProfileMutation,

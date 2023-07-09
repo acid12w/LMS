@@ -6,7 +6,7 @@ const Favorites = () => {
   console.log(favorite);
 
   return (
-    <div className="bg-white h-60 w-72 absolute z-10 top-14 right--8 overflow-scroll p-2">
+    <div className="bg-white h-60 w-72 absolute z-10 top-14 right--8 overflow-scroll p-2 cursor-pointer">
       {favorite.map((course) => {
         return (
           <div

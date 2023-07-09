@@ -6,8 +6,6 @@ import useInput from "../../hooks/use-input";
 import { CourseForm } from "./CourseForm";
 import Alert from "../UI/Alert";
 
-import { uiActions } from "../../store/ui-slice";
-
 
 export const CreatCourse = () => {
 

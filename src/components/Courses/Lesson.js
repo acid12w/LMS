@@ -1,37 +1,47 @@
 import { NavLink } from "react-router-dom";
 import { ImCheckboxChecked } from "react-icons/im";
 import { ImCheckboxUnchecked } from "react-icons/im";
-// import { useUpdateCourseMutation } from "../../store/courseApiSlice";
 import { useUpdateUserCourseMutation } from "../../store/userApiSlice";
 
 export const Lesson = ({
   title,
   courseName,
   courseId,
-  currentLesson,
+  currentLessons,
   completedLessons,
   params,
-  userLessonId
+  userLessonId,
+  index
 }) => {
+  
 
   const [updateUserCourse] = useUpdateUserCourseMutation();
+
+  const activeNav =  index === Number(params.lesson)
+     ? " flex hover:bg-gray-200 bg-gray-200 border-b-2 border-gray-300"
+     : "flex hover:bg-gray-200 border-b-2 border-gray-300 ";
+
+
+console.log(completedLessons)
+
+  const count = () => {
+    let completed = completedLessons;
+    if(currentLessons > completed) {
+      completed = currentLessons;
+    }
+    return completed
+  }
   
   return (
     <NavLink
-      onClick={() => updateUserCourse({payload: {currentCourse:currentLesson}, userLessonId })}
-      to={`/course/${courseName
-        .split(" ")
-        .join("-")}/${title}/${courseId}/${params['*']}`}
-      className={({ isActive }) =>
-        isActive
-          ? " flex hover:bg-gray-200 bg-gray-200 border-b-2 border-gray-300 "
-          : "flex hover:bg-gray-200 border-b-2 border-gray-300 " 
-      }
+      onClick={() => updateUserCourse({payload: {currentLessons: index, completedLessons: count()}, userLessonId }).invalidateTags(["Mycourses"])}
+      to={`/${courseName}/${courseId}/${currentLessons}/${params['*']}`}
+      className={activeNav}
     >
       <div 
         className="flex items-center p-4"
       >
-        {completedLessons >= currentLesson ? (
+        {completedLessons >= currentLessons ? (
           <ImCheckboxChecked className="text-xl mr-2 fill-green-500" />
         ) : (
           <ImCheckboxUnchecked className="text-xl mr-2 fill-green-500" />

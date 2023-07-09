@@ -1,18 +1,18 @@
 import { apiSlice } from "../api/ApiSlice";
 
-export const authApiSlice = apiSlice.injectEndpoints({
-    tagTypes: ['User'],
-    endpoints: builder => ({
-        getUserCourse: builder.query({
-            query: (id) => `/userCourses/${id}`
-        }),
+export const userApiSlice = apiSlice.injectEndpoints({
+    endpoints: (builder) => ({
+        getMycourse: builder.query({
+            query: (id) => `/userCourses/${id}`,
+            providesTags: ['Mycourse']
+         }), 
         addUserCourse: builder.mutation({
             query: (data) => ({
                 url: `/userCourses`,
                 method: 'POST',
                 body: data.course
             }),
-            invalidatesTags: ['User']
+            invalidatesTags: ['Mycourse'],
         }),
         updateUserCourse: builder.mutation({
             query: (data) => ({
@@ -20,13 +20,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: data.payload
             }),
-            invalidatesTags: ['User']
+            invalidatesTags: ['Mycourse'],
         }),
-    })
+    }),
 })
 
-export const {
-    useGetUserCourseQuery,
-    useAddUserCourseMutation,
-    useUpdateUserCourseMutation,
-} = authApiSlice;
+export const {  useGetMycourseQuery,useGetUserCourseQuery, useAddUserCourseMutation, useUpdateUserCourseMutation } = userApiSlice;
+
+

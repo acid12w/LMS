@@ -1,28 +1,25 @@
-import { useSelector } from "react-redux";
+import { useSelector, } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // import Swiper core and required modules
 import { Navigation, Pagination } from "swiper";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-// import { useGetCourseByIdQuery } from "../../store/courseApiSlice";
+
+import { useGetMycourseQuery } from "../../store/userApiSlice";
 
 const StartedCourses = () => {
 
-  const navigate = useNavigate();
-
-  const user = useSelector(
-    (state) => state.auth.user
+ const userId = useSelector(
+    (state) => state.auth.user.userId
   );
 
-  const startedCoursesData = useSelector(
-    (state) => state.auth?.user?.myCourses
-  );
+const navigate = useNavigate();
 
+const {data: startedCoursesData} = useGetMycourseQuery(userId);
 
   if(!startedCoursesData){
     return '';
@@ -50,14 +47,14 @@ const StartedCourses = () => {
           modules={[Pagination, Navigation]}
           className="mySwiper "
         >
-          {startedCoursesData.map((courses, index) => {
+          {startedCoursesData?.map((courses, index) => {
             return (
               <SwiperSlide className="py-2 px-12" key={index}>
-                <div key={courses.ID} className="h-32 w-full flex shadow-md">
+                <div key={courses.courseId} className="h-32 w-full flex shadow-md">
                   <div
                     onClick={() =>
                       navigate(
-                        `/course/${courses.courseName}/${courses.lessons[0].title}/${courses.courseId}/overview`
+                        `/${courses.courseName}/${courses.currentLessons}/${courses.courseId}/overview`   
                       )
                     }
                     className="h-full w-2/5 bg-center bg-cover cursor-pointer"
@@ -67,9 +64,9 @@ const StartedCourses = () => {
                   ></div>
 
                   <div className=" p-4">
-                    {/* <h5 className="font-semibold text-gray-700">
-                      {`Lecture ${completedLesson} 0f ${totalLessons}`}
-                    </h5> */} 
+                     <h5 className="font-semibold text-gray-700">
+                      {`Lecture ${courses.completedLessons} 0f 3`}
+                    </h5> 
                     <h3 className="text-gray-900 font-bold text-base mb-4">
                       {courses.courseName}
                     </h3>

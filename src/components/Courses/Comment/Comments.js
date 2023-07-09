@@ -7,6 +7,8 @@ export const Comments = ({ lessonId }) => {
 
   const {data} = useGetAllCommentsQuery( lessonId ); 
 
+  console.log(data)
+
   const addToComment = (commentData) => {
     // dispatch(courseActions.addComment(commentData));
   };
@@ -18,7 +20,7 @@ export const Comments = ({ lessonId }) => {
 
   return (
     <div className="pl-10 w-11/12">
-      <h4 className="mb-4">Join the discussion</h4>
+      <h4 className="mb-4">Join the discussion</h4>  
 
       <CommentForm
         type={"comment"}

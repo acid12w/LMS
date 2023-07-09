@@ -24,7 +24,6 @@ export const CommentForm = (props) => {
     if (props.type === "reply") {
       addReply({lessonId, reply: { username: username, text: enteredText } });
     }
-
     commentText.current.value = "";  
   };
 

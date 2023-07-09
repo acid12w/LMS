@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { useAddThumbNailMutation } from "../../store/uploadApiSlice";
 
 import { IoIosClose } from "react-icons/io";

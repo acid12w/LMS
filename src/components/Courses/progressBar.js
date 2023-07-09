@@ -6,7 +6,7 @@ export const ProgressBar = (props) => {
   return (
     <div
       className={`h-full  mr-1 ${
-        props.courseNumber <= props.currentCourse
+        props.courseNumber <= props.completedLessons
           ? "bg-green-600"
           : "bg-green-400"
       }`}

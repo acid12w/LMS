@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-
 import { useNavigate } from "react-router-dom";
 
 import { BiBriefcaseAlt2 } from "react-icons/bi";
@@ -7,9 +6,10 @@ import { MdOutlinePeopleAlt } from "react-icons/md";
 import { BsFillStarFill } from "react-icons/bs";
 
 import classes from "./CardItem.module.css";
-import { Favorite } from "../UI/Favorite";
+// import { Favorite } from "../UI/Favorite";
 
-// import { useUpdateUserCourseMutation } from "../../store/userApiSlice";
+import { useGetMycourseQuery, useAddUserCourseMutation } from "../../store/userApiSlice";
+
 
 const CardItem = ({
   thumbNail,
@@ -19,17 +19,23 @@ const CardItem = ({
   imageFull,
   rating,
   lessons,
-  completedLessons,
   courseId,
 }) => {  
+
+ 
   
   const navigate = useNavigate();
-  // const [updateUserCourse] = useUpdateUserCourseMutation();
+  
+  const user = useSelector((state) => state.auth?.user);
 
-  const currentUsername = useSelector((state) => state.auth?.user?.currentUsername);
+  const isLoggedin = user.currentUsername ? true : false;
 
-  const isLoggedin = currentUsername ? true : false;
+  const {data: userCourses} = useGetMycourseQuery(user.userId);
+  const [addUserCourse] = useAddUserCourseMutation();
 
+  const userCourseData = userCourses.find(course => course.courseId === courseId);
+
+ console.log(userCourses)
   const cardInfoClass = imageFull
     ? `${classes.cardInfoBox} ${classes.backgroundWhite}`
     : `${classes.cardInfoBox}`;
@@ -40,29 +46,23 @@ const CardItem = ({
   let str = courseName;
   const newCourseName = str.split(" ").join("-");
 
-  const completedLesson = completedLessons || 1;
-
-  const lessonTitle = lessons[0].title;
-
-  const totalLessons = lessons.length;
-
   const courseSliceObj = {
     thumbNail,
+    totalLessons: lessons.length,
+    currentLessons : 0,
+    completedLessons: 0,
     courseName,
-    completedLesson,
-    totalLessons,
-    courseId,
-    lessons
+    courseId
   };
 
-  const addStatredCourse = () => {
+  const addStatredCourse = async () => {
     if (!isLoggedin) return;
-    // updateUserCourse({currentUsername, course: courseSliceObj});
+    addUserCourse({currentUsername: user.currentUsername, course: courseSliceObj})
   };
 
   const navTo = () => {
     let navUrl = isLoggedin
-      ? `/course/${newCourseName}/${lessonTitle}/${courseId}/overview`
+      ? `/${newCourseName}/${courseId}/${userCourseData.currentLessons}/overview` 
       : `/course-overview/${courseId}`;
     navigate(navUrl, {
       replace: true,
@@ -72,6 +72,7 @@ const CardItem = ({
   return (
     <>
       <div
+      onClick={addStatredCourse}
         className="w-72 bg-white flex flex-col justify-center rounded-xl relative overflow-hidden shadow-md bg-center bg-cover custom-h-84"
         style={{
           backgroundImage: `url(${bgClass})`,
@@ -127,7 +128,7 @@ const CardItem = ({
             </div>
           </div>
         </div>
-        <Favorite addStatredCourse={addStatredCourse} />
+        {/* <Favorite addStatredCourse={addStatredCourse} /> */}
       </div>
     </>
   );

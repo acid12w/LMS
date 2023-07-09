@@ -33,5 +33,4 @@ export const {
     useGetLessonQuery,
     useAddLessonMutation,
     useRemoveLessonMutation,
-    
 } = lessonApiSlice;

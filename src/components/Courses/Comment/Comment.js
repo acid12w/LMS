@@ -10,7 +10,7 @@ export const Comment = ({ comments}) => {
   const [toggleReplyState, setToggleReplyState] = useState(0);
 
   const toggleReplyStateHandler = (num) => {
-    setToggleReplyState(num);
+    setToggleReplyState(num); 
   };
 
   const handleToggleReply = (num) => {

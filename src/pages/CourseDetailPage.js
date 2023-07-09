@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, useParams } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { Comments } from "../components/Courses/Comment/Comments";
 import { Overview } from "../components/Courses/Overview";
@@ -8,13 +8,11 @@ import { Resources } from "../components/Courses/Resources";
 import { SideBar } from "../components/Courses/SideBar";
 import YoutubeEmbed from "../components/UI/YoutubeEmbeded";
 import { CourseNav } from "../components/Courses/CourseNav";
-// import { NavBtn } from "../components/UI/NavBtn";
 
 import { GiRoundStar } from "react-icons/gi";
 import { StarRaing } from "../components/UI/StarRaing";
 import { useGetCourseByIdQuery } from "../store/courseApiSlice";
-import { useGetLessonQuery } from "../store/lessonApiSlice";
-import { useGetUserCourseQuery } from "../store/userApiSlice";
+import { useGetMycourseQuery } from "../store/userApiSlice"; 
 
 const parse = require("html-react-parser");
 
@@ -24,17 +22,23 @@ const CourseDetail = () => {
 
   const params = useParams();
   const courseIdParam = params.id;
-  const lessonTitleParam = params.lesson;
   
-  const {data : userCourseData} = useGetUserCourseQuery(courseIdParam);
-  const { data: courseData } = useGetCourseByIdQuery(courseIdParam);
-  const { data: lessons} = useGetLessonQuery(courseIdParam); 
-
-
+  const userId = useSelector(
+    (state) => state.auth.user.userId
+  );
   
-  if (!courseData || !lessons) {
+  const {data : userCourse} = useGetMycourseQuery(userId);
+  const {data: courseData} = useGetCourseByIdQuery(courseIdParam);
+  
+  if (!courseData) {
     return <p>...</p>;
-  } 
+  }
+
+  if (!userCourse) {
+    return <p>...</p>;
+  }
+  
+  const userCourseData = userCourse.find(course => course.courseId === courseIdParam);
 
   const {
     courseName,
@@ -46,13 +50,9 @@ const CourseDetail = () => {
     _id: courseId,
   } = courseData;
 
-
-  const lessonData = lessons.find(
-    (lesson) => lesson.title === lessonTitleParam
-  );
-
+  const lessonData = courseData.lessons[userCourseData.currentLessons];
+  
   const { resource, videoId, _id: lessonId } = lessonData;  
-
 
   return (
     <>
@@ -126,7 +126,7 @@ const CourseDetail = () => {
         <SideBar
           courseId={courseId}
           params={params}
-          lessonsArr={lessons}
+          lessonsArr={courseData.lessons}
           userData={userCourseData}
           courseName={courseName}
         />
