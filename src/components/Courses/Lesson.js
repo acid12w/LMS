@@ -14,15 +14,12 @@ export const Lesson = ({
   index
 }) => {
   
-
   const [updateUserCourse] = useUpdateUserCourseMutation();
 
   const activeNav =  index === Number(params.lesson)
      ? " flex hover:bg-gray-200 bg-gray-200 border-b-2 border-gray-300"
      : "flex hover:bg-gray-200 border-b-2 border-gray-300 ";
 
-
-console.log(completedLessons)
 
   const count = () => {
     let completed = completedLessons;
@@ -34,7 +31,7 @@ console.log(completedLessons)
   
   return (
     <NavLink
-      onClick={() => updateUserCourse({payload: {currentLessons: index, completedLessons: count()}, userLessonId }).invalidateTags(["Mycourses"])}
+      onClick={() => updateUserCourse({payload: {currentLessons: index, completedLessons: count()}, userLessonId })}
       to={`/${courseName}/${courseId}/${currentLessons}/${params['*']}`}
       className={activeNav}
     >

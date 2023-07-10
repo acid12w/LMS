@@ -22,23 +22,27 @@ const CardItem = ({
   courseId,
 }) => {  
 
- 
+  const [addUserCourse] = useAddUserCourseMutation();
   
   const navigate = useNavigate();
   
-  const user = useSelector((state) => state.auth?.user);
+  const user = useSelector((state) => state?.auth?.user);
 
-  const isLoggedin = user.currentUsername ? true : false;
+  const isLoggedin = user?.currentUsername ? true : false;
 
-  const {data: userCourses} = useGetMycourseQuery(user.userId);
-  const [addUserCourse] = useAddUserCourseMutation();
+  const {data: userCourses} = useGetMycourseQuery(user?.userId);
 
-  const userCourseData = userCourses.find(course => course.courseId === courseId);
+  let userCourseData = {};
+  userCourseData.currentLessons = 0;  
 
- console.log(userCourses)
+  if(userCourses){
+    userCourseData = userCourses.find(course => course.courseId === courseId);
+  }
+
   const cardInfoClass = imageFull
     ? `${classes.cardInfoBox} ${classes.backgroundWhite}`
     : `${classes.cardInfoBox}`;
+
   const bgClass = !imageFull ? `${thumbNail}` : "";
 
   const textWhite = !imageFull ? "text-white" : "";
@@ -68,6 +72,8 @@ const CardItem = ({
       replace: true,
     });
   };
+
+
 
   return (
     <>

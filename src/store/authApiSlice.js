@@ -17,6 +17,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 body: {...credentials}
             })
         }),
+        signout: builder.mutation({
+            query: () => ({
+                url: '/auth/logout',
+                method: 'POST',
+            })
+        }),
         getReauth: builder.query({
             query: () => '/auth/refresh',
         }),
@@ -40,6 +46,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
 export const {
     useSignupMutation,
     useLoginMutation,
+    useSignoutMutation,
     useGetReauthQuery,
     useGetUserProfileQuery,
     useGetUserCourseQuery,

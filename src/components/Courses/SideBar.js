@@ -31,14 +31,12 @@ export const SideBar = (props) => {
           return (
             <Lesson
               key={i}
-              id={el._id}
               title={el.title}
               index={currentLesson}
               courseName={props.courseName}
               courseId={props.courseId}
               currentLessons={currentLesson}
               completedLessons={props.userData.completedLessons}
-              lessonId={props.lessonId}
               params={props.params}
               userLessonId={props.userData._id}
             />

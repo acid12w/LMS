@@ -7,12 +7,6 @@ export const Comments = ({ lessonId }) => {
 
   const {data} = useGetAllCommentsQuery( lessonId ); 
 
-  console.log(data)
-
-  const addToComment = (commentData) => {
-    // dispatch(courseActions.addComment(commentData));
-  };
-
   if (!data) {
     return <p>...</p>
   } 
@@ -26,7 +20,6 @@ export const Comments = ({ lessonId }) => {
         type={"comment"}
         lessonId={lessonId}
         placeholder={"Leave a comment..."}
-        addAction={addToComment}
       />
       <Comment comments={data} />
     </div>

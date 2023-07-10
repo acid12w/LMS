@@ -5,7 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { RiNotification2Line } from "react-icons/ri";
 
 // import { FiHeart } from "react-icons/fi";
-
+import { useSignoutMutation } from "../../store/authApiSlice";
 import { logout } from "../../store/Auth-slice";
 
 import avatar from "../../assets/avatar.png";
@@ -13,7 +13,11 @@ import avatar from "../../assets/avatar.png";
 import { useDispatch, useSelector } from "react-redux";
 import { DropDown } from "../UI/dropDown";
 
+
+
 export const MainNaviagtion = () => {
+  
+  const [signout] = useSignoutMutation();
   const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState();
@@ -24,7 +28,7 @@ export const MainNaviagtion = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-
+    signout();
     navigate({ pathname: "/" });
   };
 

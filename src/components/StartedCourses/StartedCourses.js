@@ -14,7 +14,7 @@ import { useGetMycourseQuery } from "../../store/userApiSlice";
 const StartedCourses = () => {
 
  const userId = useSelector(
-    (state) => state.auth.user.userId
+    (state) => state?.auth?.user?.userId
   );
 
 const navigate = useNavigate();
@@ -54,7 +54,7 @@ const {data: startedCoursesData} = useGetMycourseQuery(userId);
                   <div
                     onClick={() =>
                       navigate(
-                        `/${courses.courseName}/${courses.currentLessons}/${courses.courseId}/overview`   
+                        `/${courses.courseName}/${courses.courseId}/${courses.currentLessons}/overview`   
                       )
                     }
                     className="h-full w-2/5 bg-center bg-cover cursor-pointer"
