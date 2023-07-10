@@ -47,7 +47,7 @@ export const {
     useSignupMutation,
     useLoginMutation,
     useSignoutMutation,
-    useGetReauthQuery,
+    useLazyGetReauthQuery,
     useGetUserProfileQuery,
     useGetUserCourseQuery,
     useUpdateUserProfileMutation,

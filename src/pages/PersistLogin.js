@@ -2,39 +2,29 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { setCredentials } from "../store/Auth-slice";
-import { useGetReauthQuery} from "../store/authApiSlice";
+import { useLazyGetReauthQuery} from "../store/authApiSlice";
 
 export const PersistLogin = () => {
     const dispatch = useDispatch()
+    const auth = useSelector((state) => state.auth.user);
     const [isLoading, setIsLoading] = useState(true);
-
-
-    const auth  = useSelector(state => state.auth.user)
-    const {data} =  useGetReauthQuery();
-
+    const [getReauth, result] =  useLazyGetReauthQuery();
 
     useEffect(() => { 
-        if(!data){
-                return <p>...Loading</p>
-            } else {
-                const verifyRefreshToken = async () => {
-            
-                    try {
-                        dispatch(setCredentials({ token : {accessToken: data.accessToken }, user:{ email: "johnDoe_3@test.com", currentUsername: data.username, bio: data.bio, userId: data.userId, myCourses: data.myCourses, userRole: data.userRole  }}))
-                    }catch(error){
-                        console.error(error)
-                    }finally {
-                        setIsLoading(false);
-                    }
-                } 
-                verifyRefreshToken()
+        const verifyRefreshToken = async () => {
+            try {
+                if(auth) return;
+                await getReauth();
+                dispatch(setCredentials({ token : {accessToken: result.data.accessToken }, user:{ email: "johnDoe_3@test.com", currentUsername: result.data.username, bio: result.data.bio, userId: result.data.userId, myCourses: result.data.myCourses, userRole: result.data.userRole  }}))
+            }catch(error){
+                console.error(error)
+            }finally {
+                setIsLoading(false);
             }
-       
-    }, [])
+        } 
+        verifyRefreshToken();
+    }, [result])
 
-    console.log(isLoading)
-   
-    
     return (
         <>{
             isLoading
