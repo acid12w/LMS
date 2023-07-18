@@ -8,8 +8,6 @@ const params = useParams();
   const courseId = params.id;
 
   const [isChecked, setIsChecked] = useState(isPublished);
-
-  const disabled = true
  
   const handleSubmitCourse = (e) => {
     e.preventDefault()
@@ -21,8 +19,6 @@ const params = useParams();
   const changeHandler = (e) => {
     setIsChecked(!isChecked)
   }
-
-  console.log(lessons)
 
   return (
     

@@ -124,7 +124,7 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
                 placeholder='add course overview here'
                 className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-1 mt-2" 
                 />
-                </label> : <div className="mb-6 "><h2 className="mb-2">{parse(currentCourse.overview)}</h2></div>}
+                </label> : <div className="mb-6 ">{parse(currentCourse.overview)}</div>}
           
           {toggleEdit ?
             <label className="text-sm mr-4 h-12 my-2">

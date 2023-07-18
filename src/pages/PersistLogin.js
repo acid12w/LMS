@@ -10,7 +10,7 @@ export const PersistLogin = () => {
     const auth = useSelector((state) => state.auth.user);
     const [isLoading, setIsLoading] = useState(true);
     const [getReauth, result] =  useLazyGetReauthQuery();
-    const { persist, authUser } = useAuth();
+    const { persist } = useAuth();
 
 
     useEffect(() => { 
@@ -25,13 +25,9 @@ export const PersistLogin = () => {
                 setIsLoading(false);
             } 
         } 
-
-        // verifyRefreshToken() 
         persist ? verifyRefreshToken() : setIsLoading(false);
 
-    }, [result])
-
-    console.log(persist);
+    }, [result, getReauth, dispatch, persist, auth])
 
     return (
         <>{
