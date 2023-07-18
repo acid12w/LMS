@@ -28,7 +28,7 @@ export const courseApiSlice = apiSlice.injectEndpoints({
             body: payload.data, 
             }),
             invalidatesTags: ['Course']
-        }),
+        }), 
        
     }),
 })

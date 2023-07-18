@@ -22,6 +22,7 @@ export const StarRaing = ({ courseId, setShowRating }) => {
       <div className="flex items-center justify-center px-4 py-2">
         {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1;
+          
           return (
             <GiRoundStar
               key={ratingValue}
@@ -33,7 +34,8 @@ export const StarRaing = ({ courseId, setShowRating }) => {
               onClick={() => {
                 setSelected(ratingValue);
                 setShowRating(false);
-                updateCourse({id : courseId, course: { rating: ratingValue }});
+                console.log(ratingValue);
+                updateCourse({id : courseId, data: { rating: ratingValue }});
               }}
               onMouseEnter={() => setHover(ratingValue)}
               onMouseLeave={() => setHover(null)}

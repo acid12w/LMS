@@ -35,7 +35,7 @@ export const MainNaviagtion = () => {
       console.error(err);
     }
     dispatch(logout());
-    localStorage.setItem("persist", !persist);
+    localStorage.setItem("persist", false);
     navigate({ pathname: "/" });
   };
 

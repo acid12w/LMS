@@ -11,6 +11,7 @@ export const AuthSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
+      console.log(action.payload)
       const {user, token } = action.payload;
       state.token = token.accessToken;  
       state.user = user;
@@ -21,6 +22,7 @@ export const AuthSlice = createSlice({
     },
 
     logout: (state) => {
+      console.log("clear credentials")
       state.token = null;
       state.isLoggedin = false;
       state.user = null;

@@ -29,6 +29,9 @@ export const PersistLogin = () => {
 
     }, [result, getReauth, dispatch, persist, auth])
 
+    console.log(result);
+    console.log(persist);
+
     return (
         <>{
             isLoading

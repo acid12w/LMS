@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import useAuth from "../hooks/useAuth";
+import React, { useState } from "react";
+// import useAuth from "../hooks/useAuth";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -12,7 +12,7 @@ import { useSignupMutation } from "../store/authApiSlice";
 
 const LoginPage = () => {
 
-  const { persist } = useAuth();  
+  // const { persist } = useAuth();  
 
   const [searchParams] = useSearchParams();
 
@@ -26,9 +26,9 @@ const LoginPage = () => {
     });
   };
 
-  useEffect(() => {
-    localStorage.setItem("persist", !persist);
-  }, [persist])
+  // useEffect(() => {
+  //   localStorage.setItem("persist", !persist);
+  // }, [persist])
 
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
@@ -45,7 +45,7 @@ const LoginPage = () => {
     setFormState({ ...formState, [e.target.id]: e.target.value });
   };
 
-  const { username, email, password, password2, bio } = formState;
+  const { username, email, password, password2 } = formState;
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -54,6 +54,7 @@ const LoginPage = () => {
         const userData = await login({username: email, password}).unwrap();
         const { username : currentUsername, bio, userId, accessToken, userRole } = userData;
         dispatch(setCredentials({ token : {accessToken }, user:{ email, currentUsername, bio, userId, userRole }}));
+        localStorage.setItem("persist", true);
         navigate("/", { replace: true });
       } else {
         if (password !== password2) {
@@ -68,9 +69,8 @@ const LoginPage = () => {
         }
 
       const userData = await signup({username, email, password}).unwrap();
-
-      const { username : currentUsername, bio, userId, accessToken, refreshToken } = userData;
-      dispatch(setCredentials({ token : {accessToken, refreshToken}, user:{ email, currentUsername, bio, userId }}));
+      const { username : currentUsername, bio, userId, accessToken, userRole } = userData;
+      dispatch(setCredentials({ token : {accessToken }, user:{ email, currentUsername, bio, userId, userRole }}));
       navigate("/", { replace: true });
       }
     }catch(err){
