@@ -1,20 +1,7 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import useInput from "../../hooks/use-input";
-
+import { useSelector } from "react-redux";
 import { CourseForm } from "./CourseForm";
-import Alert from "../UI/Alert";
-
 
 export const CreatCourse = () => {
-
-  const alert = useSelector((state) => state.ui.Alert);
-
-  const [showAlert, setShowAlert] = useState(false);
-
-  const [step, setStepState] = useState(1);
-
 
   const displayForm = () => {
     switch (step) {
@@ -44,13 +31,6 @@ export const CreatCourse = () => {
 
   return (
     <>
-      {showAlert && (
-        <Alert
-          status={alert.status}
-          title={alert.title}
-          message={alert.message}
-        />
-      )}
       <div className="p-6 bg-white rounded drop-shadow-xl">
         {displayForm()}
       </div>

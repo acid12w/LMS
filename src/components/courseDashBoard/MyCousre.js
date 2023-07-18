@@ -1,5 +1,4 @@
 import { useNavigate, Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { MyCousreDetails } from "./MycourseDetails";
 
 import { RiEditBoxLine } from "react-icons/ri";

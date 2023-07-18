@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {Signup} from '../components/Auth/Signup'
-// import { Login } from "../components/Auth/Login";
 
 import { uiActions } from "../store/ui-slice";
 import { setCredentials } from "../store/Auth-slice";
@@ -11,6 +11,9 @@ import { useLoginMutation } from "../store/authApiSlice";
 import { useSignupMutation } from "../store/authApiSlice";
 
 const LoginPage = () => {
+
+  const { persist } = useAuth();  
+
   const [searchParams] = useSearchParams();
 
   let navigate = useNavigate();
@@ -22,6 +25,10 @@ const LoginPage = () => {
       replace: true,
     });
   };
+
+  useEffect(() => {
+    localStorage.setItem("persist", !persist);
+  }, [persist])
 
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
@@ -44,11 +51,8 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       if (isLogin) {
-        
         const userData = await login({username: email, password}).unwrap();
-
         const { username : currentUsername, bio, userId, accessToken, userRole } = userData;
-        
         dispatch(setCredentials({ token : {accessToken }, user:{ email, currentUsername, bio, userId, userRole }}));
         navigate("/", { replace: true });
       } else {

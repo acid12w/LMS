@@ -9,7 +9,7 @@ import { useGetCourseByInstructorQuery } from "../store/courseApiSlice";
 const MyCoursePage = () => {
 
   
-  const userId = useSelector((state) => state.auth.user.userId)
+  const userId = useSelector((state) => state.auth.user.userId);
  
   const {data} = useGetCourseByInstructorQuery(userId); 
 

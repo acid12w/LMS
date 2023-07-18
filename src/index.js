@@ -6,14 +6,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store/index";
-import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
-import { courseApi } from "./api/ApiSlice";
+import { AuthProvider } from "./context/AuthProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
+        <AuthProvider>
           <App />
+        </AuthProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

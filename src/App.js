@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import "./App.css";
 import { Footer } from "./components/Layout/Footer";
 import { MainNaviagtion } from "./components/Layout/MainNaviagtion";
-
+import { AuthProvider } from "./context/AuthProvider";
 
 import RequireAuth from "./pages/RequireAuth";
 import Alert from "./components/UI/Alert";
@@ -45,22 +45,24 @@ function App() {
           <Route path="/user" element={<LoginPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="unauthorized" element={<Unauthorized />} />
+         
+            <Route element={<PersistLogin/>}>
+              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Navigate to="/home" />} />  
+              <Route element={<RequireAuth allowedRole={["student"]}/>}>
+                <Route
+                  path="/:courseName/:id/:lesson/*"
+                  element={<CourseDetail /> } 
+                />
+                <Route path="/profile" element={<ProfilePage />} />
+              </Route>
+              <Route element={<RequireAuth allowedRole={["Instructor"]}/>}>
+                <Route path="/new-course" element={<NewCourse />} />
+                <Route path="/my-course/*" element={<MyCoursePage />} />
+              </Route>
+            </Route>
+      
 
-          <Route element={<PersistLogin/>}>
-            <Route path="/home" element={<Home />} />
-            <Route path="/" element={<Navigate to="/home" />} />  
-            <Route element={<RequireAuth allowedRole={["student"]}/>}>
-              <Route
-                path="/:courseName/:id/:lesson/*"
-                element={<CourseDetail /> } 
-              />
-              <Route path="/profile" element={<ProfilePage />} />
-            </Route>
-            <Route element={<RequireAuth allowedRole={["Instructor"]}/>}>
-              <Route path="/new-course" element={<NewCourse />} />
-              <Route path="/my-course/*" element={<MyCoursePage />} />
-            </Route>
-          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

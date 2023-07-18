@@ -7,12 +7,9 @@ import { PublishedFrom } from "./PublishedForm";
 import { useUpdateCourseMutation } from "../../store/courseApiSlice";
 
 export const MyCousreDetails = ({ myCourses }) => {
-const params = useParams();
-
-  const courseId = params.id;
-
+  const params = useParams();
   const [updateCourse] = useUpdateCourseMutation();
-
+  const courseId = params.id;
   const currentCourse = myCourses?.find((course) => course._id === courseId);
 
   return (

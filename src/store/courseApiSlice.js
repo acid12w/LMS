@@ -4,21 +4,22 @@ export const courseApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllcourses: builder.query({
             query: () => '/mycourses',
-            providesTags: ["Course"],
         }),
         getCourseById: builder.query({
             query: (id) => `mycourses/${id}`,
-            providesTags: ["Course"],
+            providesTags: ['Course']
         }),
         getCourseByInstructor: builder.query({
             query: (id) => `mycourses/instructor/${id}`,
+            providesTags: ['Course']
         }),
         addCourse: builder.mutation({
             query: (course) => ({
             url: '/mycourses/create',
             method: 'POST',
             body: course, 
-            })
+            }),
+            invalidatesTags: ['Course']
         }), 
         updateCourse: builder.mutation({
             query: (payload) => ({

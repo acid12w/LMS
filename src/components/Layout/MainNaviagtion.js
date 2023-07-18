@@ -12,10 +12,12 @@ import avatar from "../../assets/avatar.png";
 // import Favorites from "../Favorites/Favorites";
 import { useDispatch, useSelector } from "react-redux";
 import { DropDown } from "../UI/dropDown";
+import useAuth from "../../hooks/useAuth";
 
 
 
 export const MainNaviagtion = () => {
+  const { persist } = useAuth();  
   
   const [signout] = useSignoutMutation();
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -26,9 +28,14 @@ export const MainNaviagtion = () => {
 
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try{
+      await signout();
+    }catch(err){
+      console.error(err);
+    }
     dispatch(logout());
-    signout();
+    localStorage.setItem("persist", !persist);
     navigate({ pathname: "/" });
   };
 

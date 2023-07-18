@@ -19,8 +19,7 @@ export const CourseForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [addCourse] = useAddCourseMutation()
-  const alert = useSelector((state) => state.ui.Alert);
+  const [addCourse] = useAddCourseMutation();
 
   const [imageUrl, setImageUrl] = useState(null);
   const [tags, setTags] = React.useState([]);
@@ -61,35 +60,37 @@ export const CourseForm = () => {
     setOverview(data);
   };
 
-  const handleDelete = (i) => {
-    setTags(tags.filter((tag, index) => index !== i));
-  };
+  // const handleDelete = (i) => {
+  //   setTags(tags.filter((tag, index) => index !== i));
+  // };
 
-  const handleAddition = (tag) => {
-    setTags([...tags, tag]);
-  };
+  // const handleAddition = (tag) => {
+  //   setTags([...tags, tag]);
+  // };
 
 
-  const handleDrag = (tag, currPos, newPos) => {
-    const newTags = tags.slice();
+  // const handleDrag = (tag, currPos, newPos) => {
+  //   const newTags = tags.slice();
 
-    newTags.splice(currPos, 1);
-    newTags.splice(newPos, 0, tag);
+  //   newTags.splice(currPos, 1);
+  //   newTags.splice(newPos, 0, tag);
 
-    // re-render
-    setTags(newTags);
-  };
+  //   // re-render
+  //   setTags(newTags);
+  // };
 
-  const handleTagClick = (index) => {
-    console.log("The tag at index " + index + " was clicked");
-  };
+  // const handleTagClick = (index) => {
+  //   console.log("The tag at index " + index + " was clicked");
+  // };
 
 
   const isValid =
-    courseNameisValid && subjectisValid && difficultyisValid && tagisValid && overviewisValid;
+    courseNameisValid && subjectisValid && overviewisValid && imageUrlisValid;
 
   const handleOnSubmit = async (e) => {
      e.preventDefault();
+
+     console.log( courseNameisValid, subjectisValid, difficulty, overviewisValid)
 
     if (!isValid) return;
 
@@ -100,20 +101,19 @@ export const CourseForm = () => {
               overview: overview,
               difficulty: difficulty  || 'beginner',
               subject: subject,
-              tags: tags,
               completedCourses: 0,
               participants: 0,
               rated: 1,
               rating: 0,
-              // thumbNail: imageUrl,
+              thumbNail: imageUrl,
               imageFull: true, 
             }
           )
 
           dispatch(
             uiActions.showAlert({
-              status: "sucsess",
-              title: "Sucess!",
+              status: "success",
+              title: "Success!",
               message: "your course was created",
             })
           );
