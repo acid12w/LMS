@@ -27,7 +27,6 @@ export const AuthSlice = createSlice({
       state.isLoggedin = false;
       state.user = null;
     },
-
   },
 });
 

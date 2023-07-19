@@ -5,7 +5,7 @@ export const uploadApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         addThumbNail: builder.mutation({
             query: payload => ({
-                url: 'http://localhost:3001/upload',
+                url: '/upload',
                 method: 'POST',
                 body: payload,
             })
