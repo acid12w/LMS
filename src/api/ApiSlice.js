@@ -3,8 +3,8 @@ import { setCredentials, logout } from '../store/Auth-slice';
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:3001',
-    // baseUrl: 'https://lms-api-rt1y.onrender.com',
+    // baseUrl: 'http://localhost:3001',
+    baseUrl: 'https://lms-api-rt1y.onrender.com',
 
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
@@ -16,13 +16,13 @@ const baseQuery = fetchBaseQuery({
     }
 })
 
-const baseQueryWithReauth = async (args, api, extraOptions) => {
+const baseQueryWithReauth = async (args, api, extraOptions) => { 
     let result = await baseQuery(args, api, extraOptions);
     
     if (result?.error?.data?.statusCode === 403) {
      
         // send refresh token to get new access token 
-        const refreshResult = await baseQuery('auth/refresh', api, extraOptions);
+        const refreshResult = await baseQuery('auth/refresh', api, extraOptions);  
 
         if (refreshResult.data) {
           
