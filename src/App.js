@@ -47,8 +47,8 @@ function App() {
           <Route path="unauthorized" element={<Unauthorized />} />
          
             <Route element={<PersistLogin/>}>
-              <Route path="/home" element={<Home />} />
-              <Route path="/" element={<Navigate to="/home" />} />  
+              <Route path="/" element={<Home />} />
+              {/* <Route path="/" element={<Navigate to="/home" />} />   */}
               <Route element={<RequireAuth allowedRole={["student"]}/>}>
                 <Route
                   path="/:courseName/:id/:lesson/*"

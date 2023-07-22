@@ -12,31 +12,30 @@ import avatar from "../../assets/avatar.png";
 // import Favorites from "../Favorites/Favorites";
 import { useDispatch, useSelector } from "react-redux";
 import { DropDown } from "../UI/dropDown";
-import useAuth from "../../hooks/useAuth";
-
-
 
 export const MainNaviagtion = () => {
-  const { persist } = useAuth();  
   
   const [signout] = useSignoutMutation();
   const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState();
 
-  const isLoggedin = useSelector((state) => state.auth.token);
+  const isLoggedin = useSelector((state) => state?.auth?.token);
+  const roles = useSelector(state => state?.auth?.user?.userRole);
+  const role = roles?.includes('Instructor');
 
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
     try{
       await signout();
+      dispatch(logout());
+      localStorage.setItem("persist", false);
+      navigate({ pathname: "/" });
     }catch(err){
       console.error(err);
     }
-    dispatch(logout());
-    localStorage.setItem("persist", false);
-    navigate({ pathname: "/" });
+    
   };
 
   const submitForm = (e) => {
@@ -107,7 +106,7 @@ export const MainNaviagtion = () => {
               className="h-12 w-12 bg-center bg-cover rounded-full mr-4 bg-green-400"
               style={bgStyle}
             ></div>
-            {toggleMenu && <DropDown handleLogout={handleLogout} />}
+            {toggleMenu && <DropDown handleLogout={handleLogout} role={role}/>}
           </li>
         )}
       </ul>

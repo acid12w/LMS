@@ -32,12 +32,9 @@ const CardItem = ({
 
   const {data: userCourses} = useGetMycourseQuery(user?.userId);
 
-  let userCourseData = {};
-  userCourseData.currentLessons = 0;  
-
-  if(userCourses){
-    userCourseData = userCourses.find(course => course.courseId === courseId);
-  }
+  const userCourseData = userCourses ? userCourses?.find(course => course.courseId === courseId) : undefined;
+  
+  let currentLessons = userCourseData !== undefined ? userCourseData.currentLessons : 0;
 
   const cardInfoClass = imageFull
     ? `${classes.cardInfoBox} ${classes.backgroundWhite}`
@@ -66,7 +63,7 @@ const CardItem = ({
 
   const navTo = () => {
     let navUrl = isLoggedin
-      ? `/${newCourseName}/${courseId}/${userCourseData.currentLessons}/overview` 
+      ? `/${newCourseName}/${courseId}/${currentLessons}/overview` 
       : `/course-overview/${courseId}`;
     navigate(navUrl, {
       replace: true,
