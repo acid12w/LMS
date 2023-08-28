@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom"; 
+import React, { useState, useEffect } from "react";
 
-export const PublishedFrom = ({ isPublished, updateCourse, lessons }) => {
+
+export const PublishedFrom = ({ isPublished, updateCourse, lessons, courseId }) => {
     
-const params = useParams();
-
-  const courseId = params.id;
-
   const [isChecked, setIsChecked] = useState(isPublished);
- 
+
+  useEffect(() => {
+    setIsChecked(isPublished)
+    return () => {};
+  }, [isPublished])
+
+  
   const handleSubmitCourse = (e) => {
     e.preventDefault()
-    
-    isPublished = isChecked;
-    updateCourse({ data: {isPublished}, id: courseId});
+    updateCourse({ data: {isPublished: isChecked}, id: courseId});
   } 
 
   const changeHandler = (e) => {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import { FiSearch } from "react-icons/fi";
@@ -6,41 +6,44 @@ import { RiNotification2Line } from "react-icons/ri";
 
 // import { FiHeart } from "react-icons/fi";
 import { useSignoutMutation } from "../../store/authApiSlice";
-import { logout } from "../../store/Auth-slice";
 
 import avatar from "../../assets/avatar.png";
 // import Favorites from "../Favorites/Favorites";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { DropDown } from "../UI/dropDown";
+import usePersist from "../../hooks/usePersist";
 
 export const MainNaviagtion = () => {
   
-  const [signout] = useSignoutMutation();
+  const [signout, {
+    isLoading,
+    isSuccess,
+    isError,
+    error
+}] = useSignoutMutation();
   const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState();
+  const [persist, setPersist] = usePersist();
 
   const isLoggedin = useSelector((state) => state?.auth?.token);
   const roles = useSelector(state => state?.auth?.user?.userRole);
   const role = roles?.includes('Instructor');
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isSuccess) navigate('/')
+  }, [isSuccess, navigate])
 
   const handleLogout = async () => {
-    try{
-      await signout();
-      dispatch(logout());
-      localStorage.setItem("persist", false);
-      navigate({ pathname: "/" });
-    }catch(err){
-      console.error(err);
+    try{      
+      await signout(); 
+    }catch(error){
+      console.error(error)
     }
-    
   };
 
   const submitForm = (e) => {
     e.preventDefault();
-
     navigate({
       pathname: "/search",
       search: `?query=${searchValue}`,

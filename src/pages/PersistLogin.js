@@ -1,41 +1,70 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
-import { setCredentials } from "../store/Auth-slice";
-import { useLazyGetReauthQuery} from "../store/authApiSlice";
-import useAuth from "../hooks/useAuth";
-
-export const PersistLogin = () => {
-    const dispatch = useDispatch()
-    const auth = useSelector((state) => state.auth.user);
-    const [isLoading, setIsLoading] = useState(true);
-    const [getReauth, result] =  useLazyGetReauthQuery();
-    const { persist } = useAuth();
+import { useEffect, useState, useRef } from "react";
+import {  useSelector } from "react-redux";
+import { Outlet, Link } from "react-router-dom";
+import usePersist from "../hooks/usePersist";
+import { useGetReauthMutation} from "../store/authApiSlice";
 
 
-    useEffect(() => { 
-        const verifyRefreshToken = async () => {
-            try {
-                if(auth) return;
-                await getReauth();
-                dispatch(setCredentials({ token : {accessToken: result.data.accessToken }, user:{ email: "johnDoe_3@test.com", currentUsername: result.data.username, bio: result.data.bio, userId: result.data.userId, myCourses: result.data.myCourses, userRole: result.data.userRole  }}))
-            }catch(error){
-                console.error(error);
-            }finally {
-                setIsLoading(false);
-            } 
-        } 
-        persist ? verifyRefreshToken() : setIsLoading(false);
 
-    }, [result, getReauth, dispatch, persist, auth])
+const PersistLogin = () => {
 
-    return (
-        <>{
-            isLoading
-                ? <p>Loading...</p>
-                : <Outlet/>
+    const [persist] = usePersist()
+    const token = useSelector((state) => state.auth.user);
+    const [trueSuccess, setTrueSuccess] = useState(false);
+    const effectRan = useRef(false)
+
+
+    const [getReauth, {
+        isUninitialized,
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useGetReauthMutation()
+
+
+    useEffect(() => {
+
+            const verifyRefreshToken = async () => {
+                console.log('verifying refresh token')
+                try {
+                    await getReauth()
+                    setTrueSuccess(true)
+                }
+                catch (err) {
+                    console.error(err)
+                }
             }
-        </>
-    )
-}
+            if (!token && persist) verifyRefreshToken()
 
+        // eslint-disable-next-line
+    
+    }, []);
+
+    let content = null;
+    if (!persist) { // persist: no
+        console.log('no persist')
+        content = <Outlet />
+    } else if (isLoading) { //persist: yes, token: no
+        console.log('loading')
+        content = <p>...loading</p>
+    } else if (isError) { //persist: yes, token: no
+        console.log('error')
+        content = (
+            <p className='errmsg'>
+                {`${error?.data?.message} - `}
+                <Link to="/login">Please login again</Link>.
+            </p>
+        )
+    }else if (isSuccess && trueSuccess) { //persist: yes, token: yes
+        console.log('success')
+        content = <Outlet />
+    } else if (token && isUninitialized) { //persist: yes, token: yes
+        console.log('token and uninit')
+        console.log(isUninitialized)
+        content = <Outlet />
+    } 
+
+    return content;
+}
+export default PersistLogin

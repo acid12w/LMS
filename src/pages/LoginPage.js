@@ -10,10 +10,11 @@ import { setCredentials } from "../store/Auth-slice";
 import { useLoginMutation } from "../store/authApiSlice";
 import { useSignupMutation } from "../store/authApiSlice";
 
+import usePersist from "../hooks/usePersist";
+
 const LoginPage = () => {
 
-  // const { persist } = useAuth();  
-
+  const [persist, setPersist] = usePersist();
   const [searchParams] = useSearchParams();
 
   let navigate = useNavigate();
@@ -26,9 +27,7 @@ const LoginPage = () => {
     });
   };
 
-  // useEffect(() => {
-  //   localStorage.setItem("persist", !persist);
-  // }, [persist])
+  
 
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
@@ -55,7 +54,7 @@ const LoginPage = () => {
         const { username : currentUsername, bio, userId, accessToken, userRole } = userData;
         dispatch(setCredentials({ token : {accessToken }, user:{ email, currentUsername, bio, userId, userRole }}));
         localStorage.setItem("persist", true);
-        navigate("/", { replace: true });
+        navigate("/home", { replace: true });
       } else {
         if (password !== password2) {
           dispatch(

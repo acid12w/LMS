@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom"; 
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
@@ -13,18 +13,29 @@ export const CousreFrom = ({ myCourses }) => {
 const dispatch = useDispatch();
 const params = useParams();
 
+
 const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
 
   const courseId = params.id;
 
   const currentCourse = myCourses?.find((course) => course._id === courseId);
-
+  const [isChecked, setIsChecked] = useState(currentCourse.imageFull);
   const [toggleEdit, setToggleEdit] = useState(false);
+
+  useEffect(() => {
+    setIsChecked(currentCourse.imageFull)
+    return () => {};
+  }, [currentCourse.imageFull])
 
   const courseNameInput = useRef();
   const overviewInput = useRef();
   const subjectInput = useRef();
   const difficultyInput = useRef();
+
+  const changeHandler = (e) => {
+    setIsChecked(!isChecked)
+  }
+
 
   const handleSubmitCourse = async (e) => {
     e.preventDefault()
@@ -46,10 +57,13 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
     try{
         const data = {};
 
+        
+
         if(courseNameInput.current.value.trim() !== '') data.courseName = courseNameInput.current.value;
         if(overviewInput.current.value.trim() !== '') data.overview = overviewInput.current.value;
         if(subjectInput.current.value.trim() !== '') data.subject = subjectInput.current.value;
         if(difficultyInput.current.value !== currentCourse.difficulty && difficultyInput.current.value.trim() !== '') data.difficulty = difficultyInput.current.value;
+        if(isChecked !== currentCourse.imageFull) data.imageFull = isChecked;
 
         if(Object.keys(data).length === 0) return;
       
@@ -134,21 +148,24 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
                   name="difficulty"
                   id="difficulty"
                 >
-                
                 <option value="beginner" >Beginner</option>
                 <option value="intermediate">Intermediate</option>
                 <option value="Advanced">Advanced</option>
               </select>
             </label> : <div className="mb-6 "><h3 className="mb-2">difficulty: {currentCourse.difficulty}</h3></div>}
+            <div className="flex mt-4">
+                <h3 className="mr-2">Background image full</h3>
+                <input type="checkbox" checked={isChecked} id="imageFull" onChange={changeHandler}/> 
+            </div> 
                 <div className="flex">
-                <button onClick={() => setToggleEdit(!toggleEdit)} className="bg-black px-8 py-2 text-white mt-4 block mr-4" type="button">
-                Edit
-            </button>
-            {toggleEdit ? <button  className="bg-black px-8 py-2 text-white  mt-4 block" type="submit">
-                Save
-            </button> : ''}
-            </div>
-        </div>
+                  <button onClick={() => setToggleEdit(!toggleEdit)} className="bg-black px-8 py-2 text-white mt-4 block mr-4" type="button">
+                      Edit
+                  </button>
+                  {toggleEdit ? <button  className="bg-black px-8 py-2 text-white  mt-4 block" type="submit">
+                      Save
+                  </button> : ''}
+              </div>
+          </div>
       </form>
   );
 };

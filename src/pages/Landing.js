@@ -6,13 +6,9 @@ import StartedCourses from "../components/StartedCourses/StartedCourses";
 
 import { useGetAllcoursesQuery } from "../store/courseApiSlice";
 
-const Home = () => {
+const Landing = () => {
 
   const {data} = useGetAllcoursesQuery();
-
-  useEffect(() => {
-    console.log('render')
-  }, [])
 
   // const featuredCourses = data.filter(course => course.isFeatured === true);
   // const courseData = data.filter(course => course.isFeatured !== true);
@@ -45,4 +41,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Landing;

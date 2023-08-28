@@ -6,6 +6,7 @@ export const SideBar = (props) => {
   const barWidth = 100 / courseLength;
 
   const currentCourse  = 1;
+  const completedLessons = props?.userData?.completedLessons || 0;
   
   return ( 
     <div className="bg-gray-100 border-l-2 border-gray-200 right-0 w-1/4 ">
@@ -20,7 +21,7 @@ export const SideBar = (props) => {
                 width={barWidth}
                 key={i}
                 courseNumber={courseNumber}
-                completedLessons={props.userData.completedLessons}
+                completedLessons={completedLessons}
               />
             );
           })}
@@ -36,9 +37,9 @@ export const SideBar = (props) => {
               courseName={props.courseName}
               courseId={props.courseId}
               currentLessons={currentLesson}
-              completedLessons={props.userData.completedLessons}
+              completedLessons={completedLessons}
               params={props.params}
-              userLessonId={props.userData._id}
+              userLessonId={props?.userData?._id}
             />
           );
         })}

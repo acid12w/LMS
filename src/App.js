@@ -5,11 +5,10 @@ import { useSelector } from "react-redux";
 import "./App.css";
 import { Footer } from "./components/Layout/Footer";
 import { MainNaviagtion } from "./components/Layout/MainNaviagtion";
-import { AuthProvider } from "./context/AuthProvider";
 
 import RequireAuth from "./pages/RequireAuth";
 import Alert from "./components/UI/Alert";
-import { PersistLogin } from "./pages/PersistLogin";
+import PersistLogin from "./pages/PersistLogin";
 
 const Home = React.lazy(() => import("./pages/HomePage"));
 const SearchPage = React.lazy(() => import("./pages/SearchPage"));
@@ -20,7 +19,9 @@ const LoginPage = React.lazy(() => import("./pages/LoginPage"));
 const MyCoursePage = React.lazy(() => import("./pages/MyCoursePage"));
 const CourseOverview = React.lazy(() => import("./pages/CourseOverviewPage"));
 const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
-const Unauthorized = React.lazy(() => import("./pages/Unauthorized"));  
+const Landing = React.lazy(() => import("./pages/Landing"));
+const Unauthorized = React.lazy(() => import("./pages/Unauthorized"));
+
 
 
 
@@ -45,9 +46,10 @@ function App() {
           <Route path="/user" element={<LoginPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="unauthorized" element={<Unauthorized />} />
+          <Route path="/" element={<Landing />} />
          
             <Route element={<PersistLogin/>}>
-              <Route path="/" element={<Home />} />
+               <Route path="/home" element={<Home />} />
               {/* <Route path="/" element={<Navigate to="/home" />} />   */}
               <Route element={<RequireAuth allowedRole={["student"]}/>}>
                 <Route
@@ -62,7 +64,6 @@ function App() {
               </Route>
             </Route>
       
-
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

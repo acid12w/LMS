@@ -37,12 +37,12 @@ const CardItem = ({
   let currentLessons = userCourseData !== undefined ? userCourseData.currentLessons : 0;
 
   const cardInfoClass = imageFull
-    ? `${classes.cardInfoBox} ${classes.backgroundWhite}`
-    : `${classes.cardInfoBox}`;
+    ? `${classes.cardInfoBox}`
+    : `${classes.cardInfoBox} ${classes.backgroundWhite}`;
 
-  const bgClass = !imageFull ? `${thumbNail}` : "";
+  const bgClass = imageFull ? `${thumbNail}` : "";
 
-  const textWhite = !imageFull ? "text-white" : "";
+  const textWhite = imageFull ? "text-white" : "";
 
   let str = courseName;
   const newCourseName = str.split(" ").join("-");
@@ -76,7 +76,7 @@ const CardItem = ({
     <>
       <div
       onClick={addStatredCourse}
-        className="w-72 bg-white flex flex-col justify-center rounded-xl relative overflow-hidden shadow-md bg-center bg-cover custom-h-84"
+        className="w-72 bg-white flex flex-col justify-center rounded-xl relative overflow-hidden shadow-md bg-center bg-cover custom-h-84 cursor-pointer"
         style={{
           backgroundImage: `url(${bgClass})`,
         }}
@@ -89,7 +89,7 @@ const CardItem = ({
           }}
           className={classes.cardImageHolder}
         >
-          {imageFull && (
+          {!imageFull && (
             <img
               src={thumbNail}
               alt="study"

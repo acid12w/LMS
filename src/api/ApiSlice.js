@@ -3,8 +3,8 @@ import { setCredentials, logout } from '../store/Auth-slice';
 
 
 const baseQuery = fetchBaseQuery({
-    // baseUrl: 'http://localhost:3001',
-    baseUrl: 'https://lms-api-rt1y.onrender.com',
+    baseUrl: 'http://localhost:3001',
+    // baseUrl: 'https://lms-api-rt1y.onrender.com',
 
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
@@ -14,18 +14,19 @@ const baseQuery = fetchBaseQuery({
         }
         return headers
     }
+    
 })
 
 const baseQueryWithReauth = async (args, api, extraOptions) => { 
     let result = await baseQuery(args, api, extraOptions);
-    
-    if (result?.error?.data?.statusCode === 403) {
-     
+    // console.log(result)
+
+    if (result?.error?.data?.statusCode === 401) {
+        console.log('sending refresh token')
         // send refresh token to get new access token 
         const refreshResult = await baseQuery('auth/refresh', api, extraOptions);  
-
-        if (refreshResult.data) {
-          
+        console.log(refreshResult)
+        if (refreshResult?.data) {
             const user = api.getState().auth.user;
             const accessToken = refreshResult.data.accessToken;
             // store the new token 
@@ -34,11 +35,15 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
             result = await baseQuery(args, api, extraOptions)
             console.log(result)
         } else {
-            
-            api.dispatch(logout())
+            if(refreshResult?.error?.data?.statusCode === 401) {
+            refreshResult.error.message = "token expired"
+            console.log(refreshResult.error.message)
+        }
+        // api.dispatch(logout())
+        return refreshResult;
         }
     }
-
+    // console.log(result)
     return result;
 }
 

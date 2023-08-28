@@ -50,7 +50,7 @@ const CourseDetail = () => {
     _id: courseId,
   } = courseData;
 
-  const lessonData = courseData.lessons[userCourseData.currentLessons];
+  const lessonData = courseData?.lessons[userCourseData?.currentLessons || 0];
   
   const { resource, videoId, _id: lessonId } = lessonData;  
 

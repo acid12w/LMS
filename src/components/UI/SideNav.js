@@ -6,10 +6,15 @@ import { UilUserSquare } from "@iconscout/react-unicons";
 import { BiSun } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 
+import useAuth  from "../../hooks/useAuth";
+
 const activeNavStyle =
   "p-4 flex mx-4 my-2 rounded-md cursor-pointer  hover:text-white hover:bg-green-500 ";
 
 export const SideNav = () => {
+
+  const { isInstructor } = useAuth();
+
   return (
     <nav className="w-75 h-full w-full fixed ">
       <ul className="mt-10 flex flex-col justify-center ">
@@ -25,7 +30,7 @@ export const SideNav = () => {
           </NavLink>
         </li>
         <li className=" ">
-          <NavLink
+          { isInstructor && <NavLink
             to="/new-course"
             className={(navData) =>
               navData.isActive
@@ -35,10 +40,10 @@ export const SideNav = () => {
           >
             <UilCreateDashboard className="mr-2 text-2xl" />{" "}
             <span className="">Create course</span>
-          </NavLink>
+          </NavLink>}
         </li>
         <li>
-          <NavLink to="/my-course" 
+          {isInstructor && <NavLink to="/my-course" 
           className={(navData) =>
             navData.isActive
               ? `${activeNavStyle} ${"text-white bg-green-500 "}`
@@ -46,7 +51,7 @@ export const SideNav = () => {
           }>
             <BiLogOut className="mr-2 text-2xl " />{" "}
             <span className="">Manage courses</span>
-          </NavLink>
+          </NavLink>}
         </li>
       </ul>
     </nav>

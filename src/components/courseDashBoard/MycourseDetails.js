@@ -16,7 +16,7 @@ export const MyCousreDetails = ({ myCourses }) => {
     <div className="h-full p-8">
       <CousreFrom myCourses={myCourses} isPublished={currentCourse.isPublished}/>
       <LessonForm courseId={courseId} />
-      <PublishedFrom updateCourse ={updateCourse} isPublished={currentCourse.isPublished} lessons={currentCourse.lessons}/>
+      <PublishedFrom updateCourse ={updateCourse} courseId={courseId} isPublished={currentCourse.isPublished} lessons={currentCourse.lessons}/>
     </div>
   );
 };
