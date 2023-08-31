@@ -20,6 +20,7 @@ const CardItem = ({
   rating,
   lessons,
   courseId,
+  subject
 }) => {  
 
   const [addUserCourse] = useAddUserCourseMutation();
@@ -43,6 +44,8 @@ const CardItem = ({
   const bgClass = imageFull ? `${thumbNail}` : "";
 
   const textWhite = imageFull ? "text-white" : "";
+
+  const bgColor = imageFull ? "" : "bg-gray-100";
 
   let str = courseName;
   const newCourseName = str.split(" ").join("-");
@@ -82,7 +85,6 @@ const CardItem = ({
         }}
       >
         <div className="absolute opacity-60 top-0  right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-900"></div>
-
         <div
           onClick={() => {
             navTo();
@@ -97,15 +99,16 @@ const CardItem = ({
             />
           )}
         </div>
-        <div className={cardInfoClass}>
+        <div className={cardInfoClass}> 
+            <h3 className={`p-2 mr-20 ${bgColor} text-xs text-emerald-400 rounded`}>
+              {subject}
+            </h3>
           <div
             onClick={() => {
               navTo();
             }}
           >
-            <h3
-              className={`${textWhite} text-base font-semibold cursor-pointer`}
-            >
+            <h3 className={`${textWhite} text-sm font-semibold cursor-pointer`}>
               {courseName}
             </h3>
           </div>

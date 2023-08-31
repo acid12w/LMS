@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { setCredentials, logout } from '../store/Auth-slice';
+import { setCredentials} from '../store/Auth-slice';
 
 
 const baseQuery = fetchBaseQuery({
-    // baseUrl: 'http://localhost:3001',
-    baseUrl: 'https://lms-api-rt1y.onrender.com',
+    baseUrl: 'http://localhost:3001',
+    // baseUrl: 'https://lms-api-rt1y.onrender.com',
 
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {

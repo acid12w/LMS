@@ -11,8 +11,6 @@ const PersistLogin = () => {
     const [persist] = usePersist()
     const token = useSelector((state) => state.auth.user);
     const [trueSuccess, setTrueSuccess] = useState(false);
-    const effectRan = useRef(false)
-
 
     const [getReauth, {
         isUninitialized,

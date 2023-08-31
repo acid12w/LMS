@@ -51,9 +51,9 @@ const LoginPage = () => {
     try {
       if (isLogin) {
         const userData = await login({username: email, password}).unwrap();
-        const { username : currentUsername, bio, userId, accessToken, userRole } = userData;
-        dispatch(setCredentials({ token : {accessToken }, user:{ email, currentUsername, bio, userId, userRole }}));
-        localStorage.setItem("persist", true);
+        const { accessToken } = userData;
+        dispatch(setCredentials({ token : {accessToken }}));
+        setPersist(prev => !prev)
         navigate("/home", { replace: true });
       } else {
         if (password !== password2) {
@@ -68,8 +68,8 @@ const LoginPage = () => {
         }
 
       const userData = await signup({username, email, password}).unwrap();
-      const { username : currentUsername, bio, userId, accessToken, userRole } = userData;
-      dispatch(setCredentials({ token : {accessToken }, user:{ email, currentUsername, bio, userId, userRole }}));
+      const { accessToken } = userData;
+      dispatch(setCredentials({ token : {accessToken }}));
       navigate("/", { replace: true });
       }
     }catch(err){
