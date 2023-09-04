@@ -79,7 +79,7 @@ return(
         <div>
             <div className="mb-8 flex flex-col justify-center items-center"> 
             <div className="h-16 w-16 bg-center bg-red-400 rounded-full mr-4 p-4">
-                <h1 className="text-white text-base font-bold text-center ">
+                <h1 className="text-white text-base font-bold text-center leading-8">
                 {`${userProfile.currentUsername[0].toUpperCase()}  ${userProfile.currentUsername[1].toUpperCase()}`}
                 </h1>
             </div>
