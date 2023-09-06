@@ -19,13 +19,13 @@ export const Signup = (props) => {
       )}
 
       <input
-        type="email"
-        id="email"
+        type="userEmail"
+        id="userEmail"
         required
         // value={}
         // onBlur={}
         onChange={handleData}
-        placeholder="email"
+        placeholder="userEmail"
         className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-1 focus:text-black focus:invalid: bg-blue-100"
       />
       <input

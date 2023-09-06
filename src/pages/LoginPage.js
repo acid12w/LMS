@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import useAuth from "../hooks/useAuth";
-import { useSearchParams, useNavigate, Link } from "react-router-dom";
+import { useSearchParams, useNavigate} from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import {Signup} from '../components/Auth/Signup'
@@ -37,7 +37,7 @@ const LoginPage = () => {
 
   const [formState, setFormState] = useState({
     username: "",
-    email: "",
+    userEmail: "",
     password: "",
     password2: "",
   });
@@ -46,15 +46,17 @@ const LoginPage = () => {
     setFormState({ ...formState, [e.target.id]: e.target.value });
   };
 
-  const { username, email, password, password2 } = formState;
+  const { username, userEmail, password, password2 } = formState;
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      if (isLogin) {
-        const userData = await login({username: email, password}).unwrap();
-        const { accessToken } = userData;
-        dispatch(setCredentials({ token : {accessToken }}));
+      if (isLogin) { 
+        
+        const userData = await login({username: userEmail, password}).unwrap();
+       console.log(userData)
+        const { accessToken, bio, username, email, myCourses, userId } = userData;
+        dispatch(setCredentials({ token : {accessToken: accessToken }, user:{ email: email, currentUsername: username, bio: bio, userId: userId, myCourses: myCourses }}))
         setPersist(prev => !prev)
         navigate("/home", { replace: true });
       } else {
@@ -68,11 +70,11 @@ const LoginPage = () => {
           );
           return;
         }
-
-      const userData = await signup({username, email, password}).unwrap();
-      const { accessToken } = userData;
-      dispatch(setCredentials({ token : {accessToken }}));
-      navigate("/", { replace: true });
+        console.log(userEmail)
+      const userData = await signup({username, email: userEmail, password}).unwrap();  
+      const { accessToken, bio, username, email, myCourses, userId } = userData;
+      dispatch(setCredentials({ token : {accessToken }, user : { bio, currentUsername: username, email, myCourses, userId}}));
+      navigate("/home", { replace: true });
       }
     }catch(err){
       console.error(err);

@@ -9,6 +9,7 @@ import classes from "./CardItem.module.css";
 // import { Favorite } from "../UI/Favorite";
 
 import { useGetMycourseQuery, useAddUserCourseMutation } from "../../store/userApiSlice";
+import  useAuth  from '../../hooks/useAuth';
 
 
 const CardItem = ({
@@ -24,12 +25,11 @@ const CardItem = ({
 }) => {  
 
   const [addUserCourse] = useAddUserCourseMutation();
+  const { isStudent } = useAuth();
   
   const navigate = useNavigate();
   
   const user = useSelector((state) => state?.auth?.user);
-
-  const isLoggedin = user?.currentUsername ? true : false;
 
   const {data: userCourses} = useGetMycourseQuery(user?.userId);
 
@@ -56,16 +56,16 @@ const CardItem = ({
     currentLessons : 0,
     completedLessons: 0,
     courseName,
-    courseId
+    courseId 
   };
 
   const addStatredCourse = async () => {
-    if (!isLoggedin) return;
+    if (!isStudent) return;
     addUserCourse({currentUsername: user.currentUsername, course: courseSliceObj})
   };
 
   const navTo = () => {
-    let navUrl = isLoggedin
+    let navUrl = isStudent
       ? `/${newCourseName}/${courseId}/${currentLessons}/overview` 
       : `/course-overview/${courseId}`;
     navigate(navUrl, {
@@ -84,7 +84,7 @@ const CardItem = ({
           backgroundImage: `url(${bgClass})`,
         }}
       >
-        <div className="absolute opacity-60 top-0  right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-900"></div>
+        <div className="absolute opacity-60 top-0 right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-900"></div>
         <div
           onClick={() => {
             navTo();

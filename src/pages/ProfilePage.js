@@ -21,6 +21,8 @@ const bioInput = useRef();
 
 const userProfile = useSelector((state) => state.auth.user); 
 
+console.log(userProfile)
+
 const handleEdit = () => {
     setToggleEdit(!toggleEdit);
 }
