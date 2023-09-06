@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import useAuth from "../hooks/useAuth";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import {Signup} from '../components/Auth/Signup'
@@ -26,6 +26,8 @@ const LoginPage = () => {
       replace: true,
     });
   };
+
+  const linkContent = isLogin? <p>Not registered ? <span className="text-emerald-500 cursor-pointer">signup</span></p>: <p>I already have an account <span className="text-emerald-500 cursor-pointer">login</span></p>;
 
   
 
@@ -94,6 +96,7 @@ const LoginPage = () => {
           message={alert?.message}
         /> */}
       </div>
+      {!isLogin || <h4 className="text-xs p-4 bg-gray-100 w-1/3">Use these credentials to log in as an instructor: johnDoe@test.com, password12</h4>}
       <div className="w-1/3 p-8 bg-white">
         <h2 className="mb-4 text-center">
           {isLogin ? "Login form" : "Signup form"}
@@ -107,15 +110,15 @@ const LoginPage = () => {
           >
             {isLogin ? "login" : "signup"}
           </button>
-          <button
-            className="ml-auto mr-auto mt-4 block mb-2"
+          <div
+            className="ml-auto mr-auto mt-4 block mb-2 text-center"
             type="button"
             onClick={() => {
               navTo();
             }}
           >
-            {isLogin ? "Not registered ? signup" : "I already have an account"}
-          </button>
+          {linkContent}
+          </div>
         </form>
       </div>
     </div>
