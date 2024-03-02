@@ -1,59 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useAddThumbNailMutation } from "../../store/uploadApiSlice";
 
 import { IoIosClose } from "react-icons/io";
 
-export const ImageUpload = ({setImageUrl }) => {
+import { MutatingDots } from 'react-loader-spinner';
+
+export const ImageUpload = ({text, subtext, setImageUrl, thumbNail }) => {
 
  
   const [addThumbNail, isLoading] = useAddThumbNailMutation();
   
   const [imageUpload, setImageUpload] = useState(null);
-  const [image, setImage] = useState(null);
-  const [isUploaded, setIsUploaded ] = useState(false);
+  const [image, setImage] = useState(thumbNail);
+  const imageTrue = thumbNail === undefined; 
+  const [isUploaded, setIsUploaded ] = useState(!imageTrue);
+
+  useEffect(() => {setImage(thumbNail)}, [thumbNail])
+
   
   const uploadFile =  async (e) => {
     e.preventDefault();
 
     try{
-       const formData = new FormData();
-    formData.append('file', imageUpload);
-    const url = await addThumbNail(formData).unwrap();
-    setImage(url?.data?.display_url)
-    setImageUrl(url?.data?.display_url)
-    setIsUploaded(true);
+        const formData = new FormData();
+        formData.append('file', imageUpload);
+        const url = await addThumbNail(formData).unwrap();
+        setImage(url?.data?.display_url)
+        setImageUrl(url?.data?.display_url)
+        setIsUploaded(true);
     }catch(error){
       console.error(error)
     }
-   
-    
   } 
   
+  const hideImage = () => {
+    setIsUploaded(false)
+  }
 
   return (
-    <form onSubmit={uploadFile} className=" flex justify-around items-center">
+    <form onSubmit={uploadFile}>
       {/* <label className="p-1">Course Name</label> */}
-      <div>
-        <h4>Course Thunbnail</h4>
+      <div className="mb-4">
+        <h4>{text}</h4>
         <h5 className="text-sm text-gray-500">
-          upload an eye catching thumbnail
+          {subtext}
         </h5>
       </div>
       {isLoading.isLoading && (
-          <p>...</p>
+          <MutatingDots
+          visible={true}
+          height="100"
+          width="100"
+          color="#4fa94d"
+          secondaryColor="#4fa94d"
+          radius="12.5"
+          ariaLabel="mutating-dots-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          />
       )}
+      {/* Course Thunbnail
+upload an eye catching thumbnail */}
+
 
       {isUploaded ? (
-        <div className=" w-96 h-96">
+        <div className=" w-96 h-72">
           <IoIosClose
-            className="text-gray-500 text-2xl absolute p-1 bg-gray-100"
-            // onClick={(e) => dellteFile(e)}
+            className="text-gray-500 text-2xl absolute p-1 bg-gray-100 fill-black cursor-pointer hover:bg-red-600 hover:fill-white"
+            onClick={hideImage}
           />
-          <img src={image} alt="thumbnail" className="w-full" />
+          <img src={image} key={image} alt="thumbnail" className="w-full" />
         </div>
       ) : (
-        <div className="p-6 flex flex-col items-center">
+        <div>
           <input
             required
             type="file"
@@ -70,7 +90,7 @@ export const ImageUpload = ({setImageUrl }) => {
           >
             Upload
           </button>
-          <h5 className="text-center">
+          <h5>
             <strong className="text-green-400"> Browse files to upload </strong>{" "}
             PNG, JPG, (max, 800x400px)
           </h5>

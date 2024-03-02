@@ -25,13 +25,13 @@ export const Pagination = ({ PerPagecourses, totalCourses, onPaginate }) => {
             <li
               className={
                 toggle === number
-                  ? "px-4 py-2  mr-1 bg-emerald-500 text-white rounded-md"
-                  : "px-4 py-2  mr-1 border-gray-200 bg-white border-2 rounded-md"
+                  ? "px-4 py-1  mr-1 bg-emerald-500 text-white rounded-md"
+                  : "px-4 py-1  mr-1 border-gray-200 bg-white border-2 rounded-md"
               }
               key={number}
               onClick={() => handleNav(number)}
             >
-              <a href="#!">{number}</a>
+              <a href="#!">{}</a>
             </li>
           );
         })}

@@ -21,9 +21,9 @@ const MyCoursePage = () => {
   return (
     <div className="flex">
         <div className="w-80 border-r-2 border-gray-100">
-          <SideNav />
+          <SideNav/>
         </div>
-        <div className="main p-8 bg-gray-50 h-full">
+        <div className="main bg-gray-50 h-full">
           <div>
             <MyCousre myCourses={data} />
           </div>

@@ -4,22 +4,27 @@ import { FaSignOutAlt } from "react-icons/fa";
 
 export const DropDown = ({ handleLogout, role }) => {
   return (
-    <div className="bg-gray-100 h-36 w-48 absolute z-10 top-16 right-12 cursor-pointer">
+    <div className="bg-white shadow p-2 rounded-md h-30 w-48 absolute z-10 top-16 right-12 cursor-pointer">
       <ul>
-        <li className="text-sm hover:bg-green-200 text-green-800 p-2 w-full">
-          <Link to="/profile">profile</Link>
-        </li>
-        {!role || <li className="text-sm hover:bg-green-200 text-green-800 p-2 w-full">
-          <Link to="/my-course">Dash board</Link>
-        </li>}
-        {/* <li className="text-sm border-t border-gray-200 hover:bg-green-200 text-green-800 p-2 w-full">
+          <li className="text-sm text-gray-500 p-2 w-full">
+            Adrian34
+          </li>
+        <Link to="/profile">
+          <li className="text-sm hover:bg-gray-100 rounded-md text-gray-500 p-2 w-full">
+            Profile
+          </li>
+        </Link>
+        {!role ||<Link to="/my-course"> <li className="rounded-md text-sm hover:bg-gray-100 text-gray-500 p-2 w-full">
+          Dash board
+        </li></Link>}
+        {/* <li className="text-sm border-t border-gray-200 hover:bg-green-200 text-green-500 p-2 w-full">
           <Link to="/new-course">create course</Link>
         </li>  */}
         <li
           onClick={handleLogout}
-          className="text-sm border-t border-gray-200 hover:bg-green-200 text-green-800 p-2 flex item-center"
+          className="rounded-md text-sm border-gray-200 hover:bg-gray-100 text-gray-500 p-2 flex items-center"
         >
-          <h4 className="mr-4">sign out</h4><FaSignOutAlt/>
+          <h4 className="mr-4">Sign out</h4><FaSignOutAlt/>
         </li>
       </ul>
     </div>

@@ -8,13 +8,13 @@ export const Signup = (props) => {
       {!props.isLogin && (
         <input
           type="text"
-          id="username"
+          id="usernameinput"
           required
           // value={}
           // onBlur={}
           onChange={handleData}
           placeholder="username"
-          className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-1 focus:text-black focus:invalid: bg-blue-100"
+          className="bg-gray-100 h-full w-full p-4 mb-8 border-gray-400 border-2"
         />
       )}
 
@@ -25,8 +25,8 @@ export const Signup = (props) => {
         // value={}
         // onBlur={}
         onChange={handleData}
-        placeholder="userEmail"
-        className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-1 focus:text-black focus:invalid: bg-blue-100"
+        placeholder="email"
+        className="bg-gray-100 h-14 w-full p-4 mb-8 border-gray-400 border-2 focus:border-green-400 "
       />
       <input
         type="text"
@@ -36,7 +36,7 @@ export const Signup = (props) => {
         // onBlur={}
         onChange={handleData}
         placeholder="password"
-        className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-1 focus:text-black focus:invalid: bg-blue-100"
+        className="bg-gray-100 h-14 w-full border-gray-400 border-2 p-4 mb-8 focus:border-green-600  "
       />
       {!props.isLogin && (
         <input
@@ -47,7 +47,7 @@ export const Signup = (props) => {
           // onBlur={}
           onChange={handleData}
           placeholder="confirm password"
-          className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-1 focus:text-black focus:invalid: bg-blue-100"
+          className="bg-gray-100 h-14 w-full border-gray-400 border-2 p-4 mb-8 focus:text-black "
         />
       )}
     </>

@@ -79,7 +79,7 @@ const CardItem = ({
     <>
       <div
       onClick={addStatredCourse}
-        className="w-72 bg-white flex flex-col justify-center rounded-xl relative overflow-hidden shadow-md bg-center bg-cover custom-h-84 cursor-pointer"
+        className="w-72 bg-white flex flex-col justify-center rounded-md relative overflow-hidden shadow-md bg-center bg-cover custom-h-84 cursor-pointer"
         style={{
           backgroundImage: `url(${bgClass})`,
         }}
@@ -100,7 +100,7 @@ const CardItem = ({
           )}
         </div>
         <div className={cardInfoClass}> 
-            <h3 className={`p-2 mr-20 ${bgColor} text-xs text-emerald-400 rounded`}>
+            <h3 className={`p-2 mr-20 ${bgColor} text-xs text-green-600 rounded`}>
               {subject}
             </h3>
           <div

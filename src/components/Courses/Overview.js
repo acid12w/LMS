@@ -16,9 +16,13 @@ export const Overview = ({
 
   }
   
-  const {bio, username, profileUrl} = data;
+  
 
-  const img = profileUrl || profile; 
+  const {bio, username, profileImage} = data;
+
+  const img = profileImage || profile; 
+  
+  const overviewPara = parse(bio.substring(0, 200)) + '...';
 
   return (
     <div className="flex">
@@ -33,8 +37,8 @@ export const Overview = ({
         ></div>
         <h3 className="pb-1 font-bold">{username}</h3>
         <h4 className="pb-2">Lecturer</h4>
-        <div className="text-center">
-          {parse(bio.substring(0, 200))}
+        <div className="text-left">
+          {overviewPara}
         </div>
       </div>
     </div>

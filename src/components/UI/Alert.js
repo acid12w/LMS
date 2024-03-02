@@ -17,20 +17,23 @@ const Alert = (props) => {
   }, [dispatch, showAlert]);
 
   let alertClass;
+  let message
 
   if (props.status === "error") {
-    alertClass = "bg-red-300 text-red-600";
+    alertClass = "bg-red-200 text-red-600";
+    message = props.message.message
   }
 
   if (props.status === "success") {
-    alertClass = "bg-green-400 text-green-600";
+    alertClass = "bg-green-200 text-green-600";
+    message = props.message
   }
 
   return (
-    <section className=" text-center font-semibold w-8/12 fixed left-80 z-10">
+    <section className="flex justify-center z-10">
       {showAlert && (
         <div
-          className={`flex items-center justify-center p-4 ${
+          className={`flex fixed rounded-md m-auto items-center w-auto rounded-md p-4 text-left font-semibold ${
             props.status === "pending"
               ? "bg-blue-300 text-blue-600"
               : alertClass
@@ -38,7 +41,7 @@ const Alert = (props) => {
         >
           <BsFillCheckCircleFill className="mr-2 text-xl" />
           <h4 className="mr-2">{props.title}</h4>
-          <p>{props.message}</p>
+          <p>{message}</p>
         </div>
       )}
     </section>

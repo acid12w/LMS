@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Navigate, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import "./App.css";
@@ -58,7 +58,7 @@ function App() {
                 />
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
-              <Route element={<RequireAuth allowedRole={["Instructor"]}/>}>
+              <Route element={<RequireAuth allowedRole={["instructor"]}/>}>
                 <Route path="/new-course" element={<NewCourse />} />
                 <Route path="/my-course/*" element={<MyCoursePage />} />
               </Route>

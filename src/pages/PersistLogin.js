@@ -4,6 +4,7 @@ import { Outlet, Link } from "react-router-dom";
 import usePersist from "../hooks/usePersist";
 import { useGetReauthMutation} from "../store/authApiSlice";
 
+import { MutatingDots } from 'react-loader-spinner';
 
 
 const PersistLogin = () => {
@@ -45,7 +46,17 @@ const PersistLogin = () => {
         content = <Outlet />
     } else if (isLoading) { //persist: yes, token: no
         console.log('loading')
-        content = <p>...loading</p>
+        content =  <MutatingDots
+                    visible={true}
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    secondaryColor="#4fa94d"
+                    radius="12.5"
+                    ariaLabel="mutating-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    />
     } else if (isError) { //persist: yes, token: no
         console.log('error')
         content = (

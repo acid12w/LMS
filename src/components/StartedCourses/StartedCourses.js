@@ -28,7 +28,7 @@ const {data: startedCoursesData} = useGetMycourseQuery(userId);
   return (
     <>
       {startedCoursesData.length > 0 ? (
-        <div className=" py-8 mx-72">
+        <div className=" py-8 px-52">
           <h4 className="text-green-600 font-semibold ">Started Courses</h4> 
           <h2 className="font-bold text-gray-900 text-3xl">
             Continue learning

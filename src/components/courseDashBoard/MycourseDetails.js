@@ -13,7 +13,7 @@ export const MyCousreDetails = ({ myCourses }) => {
   const currentCourse = myCourses?.find((course) => course._id === courseId);
 
   return (
-    <div className="h-full p-8">
+    <div className="h-full">
       <CousreFrom myCourses={myCourses} isPublished={currentCourse.isPublished}/>
       <LessonForm courseId={courseId} />
       <PublishedFrom updateCourse ={updateCourse} courseId={courseId} isPublished={currentCourse.isPublished} lessons={currentCourse.lessons}/>

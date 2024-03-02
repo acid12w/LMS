@@ -11,10 +11,13 @@ export const AuthSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      console.log(action.payload)
       const {user, token } = action.payload;
       state.token = token.accessToken;  
       state.user = user;
+    },
+
+    setUpdateProfileImage: (state, action) => {
+      state.user.profileImage = action.payload
     },
 
     setCourses: (state, action) => {
@@ -29,7 +32,7 @@ export const AuthSlice = createSlice({
   },
 });
 
-export const {setCredentials,setCourses,logout} = AuthSlice.actions;
+export const {setCredentials,setUpdateProfileImage,setCourses,logout} = AuthSlice.actions;
 
 export default AuthSlice;
 

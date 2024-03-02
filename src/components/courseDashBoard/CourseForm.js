@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom"; 
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 
 import { useUpdateCourseMutation } from "../../store/courseApiSlice";
+import { ImageUpload } from "../UI/imageUpload";
+// import useInput from "../../hooks/use-input";
 
 const parse = require("html-react-parser");
 
@@ -13,19 +15,13 @@ export const CousreFrom = ({ myCourses }) => {
 const dispatch = useDispatch();
 const params = useParams();
 
-
 const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
 
   const courseId = params.id;
 
   const currentCourse = myCourses?.find((course) => course._id === courseId);
   const [isChecked, setIsChecked] = useState(currentCourse.imageFull);
-  const [toggleEdit, setToggleEdit] = useState(false);
-
-  useEffect(() => {
-    setIsChecked(currentCourse.imageFull)
-    return () => {};
-  }, [currentCourse.imageFull])
+  const [image, setImage] = useState();
 
   const courseNameInput = useRef();
   const overviewInput = useRef();
@@ -35,7 +31,6 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
   const changeHandler = (e) => {
     setIsChecked(!isChecked)
   }
-
 
   const handleSubmitCourse = async (e) => {
     e.preventDefault()
@@ -49,7 +44,7 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
           uiActions.showAlert({
               status: "pending",
               title: "Sending!",
-              message: "Lesson is beeing added",
+              message: "Course is beeing added",
           })
       );
     }
@@ -57,9 +52,8 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
     try{
         const data = {};
 
-        
-
         if(courseNameInput.current.value.trim() !== '') data.courseName = courseNameInput.current.value;
+        if(image != null) data.thumbNail = image;
         if(overviewInput.current.value.trim() !== '') data.overview = overviewInput.current.value;
         if(subjectInput.current.value.trim() !== '') data.subject = subjectInput.current.value;
         if(difficultyInput.current.value !== currentCourse.difficulty && difficultyInput.current.value.trim() !== '') data.difficulty = difficultyInput.current.value;
@@ -73,7 +67,7 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
           uiActions.showAlert({
             status: "success",
             title: "Success!",
-            message: "Course has been created",
+            message: "Course has been successfully updated",
           })
       );
     }catch(err){
@@ -85,87 +79,81 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
         })
     );
     }
-    
-    courseNameInput.current.value = '';
-    overviewInput.current.value = '';
-    subjectInput.current.value = '';
-    difficultyInput.current.value = '';
-
   } 
 
   return (
+  <>
+
+      <ImageUpload setImageUrl={setImage} thumbNail={currentCourse.thumbNail}/>
     
-      <form onSubmit={handleSubmitCourse} className=" mb-8 ml-1/3">
-        <div className="w-2/3 block m-auto">
-          {toggleEdit ?
-                <label className="text-sm mr-4 h-12 mt-2">
-                Course name
-                <input
-                type="text"
-                id="firstName"
-                ref={courseNameInput}
-                placeholder={currentCourse.courseName}
-                className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-1 mt-2"
-                />
-                </label> : <div className="mb-6 "><h2 className="text-center mb-4">{currentCourse.courseName}</h2></div>}
-          
-          <div className="w-96 block m-auto mb-2">
-            <img
-              className="h-full w-full "
-              src={currentCourse.thumbNail}
-              alt="thumb nail"
+        <form onSubmit={handleSubmitCourse} className=" mb-8 ml-1/3 w-2/3 ">
+        
+          <label className="text-sm mr-4 h-12 mt-2">
+            Course name
+            <input
+            type="text"
+            id="firstName"
+            ref={courseNameInput}
+            key={currentCourse.courseName}
+            defaultValue={currentCourse.courseName}
+            className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 mb-1 mt-2"
             />
-          </div>
-          {toggleEdit ?
-                <label className="text-sm mr-4 h-12 mt-2">
-                Subject
-                <input
-                type="text"
-                id="firstName"
-                ref={subjectInput}
-                placeholder={currentCourse.subject}
-                className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-1 mt-2"
-                />
-                </label> : <div className="mb-6 "><h3 className="mb-2">subject: {currentCourse.subject}</h3></div>}
+          </label>
     
-          {toggleEdit ?
-                <label className="text-sm mr-4 h-12 mt-2">
-                Overview
-                <textarea
-                type="text"
-                id="firstName"
-                ref={overviewInput}
-                placeholder='add course overview here'
-                className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-1 mt-2" 
-                />
-                </label> : <div className="mb-6 ">{parse(currentCourse.overview)}</div>}
-          
-          {toggleEdit ?
-            <label className="text-sm mr-4 h-12 my-2">
-                  Difficulty:
-                <select
-                  ref={difficultyInput}
-                  name="difficulty"
-                  id="difficulty"
-                >
-                <option value="beginner" >Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
+          <label className="text-sm mr-4 h-12 mt-2">
+            Subject
+            <input
+            type="text"
+            id="firstName"
+            ref={subjectInput}
+            key={currentCourse.courseName}
+            defaultValue={currentCourse.subject}
+            className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 mb-1 mt-2"
+            />
+          </label> 
+
+          <label className="text-sm mr-4 h-12 mb-10"> 
+              Difficulty
+              <select
+              // onChange={difficultyChangeHandler}
+              name="difficulty"
+              id="difficulty"
+              ref={difficultyInput}
+              key={currentCourse.difficulty}
+              defaultValue={currentCourse.difficulty}
+              className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 focus:text-black"
+              >
+              <option value="beginner" >Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
               </select>
-            </label> : <div className="mb-6 "><h3 className="mb-2">difficulty: {currentCourse.difficulty}</h3></div>}
-            <div className="flex mt-4">
-                <h3 className="mr-2">Background image full</h3>
-                <input type="checkbox" checked={isChecked} id="imageFull" onChange={changeHandler}/> 
-            </div> 
-                <div className="flex">
-                  <button onClick={() => setToggleEdit(!toggleEdit)} className="bg-black px-8 py-2 text-white mt-4 block mr-4" type="button">
-                      Edit
-                  </button>
-                  {toggleEdit ? <button  className="bg-black px-8 py-2 text-white  mt-4 block" type="submit">
-                      Save
-                  </button> : ''}
-              </div>
-          </div>
-      </form>
+            </label>
+
+          <label className="text-sm mr-4 h-12 mt-2">
+            Overview
+            <textarea
+            type="text"
+            id="firstName"
+            ref={overviewInput}
+            key={currentCourse.overview}
+            defaultValue={currentCourse.overview}
+            className="bg-gray-100 text-gray-500 h-36 w-full border-none outline-none p-4 mb-1 mt-2" 
+            />
+          </label> 
+
+          <label>
+            Background image full
+            <input 
+            className="ml-1" 
+            type="checkbox" 
+            checked={isChecked} 
+            id="imageFull" 
+            onChange={changeHandler}/> 
+          </label>   
+
+          <button  className="bg-black px-8 py-2 text-white cursor-pointer mt-4 block" type="submit">Save</button> 
+            
+        </form>
+        </>
   );
 };

@@ -108,7 +108,7 @@ return (
             {data?.map((lesson, index) => {
                 return (
                 <div
-                    className="w-2/3 block m-auto p-4 bg-gray-100 mb-4 relative"
+                    className="w-2/3 block p-4 bg-gray-100 mb-4 relative"
                     key={index}
                 >
                     <div className="flex">
@@ -133,7 +133,8 @@ return (
             })}
         </div>
         
-        <form onSubmit={handleSubmit} className="w-2/3 block m-auto">
+        <form onSubmit={handleSubmit} className="w-2/3 ">
+            <label>
             <input
                 type="text"
                 id="title"
@@ -141,8 +142,10 @@ return (
                 value={lesson.title}
                 onChange={handleLessons}
                 placeholder="Lesson title"
-                className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-4 focus:text-black focus:invalid: bg-blue-100"
+                className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-4 focus:text-black"
             />
+            </label>
+            <label>
             <input
                 type="text"
                 id="videoId"
@@ -150,8 +153,10 @@ return (
                 value={lesson.videoId}
                 onChange={handleLessons}
                 placeholder="video"
-                className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-4 focus:text-black focus:invalid: bg-blue-100"
+                className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-4 focus:text-black"
             />
+            </label>
+            <label>
             <textarea
                 type="text"
                 id="resource"
@@ -159,9 +164,9 @@ return (
                 value={lesson.resource}
                 onChange={handleLessons}
                 placeholder="resource"
-                className="bg-gray-100 h-full w-full border-none outline-none p-4 focus:text-black focus:invalid: bg-blue-100"
+                className="bg-gray-100 h-full w-full border-none outline-none p-4 focus:text-black" 
             />
-
+            </label>
             <button
                 type="submit"
                 className="bg-black px-8 py-2 text-white  mt-4 block"

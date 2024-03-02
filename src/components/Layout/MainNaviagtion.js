@@ -3,12 +3,14 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import { FiSearch } from "react-icons/fi";
 import { RiNotification2Line } from "react-icons/ri";
+import { RiNotification4Fill } from "react-icons/ri";
 import { useSignoutMutation } from "../../store/authApiSlice";
 
 import avatar from "../../assets/avatar.png";
 import { DropDown } from "../UI/dropDown";
 import usePersist from "../../hooks/usePersist";
 import useAuth from '../../hooks/useAuth';
+import { useSelector } from "react-redux";
 
 export const MainNaviagtion = () => {
   
@@ -16,12 +18,18 @@ export const MainNaviagtion = () => {
     isSuccess,
   }] = useSignoutMutation();
 
+  const user = useSelector(state => state?.auth?.user);
+
+  
+
   const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState();
   const [persist, setPersist] = usePersist();
 
   const {isInstructor, isStudent} = useAuth();
+  const isAuth = isInstructor || isStudent;
+
  
   useEffect(() => {
     if (isSuccess) navigate('/')
@@ -34,8 +42,8 @@ export const MainNaviagtion = () => {
     }catch(error){
       console.error(error);
     }
-  };
-
+  }; 
+  
   const submitForm = (e) => {
     e.preventDefault();
     navigate({
@@ -44,29 +52,30 @@ export const MainNaviagtion = () => {
     });
   };
 
+
   let bgStyle = {
-    backgroundImage: `url(${avatar})`,
+    backgroundImage: `url(${user?.profileImage || avatar})`,
   };
 
   return (
-    <nav className="flex items-center justify-between px-8 py-2 bg-custom">
-      <h3 className="font-bold p-4 text-green-400">
+    <nav className="flex items-center justify-between px-8 py-2 bg-white drop-shadow-sm">
+      <h3 className="font-bold p-4 text-green-600">
         <Link to="/">G-LMS</Link>
       </h3>
-      <div className="flex items-center justify-center">
-        <FiSearch className="text-white text-lg" />
+      <div className="flex items-center justify-center p-2 bg-gray-100 rounded">
+        <FiSearch className="text-gray-400 text-lg mr-1 ml-1" />
         <form onSubmit={submitForm}>
           <input
             type="search"
             placeholder="Search..."
             onChange={(e) => setSearchValue(e.target.value)}
-            className="p-3 border-none outline-none bg-custom text-white"
+            className="p-1 border-none outline-none bg-gray-100 bg-text-400"
           />
         </form>
       </div>
       <ul className="flex items-center">
-      {isStudent && (
-        <li className="mr-1 p-4 text-white hover:text-emerald-400">
+      {isAuth && (
+        <li className="mr-1 p-4 text-gray-600 hover:text-green-600">
           <NavLink to="/home" className="font-bold">
             Home
           </NavLink>
@@ -79,21 +88,21 @@ export const MainNaviagtion = () => {
             {toggleMenu && <Favorites />}
           </li>
         )}  */}
-        {isStudent && (
-          <li className="mr-3 p-4 text-gray-600 hover:text-emerald-600">
-            <NavLink to="#" className="text-white text-xl">
-              <RiNotification2Line />
+        {isAuth && (
+          <li className="mr-3 p-4 bg-gray-100 rounded-full">
+            <NavLink to="#" className="text-gray-600 hover:text-green-600 text-xl">
+            <RiNotification4Fill />
             </NavLink>
           </li>
         )}
-        { isStudent || (
-          <li className="mr-1 p-4 text-white hover:text-emerald-400">
+        { isAuth || (
+          <li className="mr-1 p-4 text-gray-600 hover:text-green-600">
             <NavLink to="user/?query=login" className="font-bold">
               Login
             </NavLink>
           </li>
         )}
-         {isStudent && (
+         {isAuth && (
           <li
             className="mr-4 "
             onClick={() => {

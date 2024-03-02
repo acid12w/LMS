@@ -7,22 +7,32 @@ import { BiSun } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 
 import useAuth  from "../../hooks/useAuth";
+import { useGetCourseByInstructorQuery } from "../../store/courseApiSlice";
+import { useSelector } from "react-redux";
 
 const activeNavStyle =
-  "p-4 flex mx-4 my-2 rounded-md cursor-pointer  hover:text-white hover:bg-green-500 ";
+  "p-4 flex mx-4  cursor-pointer  hover:bg-gray-100 ";
 
 export const SideNav = () => {
 
   const { isInstructor } = useAuth();
+ 
+
+  const userId = useSelector((state) => state.auth.user.userId);
+  const {data} = useGetCourseByInstructorQuery(userId); 
+
+  if(!data) {
+    return <div>...</div>
+  }
 
   return (
-    <nav className="w-75 h-full w-full fixed ">
+    <nav className="w-75 h-full w-full">
       <ul className="mt-10 flex flex-col justify-center ">
         <li>
           <NavLink to="/profile" 
           className={(navData) =>
               navData.isActive
-                ? `${activeNavStyle} ${"text-white bg-green-500 "}`
+                ? `${activeNavStyle} ${" bg-gray-100 "}`
                 : `${activeNavStyle} ${"text-gray-700"}`
             }>
             <UilUserSquare className="mr-2 text-2xl" />{" "}
@@ -34,7 +44,7 @@ export const SideNav = () => {
             to="/new-course"
             className={(navData) =>
               navData.isActive
-                ? `${activeNavStyle} ${"text-white bg-green-500 "}`
+                ? `${activeNavStyle} ${" bg-gray-100 "}`
                 : `${activeNavStyle} ${"text-gray-700"}`
             }
           >
@@ -43,13 +53,15 @@ export const SideNav = () => {
           </NavLink>}
         </li>
         <li>
-          {isInstructor && <NavLink to="/my-course" 
+          {isInstructor && <NavLink to={`/my-course`}
           className={(navData) =>
+
             navData.isActive
-              ? `${activeNavStyle} ${"text-white bg-green-500 "}`
+              ? `${activeNavStyle} ${"bg-gray-100 "}`
               : `${activeNavStyle} ${"text-gray-700"}`
+              
           }>
-            <BiLogOut className="mr-2 text-2xl " />{" "}
+            <BiLogOut className="mr-2 text-2xl" />{" "}
             <span className="">Manage courses</span>
           </NavLink>}
         </li>

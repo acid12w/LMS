@@ -42,7 +42,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    dispatch(setCredentials({ token : {accessToken: data.accessToken }, user:{ email: "johnDoe_3@test.com", currentUsername: data.username, bio: data.bio, userId: data.userId, myCourses: data.myCourses, userRole: data.userRole  }}))
+                    dispatch(setCredentials({ token : {accessToken: data.accessToken }, user:{ email: data.email, currentUsername: data.username, bio: data.bio, userId: data.userId, myCourses: data.myCourses, userRole: data.userRole, profileImage: data.profileImage }}))
                 } catch (err) {
                     console.log(err)
                 }
@@ -55,10 +55,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
             query: (id) => `/userCourses/${id}`
         }),
         updateUserProfile: builder.mutation({
-            query: (data, currentUsername) => ({
-                url: `/auth/edit/${currentUsername}`,
+            query: (data) => ({ 
+                url: `/auth/edit/${data.email}`,
                 method: 'PATCH',
-                body: data
+                body: {...data.payload},  
             }),
             invalidatesTags: ['User']
         }),

@@ -10,9 +10,7 @@ const useAuth = () => {
         const decoded = jwtDecode(token);
         const {roles} = decoded;
 
-        console.log(decoded)
-
-        isInstructor = roles.includes('Instructor');
+        isInstructor = roles.includes('instructor');
         isStudent = roles.includes('student');
 
         return {roles, isInstructor, isStudent}

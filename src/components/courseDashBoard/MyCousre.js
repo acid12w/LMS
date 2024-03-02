@@ -1,30 +1,22 @@
+import { useState } from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import { MyCousreDetails } from "./MycourseDetails";
-
-import { RiEditBoxLine } from "react-icons/ri";
-import { TiDocumentDelete } from "react-icons/ti";
-
-// import { Roller } from "react-awesome-spinners";
-
-
-import { FiEye } from "react-icons/fi";
-
 
 export const MyCousre = ({ myCourses }) => {
   const navigate = useNavigate();
 
   const navTo = (id) => {
-    navigate(`/my-course/${id}`);
+    navigate(`/my-course/${id}`, {
+      replace: true,
+    });
   };
 
   if (myCourses.length <= 0) {
-
     return <div>No courses found...</div>;
-
   }
 
   return (
-    <div className="h-full p-8">
+    <div className="h-full p-10">
       <h2 className="text-center text-lg font-bold mb-4">My Courses</h2>
       <div className="flex justify-center mb-4">
         {myCourses.map((course, index) => {
@@ -44,17 +36,16 @@ export const MyCousre = ({ myCourses }) => {
                   }}
                   className="mr-2 flex items-center  mr-4 cursor-pointer hover:text-rose-500"
                 >
-                  <TiDocumentDelete /> <h4 className="ml-1 text-sm ">Delete</h4>
+                  {/* <TiDocumentDelete /> <h4 className="ml-1 text-sm ">Delete</h4> */}
                 </div>
-                <span className="mr-2 flex items-center cursor-pointer hover:text-rose-500">
+                {/* <span className="mr-2 flex items-center cursor-pointer hover:text-rose-500">
                   <FiEye /> <h4 className="ml-1 text-sm">Preview</h4>
-                </span>
+                </span> */}
               </div>
             </div>
           );
         })}
       </div>
-
       <Routes>
         <Route path=":id" element={<MyCousreDetails myCourses={myCourses} />} />
       </Routes>

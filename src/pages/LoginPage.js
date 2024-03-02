@@ -12,6 +12,8 @@ import { useSignupMutation } from "../store/authApiSlice";
 
 import usePersist from "../hooks/usePersist";
 
+import backgroundImage1 from '../assets/jodyhongfilms-sI1mbxJFFpU-unsplash.jpg'
+
 const LoginPage = () => {
 
   const [persist, setPersist] = usePersist();
@@ -27,7 +29,8 @@ const LoginPage = () => {
     });
   };
 
-  const linkContent = isLogin? <p>Not registered ? <span className="text-emerald-500 cursor-pointer">signup</span></p>: <p>I already have an account <span className="text-emerald-500 cursor-pointer">login</span></p>;
+  console.log(isLogin)
+  const linkContent = isLogin? <p>Not registered ? <span className="text-green-600 cursor-pointer">signup</span></p>: <p>I already have an account <span className="text-emerald-500 cursor-pointer">login</span></p>;
 
   
 
@@ -36,7 +39,7 @@ const LoginPage = () => {
   const [signup] = useSignupMutation();
 
   const [formState, setFormState] = useState({
-    username: "",
+    usernameinput: "",
     userEmail: "",
     password: "",
     password2: "",
@@ -46,17 +49,15 @@ const LoginPage = () => {
     setFormState({ ...formState, [e.target.id]: e.target.value });
   };
 
-  const { username, userEmail, password, password2 } = formState;
+  const { usernameinput, userEmail, password, password2 } = formState;
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
       if (isLogin) { 
-        
         const userData = await login({username: userEmail, password}).unwrap();
-       console.log(userData)
-        const { accessToken, bio, username, email, myCourses, userId } = userData;
-        dispatch(setCredentials({ token : {accessToken: accessToken }, user:{ email: email, currentUsername: username, bio: bio, userId: userId, myCourses: myCourses }}))
+        const { accessToken, bio, username, email, myCourses, userId, profileImage } = userData;
+        dispatch(setCredentials({ token : {accessToken: accessToken }, user:{ email: email, currentUsername: username, bio: bio, userId: userId, myCourses: myCourses, profileImage: profileImage }}))
         setPersist(prev => !prev)
         navigate("/home", { replace: true });
       } else {
@@ -70,11 +71,12 @@ const LoginPage = () => {
           );
           return;
         }
-        console.log(userEmail)
-      const userData = await signup({username, email: userEmail, password}).unwrap();  
-      const { accessToken, bio, username, email, myCourses, userId } = userData;
-      dispatch(setCredentials({ token : {accessToken }, user : { bio, currentUsername: username, email, myCourses, userId}}));
-      navigate("/home", { replace: true });
+        console.log('singup')
+      const userData = await signup({username:usernameinput, email: userEmail, password}).unwrap();  
+      const { accessToken, bio, username, email, myCourses, userId, profileImage} = userData; 
+
+      dispatch(setCredentials({ token : {accessToken }, user : { bio, currentUsername: username, email, myCourses, userId, profileImage}}));
+      navigate("/profile", { replace: true });
       }
     }catch(err){
       console.error(err);
@@ -82,7 +84,7 @@ const LoginPage = () => {
             uiActions.showAlert({
               status: "error",
               title: "Error!",
-              message: err.data.message,
+              message: err.data,
             })
         );
     }
@@ -90,38 +92,38 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center bg-green-300 ">
-      <div className="w-1/3 ">
-        {/* <Alert
-          status={alert?.status}
-          title={alert?.title}
-          message={alert?.message}
-        /> */}
-      </div>
-      {!isLogin || <h4 className="text-xs p-4 bg-gray-100 w-1/3">Use these credentials to log in as an instructor: johnDoe@test.com, password12</h4>}
-      <div className="w-1/3 p-8 bg-white">
-        <h2 className="mb-4 text-center">
-          {isLogin ? "Login form" : "Signup form"}
-        </h2>
-        <form onSubmit={onSubmitHandler}>
-          <Signup onHandleData={handleData} isLogin={isLogin} />
-          {/* <Login onHandleData={handleData} /> */}
-          <button
-            type="submit"
-            className="bg-black px-8 py-2 text-white ml-auto mr-auto mt-4 block"
-          >
-            {isLogin ? "login" : "signup"}
-          </button>
-          <div
-            className="ml-auto mr-auto mt-4 block mb-2 text-center"
-            type="button"
-            onClick={() => {
-              navTo();
-            }}
-          >
-          {linkContent}
-          </div>
-        </form>
+   <div className="flex">
+        
+        <div className="w-1/2 h-full p-44 flex flex-col justify-center">
+          {/* {!isLogin || <h4 className="text-xs p-4 bg-gray-100">Use these credentials to log in as an instructor: johnDoe@test.com, password12</h4>} */}
+          <h2 className="mb-4 text-center text-2xl">
+            {isLogin ? "Login" : "Signup"}
+          </h2>
+          <form onSubmit={onSubmitHandler}>
+            <Signup onHandleData={handleData} isLogin={isLogin} />
+            {/* <Login onHandleData={handleData} /> */}
+            <button
+              type="submit"
+              className="w-full bg-green-600 px-8 py-4 text-white hover:bg-green-700"
+            >
+              {isLogin ? "Login" : "Signup"}
+            </button>
+            <div
+              className="ml-auto mr-auto mt-4 block mb-2 text-center"
+              type="button"
+              onClick={() => {
+                navTo();
+              }}
+            >
+            {linkContent}
+            </div>
+          </form>
+        </div>
+
+        <div  style={{
+          backgroundImage: `url(${backgroundImage1})`,
+        }}
+        className="w-1/2 bg-center bg-cover bg-no-repeat m-8 rounded-lg">
       </div>
     </div>
   );
