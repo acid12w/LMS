@@ -11,6 +11,7 @@ export const MyCousreDetails = ({ myCourses }) => {
   const [updateCourse] = useUpdateCourseMutation();
   const courseId = params.id;
   const currentCourse = myCourses?.find((course) => course._id === courseId);
+  console.log(currentCourse)
 
   return (
     <div className="h-full">

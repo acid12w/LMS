@@ -9,7 +9,7 @@ export const SideBar = (props) => {
   const completedLessons = props?.userData?.completedLessons || 0;
   
   return ( 
-    <div className="bg-gray-100 border-l-2 border-gray-200 right-0 w-1/4 ">
+    <div className="border-gray-200 right-0 w-1/4">
       <div className="w-full h-full p-6 text-left ">
         <h2 className="text-2xl mb-3">Masterclass: Phonies</h2>
         <h4 className="text-base mb-2">{`${currentCourse}/${courseLength} courses Completed`}</h4>

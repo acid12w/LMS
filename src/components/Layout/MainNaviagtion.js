@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import { FiSearch } from "react-icons/fi";
-import { RiNotification2Line } from "react-icons/ri";
 import { RiNotification4Fill } from "react-icons/ri";
 import { useSignoutMutation } from "../../store/authApiSlice";
 
 import avatar from "../../assets/avatar.png";
 import { DropDown } from "../UI/dropDown";
+import { NotificationDropdown } from "../UI/NotificationDropdown"
 import usePersist from "../../hooks/usePersist";
 import useAuth from '../../hooks/useAuth';
 import { useSelector } from "react-redux";
@@ -23,6 +23,8 @@ export const MainNaviagtion = () => {
   
 
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [toggleNotification, setToggleNotification] = useState(false);
+
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState();
   const [persist, setPersist] = usePersist();
@@ -80,19 +82,13 @@ export const MainNaviagtion = () => {
             Home
           </NavLink>
         </li>)}
-        {/* {isLoggedin && (
-          <li className="mr-1 p-4 text-white text-xl hover:text-emerald-400 relative">
-            <NavLink to="/" className="font-bold">
-              <FiHeart />
-            </NavLink>
-            {toggleMenu && <Favorites />}
-          </li>
-        )}  */}
         {isAuth && (
-          <li className="mr-3 p-4 bg-gray-100 rounded-full">
-            <NavLink to="#" className="text-gray-600 hover:text-green-600 text-xl">
+          <li className="mr-3 p-4 bg-gray-100 rounded-full text-gray-600 hover:text-green-600 text-xl"
+          onClick={() => {
+            setToggleNotification(!toggleNotification);
+          }}>
             <RiNotification4Fill />
-            </NavLink>
+            {toggleNotification && <NotificationDropdown />}
           </li>
         )}
         { isAuth || (

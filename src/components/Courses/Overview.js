@@ -16,7 +16,6 @@ export const Overview = ({
 
   }
   
-  
 
   const {bio, username, profileImage} = data;
 
@@ -30,14 +29,14 @@ export const Overview = ({
         <div className=" text-base leading-8 pr-20">{parse(overview)}</div>
       </div>
       <div className="p-4 bg-gray-50 flex flex-col justify-center items-center custom-w-40 custom-h-28">
-        <h3 className="pb-3">About Instructor</h3>
+        <h3 className="pb-3 text-gray-800">About Instructor</h3>
         <div
           className="bg-center bg-cover w-32 h-32 mb-1 rounded-full bg-green-400"
           style={{ backgroundImage: `url(${img})` }}
         ></div>
-        <h3 className="pb-1 font-bold">{username}</h3>
-        <h4 className="pb-2">Lecturer</h4>
-        <div className="text-left">
+        <h3 className="pb-1 text-gray-800 font-bold">{username}</h3>
+        {/* <h4 className="pb-2 text-gray-500">Lecturer</h4> */}
+        <div className="text-left text-gray-500">
           {overviewPara}
         </div>
       </div>

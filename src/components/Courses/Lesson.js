@@ -17,8 +17,8 @@ export const Lesson = ({
   const [updateUserCourse] = useUpdateUserCourseMutation();
 
   const activeNav =  index === Number(params.lesson)
-     ? " flex hover:bg-gray-200 bg-gray-200 border-b-2 border-gray-300"
-     : "flex hover:bg-gray-200 border-b-2 border-gray-300 ";
+     ? " flex hover:bg-green-600 bg-green-600 mb-0-1 rounded "
+     : "flex hover:bg-green-600 bg-green-400 mb-0-1 rounded";
 
 
   const count = () => {
@@ -39,11 +39,11 @@ export const Lesson = ({
         className="flex items-center p-4"
       >
         {completedLessons >= currentLessons ? (
-          <ImCheckboxChecked className="text-xl mr-2 fill-green-500" />
+          <ImCheckboxChecked className="text-xl mr-2 fill-green-800" />
         ) : (
-          <ImCheckboxUnchecked className="text-xl mr-2 fill-green-500" />
+          <ImCheckboxUnchecked className="text-xl mr-2 fill-green-800" />
         )}
-        <h4 className="text-lg text-green-800 ">{title}</h4>
+        <h4 className="text-lg text-green-900">{title}</h4>
       </div>
     </NavLink>
   );

@@ -12,7 +12,7 @@ import { useSignupMutation } from "../store/authApiSlice";
 
 import usePersist from "../hooks/usePersist";
 
-import backgroundImage1 from '../assets/jodyhongfilms-sI1mbxJFFpU-unsplash.jpg'
+import backgroundImage1 from '../assets/oluwakemi-solaja-ZN52ZBFkw4Y-unsplash.jpg'
 
 const LoginPage = () => {
 

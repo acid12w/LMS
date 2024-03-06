@@ -1,14 +1,14 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import { BiHomeAlt } from "react-icons/bi";
+
 import { UilCreateDashboard } from "@iconscout/react-unicons";
 import { UilUserSquare } from "@iconscout/react-unicons";
-import { BiSun } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
+import { MutatingDots } from 'react-loader-spinner';
 
-import useAuth  from "../../hooks/useAuth";
 import { useGetCourseByInstructorQuery } from "../../store/courseApiSlice";
 import { useSelector } from "react-redux";
+import useAuth  from "../../hooks/useAuth";
 
 const activeNavStyle =
   "p-4 flex mx-4  cursor-pointer  hover:bg-gray-100 ";
@@ -21,12 +21,22 @@ export const SideNav = () => {
   const userId = useSelector((state) => state.auth.user.userId);
   const {data} = useGetCourseByInstructorQuery(userId); 
 
-  if(!data) {
-    return <div>...</div>
-  }
+  let content;
 
-  return (
-    <nav className="w-75 h-full w-full">
+  if(!data) {
+    content = <MutatingDots
+              visible={true}
+              height="100"
+              width="100"
+              color="#4fa94d"
+              secondaryColor="#4fa94d"
+              radius="12.5"
+              ariaLabel="mutating-dots-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              />
+  }else{
+    content = <nav className="w-75 h-full w-full">
       <ul className="mt-10 flex flex-col justify-center ">
         <li>
           <NavLink to="/profile" 
@@ -67,5 +77,7 @@ export const SideNav = () => {
         </li>
       </ul>
     </nav>
-  );
+  }
+
+  return content;
 };
