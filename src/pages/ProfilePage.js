@@ -22,7 +22,6 @@ const [formIsNotValid, setFormIsNotValid] = useState(false)
 
 const userProfile = useSelector((state) => state.auth.user);
 const email = userProfile.email;
-console.log(formIsNotValid)
 
 const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -40,7 +39,7 @@ const onHandleSubmit = (e) => {
             console.log('fired')
             return;
         };
-        console.log(updateObj);
+      
         setFormIsNotValid(false);
 
         updateUserProfile({payload: updateObj, email: email});
@@ -67,9 +66,9 @@ const onHandleSubmit = (e) => {
 }
 
 
-if(!userProfile) {
-    return  <p>...</p>
-}
+// if(!userProfile) {
+//     return  <p>...</p>
+// }
 
 return(
     <div className="flex">

@@ -21,7 +21,7 @@ const Alert = (props) => {
 
   if (props.status === "error") {
     alertClass = "bg-red-200 text-red-600";
-    message = props.message.message
+    message = props.message
   }
 
   if (props.status === "success") {

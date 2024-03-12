@@ -134,7 +134,6 @@ const CardItem = ({
             </div>
           </div>
         </div>
-        {/* <Favorite addStatredCourse={addStatredCourse} /> */}
       </div>
     </>
   );

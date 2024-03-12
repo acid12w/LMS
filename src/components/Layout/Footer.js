@@ -18,7 +18,7 @@ export const Footer = () => {
           <h5 className="text-white text-sm">Become a Teacher</h5>
         </div>
       </div>
-      <h3 className="text-center text-green-400 text-sm">@Copy right 2022</h3>
+      <h3 className="text-center text-green-400 text-sm">@Copy right 2024</h3>
     </footer>
   );
 };

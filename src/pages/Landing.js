@@ -1,19 +1,29 @@
-import { useEffect } from "react";
 import CardOverView from "../components/Card/CardOverView";
 import Hero from "../components/Layout/Hero";
-import StartedCourses from "../components/StartedCourses/StartedCourses";
+// import StartedCourses from "../components/StartedCourses/StartedCourses";
 // import Cards  from "../components/Card/Cards"
 
 import { useGetAllcoursesQuery } from "../store/courseApiSlice";
-import  img_1  from "../assets/side-view-people-studying-math.jpg"
+import  img_1  from "../assets/study-group-african-people-min.jpg";
+
 import { MdOutlineDraw } from 'react-icons/md';
 import { CgCode } from 'react-icons/cg';
 import { VscGraph } from 'react-icons/vsc';
 import { RiPaintFill } from 'react-icons/ri';
 
+import { CardLoader } from "../components/UI/loading/cardLoader";
+
 const Landing = () => {
 
   const {data} = useGetAllcoursesQuery();
+
+  let content;
+
+  if(!data) {
+    content = <CardLoader/>
+  }else{
+    content = <CardOverView data={data} />
+  }
 
   // const featuredCourses = data.filter(course => course.isFeatured === true);
   // const courseData = data.filter(course => course.isFeatured !== true);
@@ -23,14 +33,14 @@ const Landing = () => {
       <Hero />
       <section className="py-20 px-24 flex items-center justify-center gap-12 bg-gray-100">
         <div className="w-3/12 h-96 overflow-hidden">
-          <img src={img_1} className="w-full"/>
+          <img src={img_1} alt='students writing on a white board' className="w-full"/>
         </div>
         <article className="w-6/12">
           <h4 className="text-xl font-bold pb-4">Welcome to SG-LMS</h4>
           <p className="text-sm text-gray-600 pb-4">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. 
           </p>
-          <h5 className="text-sm text-emerald-400">Know more</h5>
+          {/* <h5 className="text-sm text-emerald-400">Know more</h5> */}
         </article>
       </section>
       <section className="flex flex-col items-center bg-gray-100">
@@ -76,14 +86,7 @@ const Landing = () => {
         <div className=" py-8 mx-60 ">
           <h2 className="font-bold text-gray-900 text-3xl">Some of our popular courses</h2>
         </div>
-      {data  && <CardOverView data={data} />}
-        {/* <div className=" py-8 mx-72 ">
-          <h4 className="text-green-600 font-semibold ">Check out our</h4>
-          <h2 className="font-bold text-gray-900 text-3xl">
-            Web development courses
-          </h2>
-        </div> */}
-        {/* <CardOverView data={techCourses} /> */}
+      {content}
       </section>
     </>
   );

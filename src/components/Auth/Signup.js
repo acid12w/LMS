@@ -3,6 +3,7 @@ export const Signup = (props) => {
     props.onHandleData(e);
   };
 
+
   return (
     <>
       {!props.isLogin && (
@@ -28,19 +29,26 @@ export const Signup = (props) => {
         placeholder="email"
         className="bg-gray-100 h-14 w-full p-4 mb-8 border-gray-400 border-2 focus:border-green-400 "
       />
+      <label>
       <input
-        type="text"
+        type="password"
         id="password"
         required
         // value={}
-        // onBlur={}
-        onChange={handleData}
+        onBlur={props.passwordBlurHandler}
+        onChange={props.passwordChangeHandler}
         placeholder="password"
         className="bg-gray-100 h-14 w-full border-gray-400 border-2 p-4 mb-8 focus:border-green-600  "
       />
+      {props.passwordHasError && (
+            <p className=" text-red-400 mt-2 ml-1">
+              Password is not valid
+            </p>
+      )}
+      </label>
       {!props.isLogin && (
         <input
-          type="text"
+          type="password"
           id="password2"
           required
           // value={}

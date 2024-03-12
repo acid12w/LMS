@@ -3,12 +3,13 @@ import { setCredentials} from '../store/Auth-slice';
 
 
 const baseQuery = fetchBaseQuery({
-    // baseUrl: 'http://localhost:3001',
-    baseUrl: 'https://lms-api-rt1y.onrender.com',
+    baseUrl: 'http://localhost:3001',
+    // baseUrl: 'https://lms-api-rt1y.onrender.com',
 
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
+        console.log(token)
         if (token) {
             headers.set("authorization", `Bearer ${token}`);
         }
@@ -19,7 +20,7 @@ const baseQuery = fetchBaseQuery({
   
 const baseQueryWithReauth = async (args, api, extraOptions) => { 
     let result = await baseQuery(args, api, extraOptions);
-    // console.log(result)
+    console.log(result)
 
     if (result?.error?.data?.statusCode === 401) {
         console.log('sending refresh token')
