@@ -61,13 +61,13 @@ export const MainNaviagtion = () => {
   return (
     <nav className="flex items-center justify-between sticky  px-8 py-2 bg-white drop-shadow-sm">
       <h3 className="font-bold p-4 text-green-600">
-        <Link to="/home">G-LMS</Link>
+        <Link to="/">G-LMS</Link>
       </h3>
       <div className="flex items-center justify-center p-2 bg-gray-100 rounded">
         <FiSearch className="text-gray-400 text-lg mr-1 ml-1" />
         <form onSubmit={submitForm}>
           <input
-            type="search"
+            type="search" 
             placeholder="Search..."
             onChange={(e) => setSearchValue(e.target.value)}
             className="p-1 border-none outline-none bg-gray-100 bg-text-400"
