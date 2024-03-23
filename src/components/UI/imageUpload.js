@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { uiActions } from "../../store/ui-slice";
 
 import { useAddThumbNailMutation } from "../../store/uploadApiSlice";
 
@@ -8,6 +11,7 @@ import { MutatingDots } from 'react-loader-spinner';
 
 export const ImageUpload = ({text, subtext, setImageUrl, thumbNail }) => {
 
+  const dispatch = useDispatch();
  
   const [addThumbNail, isLoading] = useAddThumbNailMutation();
   
@@ -15,12 +19,24 @@ export const ImageUpload = ({text, subtext, setImageUrl, thumbNail }) => {
   const [image, setImage] = useState(thumbNail);
   const imageTrue = thumbNail === undefined; 
   const [isUploaded, setIsUploaded ] = useState(!imageTrue);
+  const [message, setMessage] = useState()
 
   useEffect(() => {setImage(thumbNail)}, [thumbNail])
 
   
   const uploadFile =  async (e) => {
     e.preventDefault();
+
+    if(imageUpload === null){
+      dispatch(
+        uiActions.showAlert({
+            status: "error",
+            title: "Error!",
+            message: "No image uplaoded",
+        })
+      );
+      return
+    }
 
     try{
         const formData = new FormData();
@@ -60,9 +76,6 @@ export const ImageUpload = ({text, subtext, setImageUrl, thumbNail }) => {
           wrapperClass=""
           />
       )}
-      {/* Course Thunbnail
-upload an eye catching thumbnail */}
-
 
       {isUploaded ? (
         <div className=" w-96 h-72">

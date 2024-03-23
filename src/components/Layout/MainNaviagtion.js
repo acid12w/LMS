@@ -20,8 +20,6 @@ export const MainNaviagtion = () => {
 
   const user = useSelector(state => state?.auth?.user);
 
-  
-
   const [toggleMenu, setToggleMenu] = useState(false);
   const [toggleNotification, setToggleNotification] = useState(false);
 
@@ -55,14 +53,15 @@ export const MainNaviagtion = () => {
   };
 
 
+
   let bgStyle = {
     backgroundImage: `url(${user?.profileImage || avatar})`,
   };
 
   return (
-    <nav className="flex items-center justify-between px-8 py-2 bg-white drop-shadow-sm">
+    <nav className="flex items-center justify-between sticky  px-8 py-2 bg-white drop-shadow-sm">
       <h3 className="font-bold p-4 text-green-600">
-        <Link to="/">G-LMS</Link>
+        <Link to="/home">G-LMS</Link>
       </h3>
       <div className="flex items-center justify-center p-2 bg-gray-100 rounded">
         <FiSearch className="text-gray-400 text-lg mr-1 ml-1" />

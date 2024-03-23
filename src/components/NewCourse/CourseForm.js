@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAddCourseMutation } from "../../store/courseApiSlice";
 
-// import { WithContext as ReactTags } from "react-tag-input";
+import { WithContext as ReactTags } from "react-tag-input";
 
-// import TextEditor from "../UI/TextEditor";
 
 import useInput from "../../hooks/use-input";
 
@@ -19,11 +18,11 @@ export const CourseForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [addCourse] = useAddCourseMutation();
+  const [addCourse, { data, isLoading, error, isError, isSuccess }] = useAddCourseMutation();
+
 
   const [imageUrl, setImageUrl] = useState(null);
   const [tags, setTags] = React.useState([]);
-
 
   const tagisValid = tags.length > 0;
   const imageUrlisValid = imageUrl != null;
@@ -64,60 +63,66 @@ export const CourseForm = () => {
     rest: restDifficulty,
   } = useInput((value) => value.trim() !== "");
 
-  // const handleData = (data) => {
-  //   setOverview(data);
-  // };
-
-  // const handleDelete = (i) => {
-  //   setTags(tags.filter((tag, index) => index !== i));
-  // };
-
-  // const handleAddition = (tag) => {
-  //   setTags([...tags, tag]);
-  // };
 
 
-  // const handleDrag = (tag, currPos, newPos) => {
-  //   const newTags = tags.slice();
+  const handleDelete = (i) => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
 
-  //   newTags.splice(currPos, 1);
-  //   newTags.splice(newPos, 0, tag);
-
-  //   // re-render
-  //   setTags(newTags);
-  // };
-
-  // const handleTagClick = (index) => {
-  //   console.log("The tag at index " + index + " was clicked");
-  // };
+  const handleAddition = (tag) => {
+    setTags([...tags, tag]);
+  };
 
 
-  const isValid =
-    courseNameisValid && subjectisValid && overviewisValid && imageUrlisValid;
+  const handleDrag = (tag, currPos, newPos) => {
+    const newTags = tags.slice();
 
-  const handleOnSubmit = async (e) => {
-     e.preventDefault();
+    newTags.splice(currPos, 1);
+    newTags.splice(newPos, 0, tag);
 
-     console.log( courseNameisValid, subjectisValid, difficulty, overviewisValid)
+    // re-render
+    setTags(newTags);
+  };
+
+  const handleTagClick = (index) => {
+    console.log("The tag at index " + index + " was clicked");
+  };
+
+  const isValid = courseNameisValid && subjectisValid && overviewisValid && imageUrlisValid;
+
+  const handleOnSubmit = (e) => {
+     e.preventDefault(); 
+     
+
+     if(!imageUrlisValid){
+      dispatch(
+        uiActions.showAlert({
+            status: "error",
+            title: "Error!",
+            message: "No image uplaoded",
+        })
+      );
+      return
+     }
 
     if (!isValid) return;
 
-    try{
-      addCourse(
-            {
-              courseName: courseName,
-              overview: overview,
-              difficulty: difficulty  || 'beginner',
-              subject: subject,
-              completedCourses: 0,
-              participants: 0,
-              rated: 1,
-              rating: 0,
-              thumbNail: imageUrl,
-              imageFull: true, 
-            }
-          )
-
+    addCourse(
+          {
+            courseName: courseName,
+            overview: overview,
+            difficulty: difficulty  || 'beginner',
+            subject: subject,
+            completedCourses: 0,
+            participants: 0,
+            tags,
+            rated: 1,
+            rating: 0,
+            thumbNail: imageUrl,
+            imageFull: true, 
+          }
+        ).unwrap()
+        .then(() => { 
           dispatch(
             uiActions.showAlert({
               status: "success",
@@ -125,27 +130,24 @@ export const CourseForm = () => {
               message: "your course was created",
             })
           );
-    }catch(err){
-      dispatch(
-        uiActions.showAlert({
-          status: "error",
-          title: "Error!",
-          message: err.data.message,
+        navigate({ pathname: "/my-course" })
         })
-      );
-    }
-
-    restCourse();
-    restSubject();
-    restDifficulty();
-
-    navigate({ pathname: "/my-course" });
+        .catch((error) => {
+          dispatch(
+            uiActions.showAlert({
+              status: "error",
+              title: "Error!",
+              message: error.data.message ,
+            })
+          );
+        })
   };
 
   return (
-    <>
+    <> 
       <ImageUpload setImageUrl={setImageUrl} />
       <form onSubmit={handleOnSubmit} className="flex flex-col pb-44 w-2/3">
+       
       <label className="text-sm mr-4 h-12 mt-2 mb-10">
           Course name
           <input
@@ -217,24 +219,21 @@ export const CourseForm = () => {
               </p>
             )}
           
-        {/* <div className="Tag mb-4">
+        <div className="Tag mb-4">
           <h1 className="mb-4"> Tags </h1>
           <div>
 
             <ReactTags
               tags={tags}
-              //   suggestions={suggestions}
-              //   delimiters={delimiters}
               handleDelete={handleDelete}
               handleAddition={handleAddition}
               handleDrag={handleDrag}
               handleTagClick={handleTagClick}
               inputFieldPosition="bottom"
               autocomplete
-
             />
           </div>
-        </div> */}
+        </div>
         <label className="text-sm mr-4 mt-2">
             Overview
             <textarea
@@ -250,16 +249,8 @@ export const CourseForm = () => {
               }`}
           />
           </label> 
-        {/* <div className="mb-12">
-          <TextEditor handleChange={handleData} />
-        </div> */}
         <div className="flex">
-          <button
-            type="submit"
-            className="bg-black hover:bg-emerald-600  px-8 py-2 text-white  mt-4 block"
-          >
-            Save
-          </button>
+        <button type="submit" className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Submit</button>
         </div>
       </form>
      

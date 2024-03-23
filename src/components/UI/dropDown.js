@@ -4,7 +4,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 
 export const DropDown = ({ handleLogout, role }) => {
   return (
-    <div className="bg-white shadow p-2 rounded-md h-30 w-48 absolute z-10 top-16 right-12 cursor-pointer">
+    <div className="bg-white shadow p-2 rounded-md h-30 w-48 absolute z-20 top-16 right-12 cursor-pointer">
       <ul>
           <li className="text-sm text-gray-500 p-2 w-full">
             Adrian34

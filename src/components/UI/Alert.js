@@ -33,7 +33,7 @@ const Alert = (props) => {
     <section className="flex justify-center z-10">
       {showAlert && (
         <div
-          className={`flex fixed rounded-md m-auto items-center w-auto rounded-md p-4 text-left font-semibold ${
+          className={`flex fixed rounded-md m-auto items-center w-auto rounded-md p-4 text-left font-semibold  z-10 ${
             props.status === "pending"
               ? "bg-blue-300 text-blue-600"
               : alertClass

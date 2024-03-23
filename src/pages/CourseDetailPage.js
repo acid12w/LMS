@@ -113,7 +113,7 @@ const CourseDetail = () => {
             </div>
             <h3>{rating.toFixed(1)}</h3>
           </div>
-          <YoutubeEmbed embedId={videoId} />
+          <YoutubeEmbed embedId={videoId} width={100} height={680}/>
           <div className="p-4">
             <CourseNav />
             <div className="py-12">

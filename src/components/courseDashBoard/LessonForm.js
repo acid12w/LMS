@@ -5,8 +5,9 @@ import { useDispatch } from "react-redux";
 import { useAddLessonMutation, useRemoveLessonMutation, useGetLessonQuery  } from "../../store/lessonApiSlice";
 import { GrClose } from "react-icons/gr";
 import { uiActions } from "../../store/ui-slice";
+import YoutubeEmbed from "../UI/YoutubeEmbeded";
 
-export const LessonForm = ({courseId}) => {
+export const LessonForm = ({courseId, lessons}) => {
 
 const dispatch = useDispatch();
 const [addLesson, { isLoading: isUpdating }] = useAddLessonMutation(); 
@@ -75,6 +76,7 @@ const handleSubmit = async (e) => {
 
     try{
         if (!lesson.title || !lesson.resource || !lesson.videoId) return; 
+        console.log('lesson')
 
         await addLesson({...lesson, courseId});
 
@@ -105,23 +107,18 @@ const handleSubmit = async (e) => {
 return (
     <div className="h-full">
         <div className="mb-4">
-            {data?.map((lesson, index) => {
+            {lessons?.map((lesson, index) => {
                 return (
                 <div
-                    className="w-2/3 block p-4 bg-gray-100 mb-4 relative"
-                    key={index}
-                >
-                    <div className="flex">
+                    className="w-2/3 block p-4 bg-white shadow-md rounded-md mb-4 relative flex flex-col"
+                    key={index}>
                     <h4 className="mb-2">Lessons title: {lesson.title}</h4>
-                    </div>
-                    <div className="flex">
-                    <Link to={lesson.videoId} className="mb-2 text-green-600">
+                    <Link to={lesson.videoId} className="mb-2 text-green-600 ">
                         youtube link
                     </Link>
-                    </div>
-                    <div className="flex">
-                    <article className="mb-2">Resources: {lesson.resource}</article>
-                    </div>
+                    <YoutubeEmbed embedId={lesson.videoId}  width={50} height={280}/> 
+                    <article className="mb-2 mt-2">Resources: {lesson.resource}</article>
+           
                     <div
                     onClick={() => handleRemoveLesson(lesson._id) }
                     className="absolute top-0 right-0 p-1 bg-green-400"
@@ -142,7 +139,7 @@ return (
                 value={lesson.title}
                 onChange={handleLessons}
                 placeholder="Lesson title"
-                className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-4 focus:text-black"
+                className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 mb-1 mt-2 text-sm"
             />
             </label>
             <label>
@@ -153,7 +150,7 @@ return (
                 value={lesson.videoId}
                 onChange={handleLessons}
                 placeholder="video"
-                className="bg-gray-100 h-full w-full border-none outline-none p-4 mb-4 focus:text-black"
+                className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 mb-1 mt-2 text-sm"
             />
             </label>
             <label>
@@ -164,15 +161,10 @@ return (
                 value={lesson.resource}
                 onChange={handleLessons}
                 placeholder="resource"
-                className="bg-gray-100 h-full w-full border-none outline-none p-4 focus:text-black" 
+                className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 mb-1 mt-2 text-sm"
             />
             </label>
-            <button
-                type="submit"
-                className="bg-black px-8 py-2 text-white  mt-4 block"
-            >
-                add
-            </button>
+            <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">add</button>
         </form>
     </div>
   );

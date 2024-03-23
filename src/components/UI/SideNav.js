@@ -3,10 +3,12 @@ import { NavLink } from "react-router-dom";
 import { UilCreateDashboard } from "@iconscout/react-unicons";
 import { UilUserSquare } from "@iconscout/react-unicons";
 import { BiLogOut } from "react-icons/bi";
+import { MdOutlineMessage } from "react-icons/md";
+
 import useAuth  from "../../hooks/useAuth";
 
 const activeNavStyle =
-  "p-4 flex mx-4  cursor-pointer  hover:bg-gray-100 ";
+  "p-4 flex mx-4 cursor-pointer hover:bg-gray-100 ";
 
 export const SideNav = () => {
 
@@ -52,6 +54,18 @@ export const SideNav = () => {
         }>
           <BiLogOut className="mr-2 text-2xl" />{" "}
           <span className="">Manage courses</span>
+        </NavLink>}
+      </li>
+      <li>
+        {isInstructor && <NavLink to={`/message`}
+        className={(navData) =>
+
+          navData.isActive
+            ? `${activeNavStyle} ${"bg-gray-100 "}`
+            : `${activeNavStyle} ${"text-gray-700"}`
+            
+        }><MdOutlineMessage className="mr-2 text-2xl" />{" "}
+          <span className="">Messages</span>
         </NavLink>}
       </li>
     </ul>

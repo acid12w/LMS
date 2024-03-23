@@ -4,7 +4,7 @@ export const courseApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllcourses: builder.query({
             query: () => '/mycourses',
-            providesTags: ['Course']
+            providesTags: ['Course'],
         }),
         getCourseById: builder.query({
             query: (id) => `mycourses/${id}`,

@@ -39,7 +39,7 @@ const CourseOverviewPage = () => {
       <article className="p-6">
         <div className="w-2/3 m-auto mb-8">
           <h4 className="mb-4 text-lg font-bold">Intro Video</h4>
-          <YoutubeEmbed embedId="https://www.youtube.com/watch?v=d_BhzHVV4aQ&ab_channel=TraversyMedia" />
+          <YoutubeEmbed embedId="https://www.youtube.com/watch?v=d_BhzHVV4aQ&ab_channel=TraversyMedia" width={100} height={380}/>
         </div>
         <div className="w-2/3 m-auto">
           {/* <h3 className="text-lg">Requirements</h3>

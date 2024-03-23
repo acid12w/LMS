@@ -23,6 +23,8 @@ const [formIsNotValid, setFormIsNotValid] = useState(false)
 const userProfile = useSelector((state) => state.auth.user);
 const email = userProfile.email;
 
+console.log(userProfile)
+
 const onHandleSubmit = (e) => {
     e.preventDefault();
     if(userNameInput.current.value.trim() === undefined && emailInput.current.value.trim() === undefined && bioInput.current.value.trim() === undefined) return;
@@ -43,7 +45,11 @@ const onHandleSubmit = (e) => {
         setFormIsNotValid(false);
 
         updateUserProfile({payload: updateObj, email: email});
-        dispatch(setUpdateProfileImage(profileImage));
+
+        if(profileImage != null ){
+            dispatch(setUpdateProfileImage(profileImage));
+        }
+        
 
         dispatch(
             uiActions.showAlert({
