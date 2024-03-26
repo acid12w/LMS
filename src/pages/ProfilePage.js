@@ -23,7 +23,6 @@ const [formIsNotValid, setFormIsNotValid] = useState(false)
 const userProfile = useSelector((state) => state.auth.user);
 const email = userProfile.email;
 
-console.log(userProfile)
 
 const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -38,7 +37,6 @@ const onHandleSubmit = (e) => {
 
         if(Object.keys(updateObj).length === 0) {
             setFormIsNotValid(true);
-            console.log('fired')
             return;
         };
       
@@ -50,7 +48,6 @@ const onHandleSubmit = (e) => {
             dispatch(setUpdateProfileImage(profileImage));
         }
         
-
         dispatch(
             uiActions.showAlert({
               status: "success",
@@ -72,10 +69,6 @@ const onHandleSubmit = (e) => {
 }
 
 
-// if(!userProfile) {
-//     return  <p>...</p>
-// }
-
 return(
     <div className="flex">
     <div className="w-80 border-r-2 border-gray-100">
@@ -92,8 +85,6 @@ return(
             required
             ref={userNameInput}
             defaultValue={userProfile.currentUsername}
-            // onBlur={}
-            // placeholder={userProfile.currentUsername}
             className="bg-gray-100 text-gray-500 h-full border-none outline-none p-4 mb-1 mt-2"
             />
         </label> 
@@ -105,7 +96,6 @@ return(
             id="firstName"
             ref={emailInput}
             defaultValue={userProfile.email}
-            // onBlur={}
             className="bg-gray-100 text-gray-500 h-full border-none outline-none p-4 mb-1 mt-2"
             />
         </label> 
@@ -116,7 +106,6 @@ return(
             id="firstName"
             ref={bioInput}
             defaultValue={userProfile.bio}
-            // onBlur={}
             className="bg-gray-100 text-gray-500 h-36 border-none outline-none p-4 mb-1 mt-2"
             />
         </label> 

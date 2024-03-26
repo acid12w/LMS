@@ -31,11 +31,11 @@ const Landing = () => {
   return (
     <>
       <Hero />
-      <section className="py-20 px-24 flex items-center justify-center gap-12 bg-gray-100">
-        <div className="w-3/12 h-96 overflow-hidden">
+      <section className="py-20 px-8 sm:px-8 md:px-10 flex flex-wrap items-center justify-center gap-12 bg-gray-100  ">
+        <div className="w-[24rem]  overflow-hidden">
           <img src={img_1} alt='students writing on a white board' className="w-full"/>
         </div>
-        <article className="w-6/12">
+        <article className="w-full sm:w-full md:w-6/12">
           <h4 className="text-xl font-bold pb-4">Welcome to SG-LMS</h4>
           <p className="text-sm text-gray-600 pb-4">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. 
@@ -43,10 +43,10 @@ const Landing = () => {
           {/* <h5 className="text-sm text-emerald-400">Know more</h5> */}
         </article>
       </section>
-      <section className="flex flex-col items-center bg-gray-100">
+      <section className="flex flex-col items-center bg-gray-100 p-10">
         <h2 className="text-xl font-bold pb-4">Our Top Categories</h2>
-        <h4 className="text-center">It is a long established fact that a reader will be distracted by the readable<br/> content of a page when looking at its layout.</h4>
-        <div className="p-10 flex gap-12">
+        <h4 className="text-center">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</h4>
+        <div className=" flex flex-wrap gap-12 pt-10 justify-center">
 
           <div className="px-14 py-12 bg-white shadow-md text-center rounded-md">
             <div className="p-4 shadow-md rounded-full mb-1">
@@ -83,7 +83,7 @@ const Landing = () => {
         </div>
       </section>
       <section className="bg-gray-100 py-4">
-        <div className=" py-8 mx-60 ">
+        <div className=" py-8  md:mx-60 text-center">
           <h2 className="font-bold text-gray-900 text-3xl">Some of our popular courses</h2>
         </div>
       {content}

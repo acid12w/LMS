@@ -2,8 +2,8 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <footer className="bg-custom p-10 ">
-      <div className="flex justify-around p-16 mx-40">
+    <footer className="bg-custom flex flex-col items-center p-10 ">
+      <div className="flex gap-10 justify-around p-16 mx-40">
         <div>
           <h4 className="text-gray-300 mb-1">Company</h4>
           <h5 className="text-white text-sm">About</h5>

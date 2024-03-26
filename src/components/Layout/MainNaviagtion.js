@@ -52,8 +52,6 @@ export const MainNaviagtion = () => {
     });
   };
 
-
-
   let bgStyle = {
     backgroundImage: `url(${user?.profileImage || avatar})`,
   };
@@ -108,7 +106,7 @@ export const MainNaviagtion = () => {
               className="h-12 w-12 bg-center bg-cover rounded-full mr-4 bg-green-400"
               style={bgStyle}
             ></div>
-            {toggleMenu && <DropDown handleLogout={handleLogout} role={isInstructor}/>}
+            {toggleMenu && <DropDown userName={user.currentUsername} handleLogout={handleLogout} role={isInstructor}/>}
           </li>
         )}
       </ul>

@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 
 import { FaSignOutAlt } from "react-icons/fa";
 
-export const DropDown = ({ handleLogout, role }) => {
+export const DropDown = ({ userName, handleLogout, role }) => {
   return (
     <div className="bg-white shadow p-2 rounded-md h-30 w-48 absolute z-20 top-16 right-12 cursor-pointer">
       <ul>
           <li className="text-sm text-gray-500 p-2 w-full">
-            Adrian34
+            {userName}
           </li>
         <Link to="/profile">
           <li className="text-sm hover:bg-gray-100 rounded-md text-gray-500 p-2 w-full">

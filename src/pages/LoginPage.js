@@ -14,6 +14,7 @@ import usePersist from "../hooks/usePersist";
 import useInput from "../hooks/use-input";
 
 import backgroundImage1 from '../assets/oluwakemi-solaja-ZN52ZBFkw4Y-unsplash.jpg'
+import { PassPopover } from "../components/UI/popover/passPopover";
 
 const LoginPage = () => {
 
@@ -26,7 +27,7 @@ const LoginPage = () => {
 
   const navTo = () => {
     navigate(`/user/?query=${isLogin ? "signup" : "login"}`, {
-      replace: true,
+      replace: true, 
     });
   };
 
@@ -42,6 +43,15 @@ const LoginPage = () => {
   } = useInput((value) => regExp.test(value));
 
   const {
+    value: loginpassword,
+    // isValid: passwordisValid,
+    hasError: loginpasswordHasError,
+    valueChangeHandler: loginpasswordChangeHandler,
+    inputBlurHandler: loginpasswordBlurHandler,
+    // rest: restPassword,
+  } = useInput((value) => value.trim());
+
+  const {
     value: emailValue,
     // isValid: emailisValid,
     // hasError: emailHasError,
@@ -50,12 +60,14 @@ const LoginPage = () => {
     // rest: restemail,
   } = useInput((value) => value.trim());
 
-  const linkContent = isLogin? <p>Not registered ? <span className="text-green-600 cursor-pointer">signup</span></p>: <p>I already have an account <span className="text-green-600 cursor-pointer">login</span></p>;
+  const linkContent = isLogin? <p>Not registered ? <span className="text-green-600 cursor-pointer">Create account</span></p>: <p>I already have an account <span className="text-green-600 cursor-pointer">Login</span></p>;
 
 
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
   const [signup] = useSignupMutation();
+
+  const [togglePopup, setTogglePopup] = useState(false);
 
   const [formState, setFormState] = useState({
     usernameinput: "",
@@ -66,18 +78,13 @@ const LoginPage = () => {
 
   const handleValidiadtion = (e) => {
     const regExp = /^(?=.*?[0-9])(?=.*?[A-Za-z]).{8,32}$/;
-    if(password === ' '){
-      console.log('enter a password')
-      return;
-    }else if (regExp.test(password)){
+   if (regExp.test(password)){
       console.log("password is Valid");
       return;
     }else if(!regExp.test(password)){
-      console.log('Password is not valid');
-      return;
-    }else{
-      console.log('password is valid')
-    }
+      
+      }
+    
   }
 
   const handleData = (e) => {
@@ -91,7 +98,7 @@ const LoginPage = () => {
     try {  
       if (isLogin) { 
         console.log(emailValue)
-        const userData = await login({username: emailValue, password: password}).unwrap();
+        const userData = await login({username: emailValue, password: loginpassword}).unwrap();
         const { accessToken, bio, username, email, myCourses, userId, profileImage } = userData;
         dispatch(setCredentials({ token : {accessToken: accessToken }, user:{ email: email, currentUsername: username, bio: bio, userId: userId, myCourses: myCourses, profileImage: profileImage }}))
         setPersist(prev => !prev)
@@ -130,9 +137,9 @@ const LoginPage = () => {
 
 
   return (
-   <div className="flex">
+   <div className="flex flex-col sm:flex-row">
         
-        <div className="w-1/2 h-full p-44 flex flex-col justify-center">
+        <div className="w-full md:w-1/2 h-full p-44 flex flex-col justify-center">
           <h2 className="mb-4 text-center text-2xl">
             {isLogin ? "Login" : "Signup"}
           </h2>
@@ -158,13 +165,12 @@ const LoginPage = () => {
                   type="password"
                   id="password"
                   required
-                  // value={}
-                  onBlur={passwordBlurHandler}
-                  onChange={passwordChangeHandler}
+                  onBlur={loginpasswordBlurHandler}
+                  onChange={loginpasswordChangeHandler}
                   placeholder="password"
                   className="h-14 w-full rounded-md border-gray-200 border-2 p-4 focus:bg-green-50 focus:outline-green-600"
                 />
-                {passwordHasError && (
+                {loginpasswordHasError && (
                       <p className="text-sm text-red-400 mt-1">
                         Please enter a valid password
                       </p>
@@ -199,8 +205,10 @@ const LoginPage = () => {
             className="h-14 w-full rounded-md border-gray-200 border-2 p-4 focus:bg-green-50 focus:outline-green-600"
           />
         </label>
+
+        <PassPopover togglePopup={togglePopup}/>
         
-        <label className="h-12 mb-10 flex flex-col">
+        <label className="h-12 mb-10 flex flex-col" onMouseEnter={() => setTogglePopup(true)} onMouseLeave={() => setTogglePopup(false)}>
           <input
             type="password"
             id="password"
@@ -213,7 +221,7 @@ const LoginPage = () => {
           />
           {passwordHasError && (
             <p className="text-sm text-red-400 mt-1">
-              Must contain a special character, a number, upper case and lower case
+              Please enter a valid password
             </p>
           )}
         </label>
@@ -248,6 +256,8 @@ const LoginPage = () => {
         {linkContent}
         </div>
       </form>
+
+      
     </div>
 
         <div style={{
@@ -256,7 +266,10 @@ const LoginPage = () => {
         className="w-1/2 bg-center bg-cover bg-no-repeat m-8 rounded-lg">
       </div>
     </div>
+
+    
   );
 };
 
 export default LoginPage;
+ 
