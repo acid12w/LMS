@@ -139,7 +139,7 @@ const LoginPage = () => {
   return (
    <div className="flex flex-col sm:flex-row">
         
-        <div className="w-full md:w-1/2 h-full p-8 md:p-44 flex flex-col justify-center">
+        <div className="w-full md:w-1/2 h-full p-2 md:p-4 lg:p-20 flex flex-col justify-center">
           <h2 className="mb-4 text-center text-2xl">
             {isLogin ? "Login" : "Signup"}
           </h2>

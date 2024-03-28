@@ -51,3 +51,8 @@
 .mb-0-1 {
   margin-bottom: 5px;
 }
+
+iframe {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
