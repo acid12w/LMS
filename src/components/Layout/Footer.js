@@ -2,23 +2,30 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <footer className="bg-custom flex flex-col items-center p-10 ">
-      <div className="flex gap-10 justify-around p-16 mx-40">
-        <div>
-          <h4 className="text-gray-300 mb-1">Company</h4>
-          <h5 className="text-white text-sm">About</h5>
-          <h5 className="text-white text-sm">Blog</h5>
+<footer className="bg-white rounded-lg shadow m-4">
+    <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+        <div className="sm:flex sm:items-center sm:justify-between">
+            <a href="" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                <span className="self-center text-2xl font-semibold whitespace-nowrap">SG LMS</span>
+            </a>
+            <ul className="flex flex-wrap gap-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 ">
+                <li>
+                    <a href="#" className="hover:underline me-4 md:me-6">About</a>
+                </li>
+                <li>
+                    <a href="#" className="hover:underline me-4 md:me-6">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="#" className="hover:underline me-4 md:me-6">Licensing</a>
+                </li>
+                <li>
+                    <a href="#" className="hover:underline">Contact</a>
+                </li>
+            </ul>
         </div>
-        <div>
-          <h4 className="text-gray-300 mb-1 text-center">Team</h4>
-          <h5 className="text-white text-sm">Our Team</h5>
-        </div>
-        <div>
-          <h4 className="text-gray-300 mb-1">Teaching </h4>
-          <h5 className="text-white text-sm">Become a Teacher</h5>
-        </div>
-      </div>
-      <h3 className="text-center text-green-400 text-sm">@Copy right 2024</h3>
-    </footer>
+        <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8" />
+        <span className="block text-sm text-gray-500 sm:text-center ">© 2024 <a href="" className="hover:underline">™</a>. All Rights Reserved.</span>
+    </div>
+</footer>
   );
 };
