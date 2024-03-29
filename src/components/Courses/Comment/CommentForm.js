@@ -28,7 +28,7 @@ export const CommentForm = (props) => {
   };
 
   return (
-    <div className="flex pb-12 w-8/12 ">
+    <div className="flex pb-12 md:w-8/12 ">
       {/* <span className="h-16 w-16 bg-green-700 text-white font-bold rounded-full p-5 mr-4 mt-4">
         AA
       </span> */}
@@ -37,14 +37,9 @@ export const CommentForm = (props) => {
           type="text"
           ref={commentText}
           placeholder={props.placeholder}
-          className=" bg-gray-100 w-full h-20 p-2"
+          className=" bg-gray-100 w-full h-20 p-2 rounded"
         />
-        <button
-          type="submit"
-          className="bg-green-500 px-4 py-2 text-green-800 font-semibold my-2 float-right flex"
-        >
-          Post
-        </button>
+        <button type="submit" class="float-right flex mt-4 block focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Post</button>   
         <button
           type="button"
           onClick={() => props.togglShowForm()}

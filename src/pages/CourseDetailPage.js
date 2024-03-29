@@ -88,7 +88,7 @@ const CourseDetail = () => {
           <StarRaing courseId={courseId} setShowRating={setShowRating} />
         ))}
       <div className="flex">
-        <div className="w-9/12">
+        <div className="w-full md:w-9/12">
           <div className="flex justify-between py-4 px-8">
             <h1 className="text-3xl font-bold">{courseName}:</h1>
           </div>
@@ -143,6 +143,18 @@ const CourseDetail = () => {
                     />
                   }
                 />
+                <Route
+                  path="content"
+                  element={
+                    <SideBar
+                      courseId={courseId}
+                      params={params}
+                      lessonsArr={courseData.lessons}
+                      userData={userCourseData}
+                      courseName={courseName}
+                    />
+                  }
+                />
               </Routes>
             </div>
           </div>
@@ -153,6 +165,7 @@ const CourseDetail = () => {
           lessonsArr={courseData.lessons}
           userData={userCourseData}
           courseName={courseName}
+          style={{display: "none"}}
         />
       </div>
     </>

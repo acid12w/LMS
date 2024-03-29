@@ -30,6 +30,7 @@ export const MainNaviagtion = () => {
 
   const {isInstructor, isStudent} = useAuth();
   const isAuth = isInstructor || isStudent;
+  const urlLink = isAuth ? '/home' : '/';
 
  
   useEffect(() => {
@@ -61,10 +62,10 @@ export const MainNaviagtion = () => {
     <>
     <nav className="bg-white border-gray-200">
   <div className="w-full flex flex-wrap items-center justify-between p-4">
-    <Link className="font-bold p-4 text-green-600" to="/">G-LMS</Link>
+    <Link className="font-bold p-4 text-green-600" to={urlLink}>G-LMS</Link>
   <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         {isAuth || (
-                  <li className="mr-1 p-4 text-gray-600 hover:text-green-600">
+                  <li className="mr-1 p-4 text-gray-600 hover:text-green-600 list-none">
                     <NavLink to="user/?query=login" className="font-bold">
                       Login
                     </NavLink>
@@ -104,22 +105,7 @@ export const MainNaviagtion = () => {
         </form>
       </div>
     </li>
- 
-      {/* {isAuth && (
-        <li className="mr-1 p-4 text-gray-600 hover:text-green-600">
-          <NavLink to="/home" className="font-bold">
-            Home
-          </NavLink>
-        </li>)} */}
-        {/* {isAuth && (
-          <li className="mr-3 p-4 bg-gray-100 rounded-full text-gray-600 hover:text-green-600 text-xl"
-          onClick={() => {
-            setToggleNotification(!toggleNotification);
-          }}>
-            <RiNotification4Fill />
-            {toggleNotification && <NotificationDropdown />}
-          </li>
-        )} */}
+
         
     </ul>
   </div>

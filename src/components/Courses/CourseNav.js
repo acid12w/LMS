@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 export const CourseNav = () => {
   const activeNavStyle = "border-b-4 border-green-500 pb-2 text-green-800";
   return (
-    <nav className="flex gap-10 pb-3">
+    <nav className="flex  gap-5 md:gap-10 pb-3">
       <NavLink
         to="overview"
         className={(navData) => (navData.isActive ? activeNavStyle : "pb-2")}
@@ -21,6 +21,12 @@ export const CourseNav = () => {
         className={(navData) => (navData.isActive ? activeNavStyle : "pb-2")}
       >
         Discusson
+      </NavLink>
+      <NavLink
+        to="content"
+        className={(navData) => (navData.isActive ? activeNavStyle : "pb-2")}
+      >
+        Content
       </NavLink>
     </nav>
   );
