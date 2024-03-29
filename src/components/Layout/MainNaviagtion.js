@@ -26,7 +26,6 @@ export const MainNaviagtion = () => {
 
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState();
-  const [revealSearch, setRevealSearch] = useState(false);
   const [persist, setPersist] = usePersist();
 
   const {isInstructor, isStudent} = useAuth();
@@ -58,27 +57,98 @@ export const MainNaviagtion = () => {
     backgroundImage: `url(${user?.profileImage || avatar})`,
   };
 
-  const homeLink = isAuth ? '/home' : '/'
-
   return (
-     <nav className="flex items-center justify-between sticky px-2 py-2 bg-white drop-shadow-sm">
-      <h3 className="font-bold w-[20%] text-green-600">
-        <Link className="text-sm" to={homeLink}>G-LMS</Link>
-      </h3>
-      <div className="flex items-center justify-center p-2 bg-gray-100 rounded w-auto"  >
-        <FiSearch className="text-gray-400 text-2xl mr-1 ml-1" />
+    <>
+    <nav className="bg-white border-gray-200">
+  <div className="w-full flex flex-wrap items-center justify-between p-4">
+    <Link className="font-bold p-4 text-green-600" to="/">G-LMS</Link>
+  <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        {isAuth || (
+                  <li className="mr-1 p-4 text-gray-600 hover:text-green-600">
+                    <NavLink to="user/?query=login" className="font-bold">
+                      Login
+                    </NavLink>
+                  </li>
+                )}
+          {isAuth && (
+                  <div
+                    className="mr-4 " 
+                    onClick={() => {
+                      setToggleMenu(!toggleMenu);
+                    }}
+                  >
+                    <div
+                      className="h-12 w-12 bg-center bg-cover rounded-full mr-4 bg-green-400"
+                      style={bgStyle}
+                    ></div>
+                    {toggleMenu && <DropDown userName={user.currentUsername} handleLogout={handleLogout} role={isInstructor}/>}
+                  </div>
+          )}
+      <button onClick={() => setToggleDropDown(!toggleDropDown)} data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-user" aria-expanded="false">
+        <span className="sr-only">Open main menu</span>
+        <FiSearch className="text-gray-600 text-lg mr-1 ml-1" />
+    </button>
+  </div>
+  <div className={`items-center justify-between ${toggleDropDown ? 'visible' : 'hidden'} w-full md:flex md:w-auto md:order-1`} id="navbar-user">
+  <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+   <li className=""> 
+   <div className="flex items-center justify-center p-2 bg-gray-100 rounded">
+        <FiSearch className="text-gray-400 text-lg mr-1 ml-1" />
         <form onSubmit={submitForm}>
           <input
             type="search" 
             placeholder="Search..."
             onChange={(e) => setSearchValue(e.target.value)}
-            className="p-1 border-none outline-none bg-gray-100 bg-text-400 w-[90%]"
+            className="p-1 border-none outline-none bg-gray-100 bg-text-400"
+          />
+        </form>
+      </div>
+    </li>
+ 
+      {/* {isAuth && (
+        <li className="mr-1 p-4 text-gray-600 hover:text-green-600">
+          <NavLink to="/home" className="font-bold">
+            Home
+          </NavLink>
+        </li>)} */}
+        {/* {isAuth && (
+          <li className="mr-3 p-4 bg-gray-100 rounded-full text-gray-600 hover:text-green-600 text-xl"
+          onClick={() => {
+            setToggleNotification(!toggleNotification);
+          }}>
+            <RiNotification4Fill />
+            {toggleNotification && <NotificationDropdown />}
+          </li>
+        )} */}
+        
+    </ul>
+  </div>
+  </div>
+</nav>
+    {/* <nav className="flex items-center justify-between sticky  px-8 py-2 bg-white drop-shadow-sm">
+      <h3 className="font-bold p-4 text-green-600">
+        <Link to="/">G-LMS</Link>
+      </h3>
+      <div className="flex items-center justify-center p-2 bg-gray-100 rounded">
+        <FiSearch className="text-gray-400 text-lg mr-1 ml-1" />
+        <form onSubmit={submitForm}>
+          <input
+            type="search" 
+            placeholder="Search..."
+            onChange={(e) => setSearchValue(e.target.value)}
+            className="p-1 border-none outline-none bg-gray-100 bg-text-400"
           />
         </form>
       </div>
       <ul className="flex items-center">
+      {isAuth && (
+        <li className="mr-1 p-4 text-gray-600 hover:text-green-600">
+          <NavLink to="/home" className="font-bold">
+            Home
+          </NavLink>
+        </li>)}
         {isAuth && (
-          <li className="mr-3 p-2 ml-4 sm:p-4 bg-gray-100 rounded-full text-gray-600 hover:text-green-600 text-sm sm:text-xl"
+          <li className="mr-3 p-4 bg-gray-100 rounded-full text-gray-600 hover:text-green-600 text-xl"
           onClick={() => {
             setToggleNotification(!toggleNotification);
           }}>
@@ -95,18 +165,21 @@ export const MainNaviagtion = () => {
         )}
          {isAuth && (
           <li
+            className="mr-4 "
             onClick={() => {
               setToggleMenu(!toggleMenu);
             }}
           >
             <div
-              className="h-12 w-12 bg-center bg-cover rounded-full bg-green-400"
+              className="h-12 w-12 bg-center bg-cover rounded-full mr-4 bg-green-400"
               style={bgStyle}
             ></div>
             {toggleMenu && <DropDown userName={user.currentUsername} handleLogout={handleLogout} role={isInstructor}/>}
           </li>
         )}
       </ul>
-    </nav> 
+    </nav> */}
+
+    </>
   );
 };
