@@ -146,7 +146,7 @@ export const CourseForm = () => {
   return (
     <> 
       <ImageUpload setImageUrl={setImageUrl} />
-      <form onSubmit={handleOnSubmit} className="flex flex-col pb-44 w-2/3">
+      <form onSubmit={handleOnSubmit} className="flex flex-col pb-44 md:w-2/3">
        
       <label className="text-sm mr-4 h-12 mt-2 mb-10">
           Course name

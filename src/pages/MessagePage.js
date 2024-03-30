@@ -16,6 +16,7 @@ const MessagePage = () => {
   const [event, setevent] = useState([]);
   const [roomState, setRoomState ] = useState('room1');
   const [roomIndex, setRoomIndex] = useState(0) 
+  const [toggleSideNav, setToggleSideNav] = useState(false);
 
   const user = useSelector(state => state?.auth?.user);
 
@@ -73,10 +74,18 @@ const MessagePage = () => {
 
   return (
     <div className="flex"> 
-       <SideNav/>
-       <div className='main bg-gray-50 flex'>
+    <button onClick={() => setToggleSideNav(!toggleSideNav)} type="button" class="absolute inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+        <span className="sr-only">Open sidebar</span>
+        <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+        </svg>
+      </button>
+      <div className={`w-80 border-r-2 border-gray-100  fixed z-30 bg-white h-full ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'}`}>
+          <SideNav setToggleSideNav={setToggleSideNav} toggleSideNav={toggleSideNav}/>
+        </div>
+       <div className='w-full md:main bg-gray-50 md:flex mt-10'>
 
-          <div className='w-1/3 border-r-2'>
+          <div className='md:w-1/3 border-r-2'>
               {rooms.map( (room, index ) =>
                  <div key={index} className={`p-4 w-full border-b-2 cursor-pointer flex items-center hover:bg-gray-200 ${roomIndex === index ? 'bg-gray-200': ''}`} onClick={() => {handleJoin(room); setRoomIndex(index)}}>
                   <div className="text-3xl p-2 bg-green-400 mr-2 rounded-md"><GrTechnology className="fill-green-800"/></div> 
