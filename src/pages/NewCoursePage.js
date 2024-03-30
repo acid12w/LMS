@@ -7,7 +7,7 @@ const NewCourse = () => {
         <div className="w-80 border-r-2 border-gray-100">
           <SideNav />
         </div>
-        <div className="main p-10 bg-gray-50 h-full">
+        <div className="w-full md:main p-10 bg-gray-50 h-full">
           <CourseForm />
         </div>
       </div>

@@ -78,7 +78,7 @@ export const ImageUpload = ({text, subtext, setImageUrl, thumbNail }) => {
       )}
 
       {isUploaded ? (
-        <div className=" w-96 h-72">
+        <div className="w-full md:w-96 mb-2">
           <IoIosClose
             className="text-gray-500 text-2xl absolute p-1 bg-gray-100 fill-black cursor-pointer hover:bg-red-600 hover:fill-white"
             onClick={hideImage}

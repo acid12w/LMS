@@ -110,7 +110,7 @@ return (
             {lessons?.map((lesson, index) => {
                 return (
                 <div
-                    className="w-2/3 block p-4 bg-white shadow-md rounded-md mb-4 relative flex flex-col"
+                    className="md:w-2/3 block p-4 bg-white shadow-md rounded-md mb-4 relative flex flex-col"
                     key={index}>
                     <h4 className="mb-2">Lessons title: {lesson.title}</h4>
                     <Link to={lesson.videoId} className="mb-2 text-green-600 ">
@@ -130,7 +130,7 @@ return (
             })}
         </div>
         
-        <form onSubmit={handleSubmit} className="w-2/3 ">
+        <form onSubmit={handleSubmit} className="md:w-2/3 ">
             <label>
             <input
                 type="text"

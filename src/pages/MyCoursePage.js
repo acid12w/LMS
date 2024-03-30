@@ -23,6 +23,8 @@ const MyCoursePage = () => {
   const userId = useSelector((state) => state.auth.user.userId);
 
   const [tabCount, setTabCount] = useState(null);
+
+  const [toggleSideNav, setToggleSideNav] = useState(false);
  
   const {data} = useGetCourseByInstructorQuery(userId); 
 
@@ -52,23 +54,29 @@ const MyCoursePage = () => {
 
   return (
     <div className="flex">
-        <div className="w-80 border-r-2 border-gray-100">
-          <SideNav/>
+      <button onClick={() => setToggleSideNav(!toggleSideNav)} type="button" class="absolute inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+        <span className="sr-only">Open sidebar</span>
+        <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+        </svg>
+      </button>
+        <div className={`w-80 border-r-2 border-gray-100 fixed z-30 bg-white h-full ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'}`}>
+          <SideNav setToggleSideNav={setToggleSideNav} toggleSideNav={toggleSideNav}/>
         </div>
-        <div className="main p-10 pt-20 bg-gray-50 h-full">
+        <div className="w-full sm:main p-6 md:p-10 pt-20 bg-gray-50 h-full">
           <div>
-            <h2 className="text-center text-lg font-bold mb-12">My Courses</h2>
+            <h2 onClick={()=>{setToggleSideNav(!toggleSideNav)}} className="text-center text-lg font-bold mb-12">My Courses</h2>
             <Swiper
               // install Swiper modules
               spaceBetween={10}
-              slidesPerView={4}
+              slidesPerView={1}
               navigation={true}
               modules={[Pagination, Navigation]}
-              className="mySwiper px-16 mb-20 "
+              className="mySwiper px-16 mb-20 w-full"
             >
               {data.map((course, index) => {
                 return (
-                  <SwiperSlide className="" key={index}>
+                  <SwiperSlide className="w-20" key={index}>
                   <div
                     className={`p-4 bg-white shadow-md mr-4 cursor-pointer flex items-center rounded-md ${tabCount === index ? 'bg-green-200' : ''}`}
                     key={index}

@@ -92,7 +92,7 @@ export const PublishedFrom = ({ isPublished, updateCourse, lessons, courseId }) 
   }
 
   return (
-    <div className="grid grid-cols-2 w-1/3">
+    <div className="grid grid-cols-2 md:w-1/3">
     <form onSubmit={handleSubmitCourse} className=" mt-8 ">
         <div className="flex my-2">
             <h3 className="mr-2">publish</h3>
@@ -113,7 +113,7 @@ export const PublishedFrom = ({ isPublished, updateCourse, lessons, courseId }) 
         
       </form>
       
-      <button onClick={handleRemoveCourse} class="self-end justify-self-start focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Delete</button>
+      <button onClick={handleRemoveCourse} className="self-end justify-self-start focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Delete</button>
     </div>
   );
 };

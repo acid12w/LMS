@@ -73,13 +73,13 @@ export const MainNaviagtion = () => {
                 )}
           {isAuth && (
                   <div
-                    className="mr-4 " 
+                    className="mr-2" 
                     onClick={() => {
                       setToggleMenu(!toggleMenu);
                     }}
                   >
                     <div
-                      className="h-12 w-12 bg-center bg-cover rounded-full mr-4 bg-green-400"
+                      className="h-12 w-12 bg-center bg-cover rounded-full bg-green-400"
                       style={bgStyle}
                     ></div>
                     {toggleMenu && <DropDown userName={user.currentUsername} handleLogout={handleLogout} role={isInstructor}/>}

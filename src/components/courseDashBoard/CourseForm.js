@@ -84,7 +84,7 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
 
       <ImageUpload setImageUrl={setImage} thumbNail={currentCourse.thumbNail}/>
     
-        <form onSubmit={handleSubmitCourse} className=" mb-8 ml-1/3 w-2/3 ">
+        <form onSubmit={handleSubmitCourse} className=" mb-8 ml-1/3 md:w-2/3 ">
         
           <label className="text-sm mr-4 h-12 mt-2">
             Course name
