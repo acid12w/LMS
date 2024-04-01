@@ -55,11 +55,11 @@ export const ImageUpload = ({text, subtext, setImageUrl, thumbNail }) => {
   }
 
   return (
-    <form onSubmit={uploadFile}>
+    <form onSubmit={uploadFile} className="md:w-2/3">
       {/* <label className="p-1">Course Name</label> */}
       <div className="mb-4">
         <h4>{text}</h4>
-        <h5 className="text-sm text-gray-500">
+        <h5 className="text-sm text-gray-500 ">
           {subtext}
         </h5>
       </div>
@@ -94,7 +94,7 @@ export const ImageUpload = ({text, subtext, setImageUrl, thumbNail }) => {
             onChange={(event) => {
               setImageUpload(event.target.files[0]);
             }}
-            className="cursor-pointer bg-gray-200 px-4 py-2 mr-4 text-gray-800 font-semibold my-2 rounded flex"
+            className="w-full cursor-pointer bg-gray-200 px-4 py-2 mr-4 text-gray-800 font-semibold my-2 rounded flex"
           />
           <button
             type="submit"

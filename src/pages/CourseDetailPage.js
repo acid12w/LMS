@@ -152,6 +152,7 @@ const CourseDetail = () => {
                       lessonsArr={courseData.lessons}
                       userData={userCourseData}
                       courseName={courseName}
+                      customStyle={'md:hidden'}
                     />
                   }
                 />
@@ -165,7 +166,7 @@ const CourseDetail = () => {
           lessonsArr={courseData.lessons}
           userData={userCourseData}
           courseName={courseName}
-          style={{display: "none"}}
+          customStyle={'hidden md:block'}
         />
       </div>
     </>

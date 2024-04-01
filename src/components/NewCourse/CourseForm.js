@@ -148,7 +148,7 @@ export const CourseForm = () => {
       <ImageUpload setImageUrl={setImageUrl} />
       <form onSubmit={handleOnSubmit} className="flex flex-col pb-44 md:w-2/3">
        
-      <label className="text-sm mr-4 h-12 mt-2 mb-10">
+      <label className="text-sm md:mr-4 h-12 mt-2 mb-10">
           Course name
           <input
             type="text"
@@ -169,7 +169,7 @@ export const CourseForm = () => {
           )}
       </label>
 
-      <label className="text-sm mr-4 h-12 mt-2 mb-12">
+      <label className="text-sm md:mr-4 h-12 mt-2 mb-12">
           Search subject
           <input
               type="text"
@@ -198,7 +198,7 @@ export const CourseForm = () => {
             </label>
        
          
-            <label className="text-sm mr-4 h-12 mb-10"> 
+            <label className="text-sm md:mr-4 h-12 mb-10"> 
             Difficulty
             <select
               defaultValue={difficulty}
@@ -234,7 +234,7 @@ export const CourseForm = () => {
             />
           </div>
         </div>
-        <label className="text-sm mr-4 mt-2">
+        <label className="text-sm md:mr-4 mt-2">
             Overview
             <textarea
               type="text"

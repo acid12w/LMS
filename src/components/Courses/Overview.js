@@ -32,11 +32,11 @@ export const Overview = ({
   const overviewPara = parse(bio.substring(0, 200)) + '...';
 
   return (
-    <div className="md:flex">
-      <div className="flex-auto md:w-4/5 mb-6">
+    <div className="lg:flex">
+      <div className="flex-auto lg:w-4/5 mb-6">
         <div className=" text-base leading-8 md:pr-20">{parse(overview)}</div>
       </div>
-      <div className="p-4 m-auto bg-gray-50 flex flex-col justify-center items-center md:w-1/3 custom-h-28">
+      <div className="p-4 m-auto bg-gray-50 flex flex-col justify-center items-center lg:w-1/3 custom-h-28">
         <h3 className="pb-3 text-gray-800">About Instructor</h3>
         <div
           className="bg-center bg-cover w-32 h-32 mb-1 rounded-full bg-green-400"

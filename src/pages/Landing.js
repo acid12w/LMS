@@ -32,7 +32,7 @@ const Landing = () => {
     <>
       <Hero />
       <section className="py-20 px-8 sm:px-8 md:px-10 flex flex-wrap items-center justify-center gap-12 bg-gray-100  ">
-        <div className="w-[24rem]  overflow-hidden">
+        <div className="w-[24rem] overflow-hidden">
           <img src={img_1} alt='students writing on a white board' className="w-full"/>
         </div>
         <article className="w-full sm:w-full md:w-6/12">
@@ -60,7 +60,7 @@ const Landing = () => {
             <div className="p-4 shadow-md rounded-full mb-1">
               <CgCode className="text-4xl "/> 
             </div>
-            <h3 className="text-lg">Design</h3>
+            <h3 className="text-lg">Coding</h3>
             <h4 className="text-xs text-gray-400">View More</h4>
           </div>
 
@@ -68,7 +68,7 @@ const Landing = () => {
             <div className="p-4 shadow-md rounded-full mb-1">
               <VscGraph className="text-4xl "/> 
             </div>
-            <h3 className="text-lg">Design</h3>
+            <h3 className="text-lg">Data</h3>
             <h4 className="text-xs text-gray-400">View More</h4>
           </div>
 
@@ -76,7 +76,7 @@ const Landing = () => {
             <div className="p-4 shadow-md rounded-full mb-1">
               <RiPaintFill className="text-4xl "/> 
             </div>
-            <h3 className="text-lg">Design</h3>
+            <h3 className="text-lg">Color</h3>
             <h4 className="text-xs text-gray-400">View More</h4>
           </div>
 

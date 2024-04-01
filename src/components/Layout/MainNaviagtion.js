@@ -60,7 +60,7 @@ export const MainNaviagtion = () => {
 
   return (
     <>
-    <nav className="bg-white border-gray-200">
+    <nav className="bg-white border-gray-200 shadow">
   <div className="w-full flex flex-wrap items-center justify-between p-4">
     <Link className="font-bold p-4 text-green-600" to={urlLink}>G-LMS</Link>
   <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">

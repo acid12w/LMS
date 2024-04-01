@@ -91,7 +91,7 @@ const MessagePage = () => {
                   <div className="text-3xl p-2 bg-green-400 mr-2 rounded-md"><GrTechnology className="fill-green-800"/></div> 
                   <div className=''>
                     <h3 className="text-sm text-gray-800">{room}</h3>
-                    <h3 className='text-xs text-gray-600'rounded>this is the name of the course</h3>
+                    <h3 className='text-xs text-gray-600'rounded>this is the name of the course</h3>  
                   </div>
               </div>
               )}
