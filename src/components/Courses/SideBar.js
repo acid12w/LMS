@@ -10,7 +10,7 @@ export const SideBar = (props) => {
   
   return ( 
     <div className={`border-gray-200 right-0 md:w-1/4 ${props.customStyle}`}>
-      <div className="w-full h-full md:p-6 text-left ">
+      <div className="w-full h-full md:p-2 text-left ">
         <h4 className="text-base mb-2">{`${currentCourse}/${courseLength} courses Completed`}</h4>
         <div className="mb-10 h-2 w-full flex">
           {props.lessonsArr.map((el, i) => {

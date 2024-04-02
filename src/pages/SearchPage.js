@@ -30,7 +30,7 @@ const SearchPage = () => {
 
   return (
     <div className="h-full my-32">
-      <div className="p-8 mx-72 border-b-2 ">
+      <div className="p-2 lg:p-8 mx-20 lg:mx-64 border-b-2 ">
         <h4 className="text-3xl font-bold text-gray-900">Search Results</h4>
       </div>
       {alertText}

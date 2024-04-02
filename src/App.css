@@ -1,7 +1,10 @@
-.main {
-  width: calc(100% - 300px);
-  left: 300px;
+@media (min-width: 1280px) { 
+    .main {
+    width: calc(100% - 305px);
+    left: 300px;
+  }
 }
+
 
 .w-75 {
   width: 300px;
