@@ -1,6 +1,7 @@
 import { Lesson } from "./Lesson";
 import { ProgressBar } from "./progressBar";
 
+
 export const SideBar = (props) => {
   const courseLength = props.lessonsArr.length;
   const barWidth = 100 / courseLength;
@@ -9,9 +10,10 @@ export const SideBar = (props) => {
   const completedLessons = props?.userData?.completedLessons || 0;
   
   return ( 
-    <div className={`border-gray-200 right-0 md:w-1/4 ${props.customStyle}`}>
-      <div className="w-full h-full md:p-2 text-left ">
-        <h4 className="text-base mb-2">{`${currentCourse}/${courseLength} courses Completed`}</h4>
+    <div className={`border-gray-200 right-0 md:w-1/4 p-2 ${props.customStyle}`}>
+      <div className="w-fulls md:p-2 text-left ">
+        <h3 className="text-xl text-bold mt-6">Lessons</h3>
+        <h4 className="text-base mb-14">{`${currentCourse}/${courseLength} courses Completed`}</h4>
         <div className="mb-10 h-2 w-full flex">
           {props.lessonsArr.map((el, i) => {
             let courseNumber = i ;
@@ -25,7 +27,7 @@ export const SideBar = (props) => {
             );
           })}
         </div>
-        {/* <ProgressBar /> */}
+        <ProgressBar />
         {props.lessonsArr.map((el, i) => {
           let currentLesson = i;
           return (

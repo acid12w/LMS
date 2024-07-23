@@ -1,6 +1,9 @@
 import CardOverView from "../components/Card/CardOverView";
 import { CardLoader } from "../components/UI/loading/cardLoader";
 import { useGetAllcoursesQuery } from "../store/courseApiSlice";
+import { Link } from "react-router-dom";
+
+import bg1 from '../assets/hero-3.png'
 
 const Home = () => {
 
@@ -21,7 +24,14 @@ const Home = () => {
 
  
 
-  return (
+  return (<>
+    <section className=" md:py-8 md:px-20">
+        <div className="bg-violet-200 p-16 rounded-lg md:rounded-none bg-center bg-cover h-96 flex flex-col justify-center" style={{backgroundImage: `url(${bg1})`}}>
+            <h2 className="text-white mb-4 text-lg">Learn from the</h2>
+            <h4 className="text-4xl font-bold text-white">Comfort of your own home</h4>
+        </div>
+   
+      </section>
     <section className="bg-white py-4">
       <div className="py-8 text-center">  
         
@@ -30,6 +40,7 @@ const Home = () => {
       {content1}
       {content}
     </section>
+    </>
   );
 };
 

@@ -4,12 +4,11 @@ import classes from "./Hero.module.css";
 const Hero = () => {
   return (
     <div className={classes.hero}>
-      <div className="absolute opacity-60 top-0  right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-green-500"></div>
-      <div className={classes.center}>
-        <h3 className=" text-3xl text-white font-bold ">
-          Re-think how you learn
+      <div className="text-left">
+        <h3 className=" text-5xl text-emerald-900 font-bold mb-3">
+          Re-think how <br></br>you learn
         </h3>
-        <h2 className="white mb-1">
+        <h2 className="text-emerald-900 mb-1">
           SG-LMS is the best online resource for Learning how to<br></br> use
           Creative Skills{" "}
         </h2>
@@ -22,3 +21,5 @@ const Hero = () => {
 };
 
 export default Hero;
+
+

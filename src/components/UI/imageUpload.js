@@ -51,7 +51,8 @@ export const ImageUpload = ({text, subtext, setImageUrl, thumbNail }) => {
   } 
   
   const hideImage = () => {
-    setIsUploaded(false)
+    setImageUrl(null);
+    setIsUploaded(false);
   }
 
   return (

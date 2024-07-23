@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 export const CourseNav = () => {
-  const activeNavStyle = "border-b-4 border-green-500 pb-2 text-green-800";
+  const activeNavStyle = "bg-orange-400 py-1 px-2 rounded text-white";
   return (
     <nav className="flex gap-5 md:gap-10 pb-3">
       <NavLink

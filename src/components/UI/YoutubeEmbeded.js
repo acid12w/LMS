@@ -2,7 +2,7 @@ const YoutubeEmbed = ({ embedId, width, height }) => {
 
   const link = embedId.split("=")[1];
   return (
-    <div className="h-80 md:h-[24rem] lg:h-[30rem]">
+    <div className="h-80 md:h-[24rem] lg:h-[30rem] pl-8">
       <iframe
         width='100%'
         height='100%'
@@ -11,6 +11,7 @@ const YoutubeEmbed = ({ embedId, width, height }) => {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
         title="Embedded youtube"
+        className="rounded-lg"
       />
     </div>
   );
