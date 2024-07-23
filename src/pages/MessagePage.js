@@ -24,7 +24,8 @@ const MessagePage = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [event, setevent] = useState([]);
   const [participants, setParticipants] = useState([]);
-  const [roomIndex, setRoomIndex] = useState("room1") 
+  const [roomIndex, setRoomIndex] = useState(1);
+  const [currentRoom, setCurrentRoom] = useState("General assemblly") 
   const [toggleSideNav, setToggleSideNav] = useState(false);
 
   const user = useSelector(state => state?.auth?.user);
@@ -83,8 +84,9 @@ const MessagePage = () => {
     restMessageInput();
   }
 
-  const handleJoin = (index) => {
-    setRoomIndex(`room${index+ 1}`)
+  const handleJoin = (index, roomName) => {
+    setRoomIndex(`room${index+ 1}`);
+    setCurrentRoom(roomName);
     socket.emit('join', {roomID: `room${index+ 1}`, profileImage: user.profileImage, name: user.currentUsername});     
   }
 
@@ -107,52 +109,54 @@ const MessagePage = () => {
   //                 </li>)
 
   
-  const rooms = ['General assemblly', 'Notice board', 'room3', 'room4', 'room5', 'room6'];
+  const rooms = [{ roomName: 'General assemblly', id: 1 }, { roomName: 'Notice board', id: 2 }];
 
   return (
     <div className="flex">
       
-    <button onClick={() => setToggleSideNav(!toggleSideNav)} type="button" className="absolute inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+    <button onClick={() => setToggleSideNav(!toggleSideNav)} type="button" className="left-2 absolute inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
         <span className="sr-only">Open sidebar</span>
         <svg className="w-6 h-6"  fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
         <path d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
         </svg>
       </button>
-      <div className={`w-full sm:w-1/4 border-r-2 border-gray-100 fixed lg:relative z-30 bg-gray-100 h-full md:h-auto ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'} lg:translate-x-[0]`}>
+      <div className={`w-11/12 sm:w-1/4 border-r-2 border-gray-100 fixed lg:relative z-30 bg-gray-100 h-full md:h-auto ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'} lg:translate-x-[0]`}>
           <SideNav setToggleSideNav={setToggleSideNav} toggleSideNav={toggleSideNav}/>
         </div>
 
-       <div className='w-full md:main gap-4 md:flex'>
+       <div className='w-full md:main gap-4 md:flex'>  
        
-          <div className='w-full md:w-1/3 p-4'>
-            <h4 className='my-8'>Our campus</h4>
+          <div className='w-full md:w-1/3 px-4 pt-10'>
+            <h4 className='my-4'>Our campus</h4>
           <Swiper
           // install Swiper modules
           spaceBetween={0}
           slidesPerView={1}
           navigation={true}
+          // pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
           modules={[Pagination, Navigation]}
-          className="mySwiper md:hidden"
+          className="mySwiper md:hidden mb-4"
         >
            
           {rooms.map( (room, index ) =>
           <SwiperSlide>
-                 <div key={index} className={`p-4 w-full flex rounded-lg cursor-pointer  items-center hover:bg-gray-100 ${roomIndex === `room${index+ 1}` ? 'bg-gray-100': ''}`} onClick={() => {handleleave(); handleJoin(index); }}>
+                 <div key={index} className={`p-4 w-full flex rounded-lg cursor-pointer items-center hover:bg-gray-100 ${roomIndex === room.id ? 'bg-gray-100': ''}`} onClick={() => {handleleave(); handleJoin(index, room.roomName); }}>
                   <div className="text-3xl p-4 bg-cover bg-center mr-2 rounded-full h-12 w-12" style={{backgroundImage: `url(${avatar1})`}}></div> 
                   <div className=''>
-                    <h3 className="text-sm text-gray-800">{room}</h3>
-                    <h3 className='text-xs text-gray-600'rounded>this is the name of the course</h3>  
+                    <h3 className="text-sm text-gray-800">{room.roomName}</h3>
+                    {/* <h3 className='text-xs text-gray-600'rounded>this is the name of the course</h3>   */}
                   </div>
               </div>
               </SwiperSlide>
               )}
         </Swiper>
               {rooms.map( (room, index ) =>
-                 <div key={index} className={`hidden md:flex p-4 w-full rounded-lg cursor-pointer items-center hover:bg-gray-100 ${roomIndex === `room${index+ 1}` ? 'bg-gray-100': ''}`} onClick={() => {handleleave(); handleJoin(index); }}>
+                <div key={index} className={`hidden md:flex p-4 w-full flex rounded-lg cursor-pointer items-center hover:bg-gray-100 ${roomIndex === room.id ? 'bg-gray-100': ''}`} onClick={() => {handleleave(); handleJoin(index, room.roomName); }}>
                   <div className="text-3xl p-4 bg-cover bg-center mr-2 rounded-full h-12 w-12" style={{backgroundImage: `url(${avatar1})`}}></div> 
                   <div className=''>
-                    <h3 className="text-sm text-gray-800">{room}</h3>
-                    <h3 className='text-xs text-gray-600'rounded>this is the name of the course</h3>  
+                    <h3 className="text-xs text-gray-800">{room.roomName}</h3>
+                    {/* <h3 className='text-xs text-gray-600'rounded>this is the name of the course</h3>   */}
                   </div>
               </div>
               )}
@@ -160,11 +164,11 @@ const MessagePage = () => {
 
   
 
-          <div className='p-4 sm:p-8 w-full bg-center bg-cover' style={{
+          <div className='p-0 sm:px-4 sm:p-8 w-full bg-center bg-cover' style={{
             backgroundImage: `url(${img4})`,
             }}>  
-              <div className='grid grid-cols-2 mb-4'>
-                <h2 className='sm:p-4 text-gray-800'>{`Your are now in chat ${roomIndex}`}</h2>
+              <div className='px-4 sm:p-0 grid grid-cols-2 mb-4 drop-shadow-sm border-b'>
+                <h2 className=' bg-violet-200 py-1 px-2 rounded text-sm text-violet-900 w-max self-center'>{currentRoom}</h2>
                 <div className='flex justify-self-end mr-8'>
                   {
                     participants.filter(el => el.roomID === roomIndex).map((participant, index) => {
@@ -199,7 +203,7 @@ const MessagePage = () => {
                   </li>)}
               </ul>
         
-              <form onSubmit={onSubmit} className="m-auto bg-white rounded-2xl flex items-center p-2 sm:p-4 w-full drop-shadow-md w-full sm:w-2/3">
+              <form onSubmit={onSubmit} className="m-auto bg-white sm:rounded-lg flex items-center p-2 sm:p-4 w-full drop-shadow-md w-full sm:w-2/3">
                 <label className="text-sm mr-4 h-12 w-4/5 border-r-2">
                 <input
                     type="text"

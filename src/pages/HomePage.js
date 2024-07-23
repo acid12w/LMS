@@ -26,7 +26,7 @@ const Home = () => {
 
   return (<>
     <section className=" md:py-8 md:px-20">
-        <div className="bg-violet-200 p-16 rounded-lg md:rounded-none bg-center bg-cover h-96 flex flex-col justify-center" style={{backgroundImage: `url(${bg1})`}}>
+        <div className="bg-violet-200 p-16 md:rounded-lg rounded-none bg-center bg-cover h-96 flex flex-col justify-center" style={{backgroundImage: `url(${bg1})`}}>
             <h2 className="text-white mb-4 text-lg">Learn from the</h2>
             <h4 className="text-4xl font-bold text-white">Comfort of your own home</h4>
         </div>

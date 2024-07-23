@@ -11,11 +11,29 @@
 }
 
 .swiper-button-next {
-  color: #afafaf !important;
+  background-image: url(../src/assets/right-arrow-1.svg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+
+.swiper-button-next::after {
+  display: none;
 }
 
 .swiper-button-prev {
-  color: #afafaf !important;
+  color: #1a03ae !important;
+}
+
+.swiper-button-prev {
+  background-image: url(../src/assets/left-arrow-1.svg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+
+.swiper-button-prev::after {
+  display: none;
 }
 
 
