@@ -2,7 +2,7 @@ const YoutubeEmbed = ({ embedId, width, height }) => {
 
   const link = embedId.split("=")[1];
   return (
-    <div className="h-80 md:h-[24rem] lg:h-[30rem] pl-8">
+    <div className="h-80 md:h-[24rem] lg:h-[30rem] p-1 ">
       <iframe
         width='100%'
         height='100%'

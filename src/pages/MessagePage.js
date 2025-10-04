@@ -30,7 +30,7 @@ const MessagePage = () => {
 
   const user = useSelector(state => state?.auth?.user);
 
-  console.log(participants)
+  console.log(event)
 
   useEffect(() => {
     function onConnect() {
@@ -44,6 +44,7 @@ const MessagePage = () => {
     }
 
     function onFooEvent(value) {
+      console.log(value)
       setevent(previous => [...previous, value]);
     }
 
@@ -51,22 +52,28 @@ const MessagePage = () => {
       setParticipants(value);
     }
 
+    function onException(value) {
+      console.log(value)
+    }
+
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
     socket.on('message', onFooEvent);
     socket.on('participants', onParticipant);
+    socket.on('exception', onException);
 
     return () => {
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);
       socket.off('foo', onFooEvent);
       socket.off('foo', onParticipant);
+      socket.off('exception', onException);
     };
   }, []);
 
   const {
         value: messageInput,
-        // isValid: courseNameisValid,
+        isValid: messageisValid,
         // hasError: courseNameHasError,
         valueChangeHandler: courseNameChangeHandler,
         // inputBlurHandler: courseBlurHandler,
@@ -77,15 +84,16 @@ const MessagePage = () => {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    if(messageInput.trim() === '') return;
+    if(!messageisValid) return;
 
     console.log(messageInput)
-    socket.emit('message', {msg: messageInput, room: roomIndex, name: user.currentUsername, profileImage:user.profileImage});    
+    socket.emit('message', {msg: messageInput, roomID: roomIndex, name: user.currentUsername, profileImage:user.profileImage});    
     restMessageInput();
   }
 
   const handleJoin = (index, roomName) => {
-    setRoomIndex(`room${index+ 1}`);
+
+    setRoomIndex(`room${index + 1}`);
     setCurrentRoom(roomName);
     socket.emit('join', {roomID: `room${index+ 1}`, profileImage: user.profileImage, name: user.currentUsername});     
   }
@@ -120,9 +128,9 @@ const MessagePage = () => {
         <path d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
         </svg>
       </button>
-      <div className={`w-11/12 sm:w-1/4 border-r-2 border-gray-100 fixed lg:relative z-30 bg-gray-100 h-full md:h-auto ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'} lg:translate-x-[0]`}>
+      <div className={`w-11/12 md:w-4/12  drop-shadow fixed lg:relative lg:h-auto z-30 bg-gray-100 h-full ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'} lg:translate-x-[0]`}>
           <SideNav setToggleSideNav={setToggleSideNav} toggleSideNav={toggleSideNav}/>
-        </div>
+      </div>
 
        <div className='w-full md:main gap-4 md:flex'>  
        
@@ -138,13 +146,12 @@ const MessagePage = () => {
           modules={[Pagination, Navigation]}
           className="mySwiper md:hidden mb-4"
         >
-           
           {rooms.map( (room, index ) =>
           <SwiperSlide>
-                 <div key={index} className={`p-4 w-full flex rounded-lg cursor-pointer items-center hover:bg-gray-100 ${roomIndex === room.id ? 'bg-gray-100': ''}`} onClick={() => {handleleave(); handleJoin(index, room.roomName); }}>
+                 <div key={index} className={`p-4 w-full mb-2 flex rounded-lg cursor-pointer items-center hover:bg-gray-100 ${roomIndex === room.id ? 'bg-violet-200': ''}`} onClick={() => {handleleave(); handleJoin(index, room.roomName); }}>
                   <div className="text-3xl p-4 bg-cover bg-center mr-2 rounded-full h-12 w-12" style={{backgroundImage: `url(${avatar1})`}}></div> 
                   <div className=''>
-                    <h3 className="text-sm text-gray-800">{room.roomName}</h3>
+                    <h3 className="text-sm text-gray-800 mb-4">{room.roomName}</h3>
                     {/* <h3 className='text-xs text-gray-600'rounded>this is the name of the course</h3>   */}
                   </div>
               </div>
@@ -152,7 +159,7 @@ const MessagePage = () => {
               )}
         </Swiper>
               {rooms.map( (room, index ) =>
-                <div key={index} className={`hidden md:flex p-4 w-full flex rounded-lg cursor-pointer items-center hover:bg-gray-100 ${roomIndex === room.id ? 'bg-gray-100': ''}`} onClick={() => {handleleave(); handleJoin(index, room.roomName); }}>
+                <div key={index} className={`hidden md:flex p-4 w-full mb-2 flex rounded-lg cursor-pointer items-center hover:bg-gray-100 ${roomIndex === room.id ? 'bg-violet-200': ''}`} onClick={() => {handleleave(); handleJoin(index, room.roomName); }}>
                   <div className="text-3xl p-4 bg-cover bg-center mr-2 rounded-full h-12 w-12" style={{backgroundImage: `url(${avatar1})`}}></div> 
                   <div className=''>
                     <h3 className="text-xs text-gray-800">{room.roomName}</h3>
@@ -162,12 +169,11 @@ const MessagePage = () => {
               )}
           </div>
 
-  
 
           <div className='p-0 sm:px-4 sm:p-8 w-full bg-center bg-cover' style={{
             backgroundImage: `url(${img4})`,
             }}>  
-              <div className='px-4 sm:p-0 grid grid-cols-2 mb-4 drop-shadow-sm border-b'>
+              <div className='px-4 sm:p-0 grid grid-cols-2 drop-shadow-sm pb-1 border-b'>
                 <h2 className=' bg-violet-200 py-1 px-2 rounded text-sm text-violet-900 w-max self-center'>{currentRoom}</h2>
                 <div className='flex justify-self-end mr-8'>
                   {
@@ -187,7 +193,7 @@ const MessagePage = () => {
 
               <ul className='h-[70vh] sm:p-10 overflow-y-scroll flex flex-col'>
                 <h4 className='text-center text-gray-300 pb-6'>Today</h4>
-                  {event.filter((message)=> message.content.room === roomIndex).map((message, index) =>  
+                  {event.filter((message)=> message.content.roomID === roomIndex).map((message, index) =>  
                   <li key={index} class={`flex items-center gap-2.5 ${user.currentUsername === message.content.name ? 'self-start': 'self-end flex-row-reverse'}`}>
                     <img class="h-6 w-6 bg-center bg-cover rounded-full ml-4 bg-green-400" src={message.content.profileImage} alt="profile picture"/>
                   <div class="flex flex-col gap-1 w-full max-w-[500px] ">

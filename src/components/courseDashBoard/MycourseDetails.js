@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"; 
 
 import { CousreFrom } from "./CourseForm";
-import { LessonForm } from "./LessonForm";
+import { LessonForm } from "../../pages/LessonForm";
 import { PublishedFrom } from "./PublishedForm";
 
 import { useUpdateCourseMutation } from "../../store/courseApiSlice";
@@ -18,8 +18,8 @@ export const MyCousreDetails = ({ myCourses }) => {
   return (
     <div className="h-full">
       <CousreFrom myCourses={myCourses} isPublished={currentCourse.isPublished}/>
-      <LessonForm lessons={lessons } courseId={courseId}/>
       <PublishedFrom updateCourse ={updateCourse} courseId={courseId} isPublished={currentCourse.isPublished} lessons={lessons}/>
     </div>
   );
 };
+

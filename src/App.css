@@ -6,12 +6,14 @@
 }
 
 
+
+
 .w-75 {
   width: 300px;
 }
 
 .swiper-button-next {
-  background-image: url(../src/assets/right-arrow-1.svg);
+  background-image: url(../src/assets/right-arrow.svg);
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;
@@ -26,7 +28,7 @@
 }
 
 .swiper-button-prev {
-  background-image: url(../src/assets/left-arrow-1.svg);
+  background-image: url(../src/assets/left-arrow.svg);
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;
@@ -53,9 +55,10 @@
 }
 
 .tag-wrapper.ReactTags__tag {
-  padding: 10px;
-  background-color: #eee;
-  border: rgb(73, 73, 73) 2px solid;
+  padding: 5px;
+  background-color: #00a6f4;
+  color: #dff2fe;
+  border-radius: 5px;
   margin-right: 5px;
 }
 
@@ -64,7 +67,9 @@
 }
 
 .ReactTags__tagInputField {
-  background-color: #eee;
+  background-color: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
   padding: 10px;
   width: 100%;
 }

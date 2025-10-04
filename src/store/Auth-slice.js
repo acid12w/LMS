@@ -17,6 +17,7 @@ export const AuthSlice = createSlice({
     },
 
     setUpdateProfileImage: (state, action) => {
+      console.log(action.payload)
       state.user.profileImage = action.payload
     },
 

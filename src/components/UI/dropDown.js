@@ -14,9 +14,11 @@ export const DropDown = ({ userName, handleLogout, role }) => {
             Profile
           </li>
         </Link>
-        {!role ||<Link to="/my-course"> <li className="rounded-md text-sm hover:bg-gray-100 text-gray-500 p-2 w-full">
-          Dash board
-        </li></Link>}
+        {role || <Link to="/my-courses"> 
+          <li className="rounded-md text-sm hover:bg-gray-100 text-gray-500 p-2 w-full">
+            Dash board
+          </li>
+        </Link>}
         {/* <li className="text-sm border-t border-gray-200 hover:bg-green-200 text-green-500 p-2 w-full">
           <Link to="/new-course">create course</Link>
         </li>  */}

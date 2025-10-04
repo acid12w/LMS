@@ -27,6 +27,8 @@ const CourseDetail = () => {
     (state) => state.auth.user
   );
 
+  console.log(user)
+
  
   
   const userId = useSelector(
@@ -114,7 +116,7 @@ const CourseDetail = () => {
             <h3>{rating.toFixed(1)}</h3>
           </div>
           <YoutubeEmbed embedId={videoId} width={90} height={680}/>
-          <div className="pl-8 pt-4">
+          <div className="p-1 sm:pl-8 sm:pt-4 ">
             <CourseNav />
             <div className="py-12">
               <Routes>

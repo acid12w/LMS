@@ -10,10 +10,10 @@ export const SideBar = (props) => {
   const completedLessons = props?.userData?.completedLessons || 0;
   
   return ( 
-    <div className={`border-gray-200 right-0 md:w-1/4 p-2 ${props.customStyle}`}>
+    <div className={`border-gray-200 right-0 md:w-1/4 md:p-2 ${props.customStyle}`}>
       <div className="w-fulls md:p-2 text-left ">
-        <h3 className="text-xl text-bold mt-6">Lessons</h3>
-        <h4 className="text-base mb-14">{`${currentCourse}/${courseLength} courses Completed`}</h4>
+        <h3 className="text-base text-bold">Lessons</h3>
+        <h4 className="text-sm mb-14">{`${currentCourse}/${courseLength} courses Completed`}</h4>
         <div className="mb-10 h-2 w-full flex">
           {props.lessonsArr.map((el, i) => {
             let courseNumber = i ;

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { CourseForm } from "../components/NewCourse/CourseForm";
+import { CoursesForm } from "../components/courseDashBoard/CoursesForm";
 import { SideNav } from "../components/UI/SideNav";
 
-const NewCourse = () => {
+const CoursesPage = () => {
   const [toggleSideNav, setToggleSideNav] = useState(false);
 
   return (
@@ -13,14 +13,15 @@ const NewCourse = () => {
         <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
         </svg>
       </button>
-      <div className={`w-11/12 md:w-[29%] fixed lg:relative lg:h-auto z-30 bg-white h-full  ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'} lg:translate-x-[0]`}>
+      <div className={`w-11/12 md:w-[26em] fixed lg:relative lg:h-auto z-30 bg-white h-full border-r-2 border-gray-50 ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'} lg:translate-x-[0]`}>
           <SideNav setToggleSideNav={setToggleSideNav} toggleSideNav={toggleSideNav}/>
       </div>
-        <div className="w-full md:main p-6 bg-gray-50 h-full">
-          <CourseForm />
+        <div className="w-full md:main p-6 mt-10 h-full bg-gray-50 ">
+          <CoursesForm />
+          <div className="h-[30vh]"></div>
         </div>
       </div>
   );
 };
 
-export default NewCourse;
+export default CoursesPage;

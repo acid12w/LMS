@@ -18,13 +18,12 @@ export const CourseForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [addCourse, { data, isLoading, error, isError, isSuccess }] = useAddCourseMutation();
+  const [addCourse] = useAddCourseMutation();
 
 
   const [imageUrl, setImageUrl] = useState(null);
   const [tags, setTags] = React.useState([]);
 
-  const tagisValid = tags.length > 0;
   const imageUrlisValid = imageUrl != null;
 
   const {
@@ -130,7 +129,7 @@ export const CourseForm = () => {
               message: "your course was created",
             })
           );
-        navigate({ pathname: "/my-course" })
+        navigate({ pathname: "/my-courses" })
         })
         .catch((error) => {
           dispatch(
@@ -145,7 +144,9 @@ export const CourseForm = () => {
 
   return (
     <> 
-      <ImageUpload setImageUrl={setImageUrl} />
+    <div className="w-2/3">
+        <ImageUpload setImageUrl={setImageUrl} />
+    </div>
       <form onSubmit={handleOnSubmit} className="flex flex-col pb-44 md:w-2/3">
        
       <label className="text-sm h-12 mt-2 mb-10">
@@ -158,7 +159,7 @@ export const CourseForm = () => {
             onBlur={courseBlurHandler}
             onChange={courseNameChangeHandler}
             placeholder="Course name"
-            className={`${"bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 mt-1 rounded-md focus:text-black"} ${
+            className={`${"block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"} ${
               courseNameHasError ? "outline outline-red-600" : ""
             }`}
           />
@@ -179,7 +180,7 @@ export const CourseForm = () => {
               onBlur={subjectBlurHandler}
               onChange={subjectChangeHandler}
               placeholder="Search subjects..."
-              className={`${"bg-gray-100 text-gray-500 h-full w-full p-4 mt-1 rounded-md focus:text-black"} ${
+              className={`${"block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"} ${
                 subjectHasError ? "outline outline-red-600" : ""
               }`}
           />
@@ -206,7 +207,7 @@ export const CourseForm = () => {
               name="difficulty"
               id="difficulty"
               required
-              className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-1 focus:text-black"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="beginner" >Beginner</option>
               <option value="intermediate">Intermediate</option>
@@ -231,6 +232,7 @@ export const CourseForm = () => {
               handleTagClick={handleTagClick}
               inputFieldPosition="bottom"
               autocomplete
+              classNames="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>
@@ -244,7 +246,7 @@ export const CourseForm = () => {
               onBlur={overviewBlurHandler}
               onChange={overviewChangeHandler}
               placeholder="Overview..."
-              className={`${"bg-gray-100 text-gray-500 h-36 w-full border-none outline-none p-4 mb-1 mt-2 rounded-md"} ${
+              className={`${"block p-2.5 mb-4 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"} ${
                 overviewHasError ? "outline border-red-100" : ""
               }`}
           />

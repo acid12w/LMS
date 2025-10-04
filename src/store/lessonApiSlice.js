@@ -10,11 +10,26 @@ export const lessonApiSlice = apiSlice.injectEndpoints({
             }),
             providesTags: ['Lesson'],
         }),
+        getLessonByCourseId: builder.query({
+            query: (lessonId) => ({
+            url: `/lesson/course/${lessonId}`,
+            method: 'GET',
+            }),
+            providesTags: ['Lesson'],
+        }),
         addLesson: builder.mutation({
             query: (payload) => ({
             url: `/lesson/create`,
             method: 'POST',
             body: payload, 
+            }),
+            invalidatesTags: ['Lesson']
+        }),
+        updateLesson: builder.mutation({
+            query: (payload) => ({
+            url: `/lesson/edit/${payload.data.id}`,
+            method: 'PATCH',
+            body: payload.data, 
             }),
             invalidatesTags: ['Lesson']
         }),
@@ -31,6 +46,8 @@ export const lessonApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetLessonQuery,
+    useGetLessonByCourseIdQuery,
     useAddLessonMutation,
+    useUpdateLessonMutation,
     useRemoveLessonMutation,
 } = lessonApiSlice;

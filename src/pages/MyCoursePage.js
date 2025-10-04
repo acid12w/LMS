@@ -1,34 +1,26 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { MyCousre } from "../components/courseDashBoard/MyCousre";
-import { SideNav } from "../components/UI/SideNav";
 
-import { GrTechnology } from "react-icons/gr";
-
-import { Navigation, Pagination } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
-
+import { IoIosArrowRoundBack } from "react-icons/io";
 import { useGetCourseByInstructorQuery } from "../store/courseApiSlice";
 
 const MyCoursePage = () => {
 
-  const courseId = useParams()["*"];
   const userId = useSelector((state) => state.auth.user.userId);
 
-  const [tabCount, setTabCount] = useState(null);
 
   const [toggleSideNav, setToggleSideNav] = useState(false);
  
   const {data} = useGetCourseByInstructorQuery(userId); 
 
   const navigate = useNavigate(); 
+
+    const goBack = () => {
+      navigate(-1); // Navigates to the previous page
+    };
   
   if(!data){
     return < div className="w-screen h-screen flex justify-center items-center ">
@@ -42,17 +34,6 @@ const MyCoursePage = () => {
 </div>
   }
 
-  const navTo = (id) => {
-    navigate(`/my-course/${id}`, {
-      replace: true,
-    });
-  };
-
-  const currentCourse = data?.find((course) => course._id === courseId);
-
-
-
-
   return (
     <div className="flex">
       <button onClick={() => setToggleSideNav(!toggleSideNav)} type="button" class="absolute left-4 lg:hidden inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
@@ -61,60 +42,15 @@ const MyCoursePage = () => {
         <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
         </svg>
       </button>
-        <div className={`w-80 border-r-2 border-gray-100 fixed lg:relative z-30 bg-white h-full ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'} lg:translate-x-[0]`}>
-          <SideNav setToggleSideNav={setToggleSideNav} toggleSideNav={toggleSideNav}/>
-        </div>
-        <div className="w-full main p-6 md:p-10 pt-20 bg-gray-50 h-full">
+        <div className="w-full p-6 mt-10 h-full">
           <div>
             <h2 onClick={()=>{setToggleSideNav(!toggleSideNav)}} className="text-center text-lg font-bold mb-12">My Courses</h2>
-            <Swiper
-              // install Swiper modules
-              spaceBetween={10}
-              slidesPerView={1}
-              navigation={true}
-              modules={[Pagination, Navigation]}
-              breakpoints= {{
-                // when window width is <= 499px
-                640: {
-                    slidesPerView: 1,
-                    spaceBetweenSlides: 30
-                },
-                // when window width is <= 999px
-                768: {
-                    slidesPerView: 2,
-                    spaceBetweenSlides: 40
-                },
-                1024: {
-                  slidesPerView: 4,
-                  spaceBetweenSlides: 40
-                }
-            }}
-              className="mySwiper px-16 mb-20 w-full"
-            >
-              {data.map((course, index) => {
-                return (
-                  <SwiperSlide className="w-20" key={index}>
-                  <div
-                    className={`p-4 bg-white shadow-md mr-4 cursor-pointer flex items-center rounded-md ${tabCount === index ? 'bg-green-200' : ''}`}
-                    key={index}
-                    onClick={() => {
-                      navTo(course._id);
-                      setTabCount(index)
-                    }}
-                  >
-                    <div className="text-3xl p-2 bg-green-400 mr-2 rounded-md"><GrTechnology className="fill-green-800"/></div> 
-                    <div>
-                    <h3 className="text-sm text-gray-800">{course.courseName}</h3>
-                    <h3 className='text-xs text-gray-600'rounded>{course.subject}</h3>
-                    </div>
-                
-                  </div>
-                  </SwiperSlide>
-                );
-              })}
-              </Swiper>
             
-           {currentCourse === undefined ? <p className="h-96">Select a course to begin...</p> : <MyCousre myCourses={data} /> }
+             <div className="">
+                <span className="cursor-p flex items-center mb-8 cursor-pointer" onClick={()=> goBack()}><IoIosArrowRoundBack className="w-6 h-6"/> <p className="text-xs">Back to courses</p></span>
+                <MyCousre myCourses={data} /> 
+            </div> 
+          
           </div>
         </div>
       </div>

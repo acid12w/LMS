@@ -1,41 +1,103 @@
-import React, { useState, useRef } from "react";
-import { useParams } from "react-router-dom"; 
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom"; 
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 
+import { useAddLessonMutation, useGetLessonByCourseIdQuery} from "../../store/lessonApiSlice";
+
 import { useUpdateCourseMutation } from "../../store/courseApiSlice";
 import { ImageUpload } from "../UI/imageUpload";
-// import useInput from "../../hooks/use-input";
+import { MdOutlineDashboardCustomize } from "react-icons/md";
+import { MdOutlineModeEdit } from "react-icons/md";
+import { IoMdApps } from 'react-icons/io';
+
+
+import { gsap } from 'gsap';
+import { Draggable } from 'gsap/Draggable';
+
+gsap.registerPlugin(Draggable);
 
 
 export const CousreFrom = ({ myCourses }) => {
 
 const dispatch = useDispatch();
 const params = useParams();
+const navigate = useNavigate(); 
 
-const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
+const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation();
+const [addLesson] = useAddLessonMutation(); 
 
-  const courseId = params.id;
+const courseId = params.id;
 
-  const currentCourse = myCourses?.find((course) => course._id === courseId);
-  const [isChecked, setIsChecked] = useState(currentCourse.imageFull);
-  const [image, setImage] = useState();
+const {data} = useGetLessonByCourseIdQuery(courseId); 
+const currentCourse = myCourses?.find((course) => course._id === courseId);
+const [image, setImage] = useState();
+
+console.log(data);
+
+useEffect(() => {
+    setItems(data)
+  },[data]);
+
+
+  const [editState, setToggleEditState] = useState({
+    courseName: true,
+    subject: true,
+    description: true,
+    lesson: true,
+  }); 
+  
+  const [items, setItems] = useState(null);
+  const [dragIndex, setDragIndex] = useState(null);
+
+  const handleDragOver = (e) => {
+    e.preventDefault()
+  }
+
+  const handleDragStart = (index) => {
+    setDragIndex(index)
+  }
+
+
+  const handleDrop = function (index) {
+      const newItems = [...items];
+      const draggedItem = newItems[dragIndex]
+      newItems.splice(dragIndex, 1);
+      newItems.splice(index, 0, draggedItem);
+      setItems(newItems);
+      setDragIndex(null);
+      // gsap.to(draggedItem, { y: 0, duration: 0.3 });
+    }
+      
+
+
+  const handleToggle = (key) => {
+    setToggleEditState(prevToggles => ({
+      ...prevToggles,
+      [key]: !prevToggles[key], // Toggle the specific state using the key
+    }));
+  };
 
   const courseNameInput = useRef();
   const overviewInput = useRef();
   const subjectInput = useRef();
   const difficultyInput = useRef();
+  const lessonInput = useRef();
 
-  const changeHandler = (e) => {
-    setIsChecked(!isChecked)
+  if(!data){
+    return<p>loading</p>;
   }
-
-  const handleSubmitCourse = async (e) => {
-    e.preventDefault()
    
-    if(courseNameInput.current.value.trim() && subjectInput.current.value.trim() && overviewInput.current.value.trim() && difficultyInput.current.value.trim() === ""){
-        return
-    }
+ const navTo = (id) => {
+    navigate(`/lesson/${id}`, {
+      replace: true,
+    });
+  };
+ 
+
+
+  const handleCourseNameSubmitt = async (e) => {
+    e.preventDefault();
 
     if(isUpdating){
       dispatch(
@@ -47,18 +109,23 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
       );
     }
 
+    
     try{
         const data = {};
+        const courseName = courseNameInput.current.value.trim();
+        const overview = overviewInput?.current?.value.trim();
+        const subject = subjectInput?.current?.value.trim();
+        const difficulty = difficultyInput?.current?.value.trim();
 
-        if(courseNameInput.current.value.trim() !== '') data.courseName = courseNameInput.current.value;
-        if(image != null) data.thumbNail = image;
-        if(overviewInput.current.value.trim() !== '') data.overview = overviewInput.current.value;
-        if(subjectInput.current.value.trim() !== '') data.subject = subjectInput.current.value;
-        if(difficultyInput.current.value !== currentCourse.difficulty && difficultyInput.current.value.trim() !== '') data.difficulty = difficultyInput.current.value;
-        if(isChecked !== currentCourse.imageFull) data.imageFull = isChecked;
+        console.log(courseName, '')
 
-        if(Object.keys(data).length === 0) return;
-      
+        if(courseName !== '' )  data.courseName = courseName;
+        if(overview !== '' )  data.overview = overview; 
+        if(subject !== '' )  data.subject = subject;
+        // if(difficulty !== '' )  data.courseName = difficulty;
+
+        console.log(data)
+        
         await updateCourse({data, id: courseId});
 
         dispatch(
@@ -69,6 +136,7 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
           })
       );
     }catch(err){
+      console.log(err)
       dispatch(
         uiActions.showAlert({
           status: "error",
@@ -77,28 +145,167 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
         })
     );
     }
-  } 
+  }
+
+  const handleLessonSubmit = async (e) => {
+      e.preventDefault();
+
+      const title = lessonInput.current.value.trim();
+      
+      if(isUpdating){
+          dispatch(
+              uiActions.showAlert({
+                  status: "pending",
+                  title: "Sending!",
+                  message: "Lesson is beeing added",
+              })
+          );
+      }
+  
+      try{
+
+          await addLesson({title, courseId});
+  
+          dispatch(
+              uiActions.showAlert({
+                status: "success",
+                title: "Success!",
+                message: "Lesson has been added",
+              })
+          );
+
+      }catch(err){
+          dispatch(
+              uiActions.showAlert({
+                status: "error",
+                title: "Error!",
+                message: "sending failed",
+              })
+          );
+      }
+      
+  };
+
+
 
   return (
-  <>
-
-      <ImageUpload setImageUrl={setImage} thumbNail={currentCourse.thumbNail}/>
+  <div className="flex gap-x-4">
     
-        <form onSubmit={handleSubmitCourse} className=" mb-8 ml-1/3 md:w-2/3 ">
-        
-          <label className="text-sm mr-4 h-12 mt-2">
-            Course name
+    <div className="w-1/2">
+    <div className="flex items-center gap-x-4 mb-8">
+        <div className="p-1 rounded-full bg-green-100"><MdOutlineDashboardCustomize className="w-[30px] h-[30px] fill-green-700" /></div> 
+        <p>Customize your course</p>
+    </div> 
+      <div className="bg-[#e6efe9] p-4 rounded-md mb-4 flex justify-center">
+          <ImageUpload setImageUrl={setImage} thumbNail={currentCourse.thumbNail}/>
+      </div>
+    
+      <div className="bg-[#e6efe9] p-4 rounded-md">
+          <div className="flex justify-between mb-4"><p>Course name</p> <button onClick={() => handleToggle("courseName")} className="text-gray-800 text-xs px-4 py-1 flex items-center rounded">{editState.courseName ? <p className="flex gap-x-3"><MdOutlineModeEdit className="w-6 h-6" /> Edit</p> : <p > Cencel</p>}</button></div> 
+          { !editState.courseName || <p className="text-sm text-gray-600">{currentCourse.courseName}</p>}
+          {editState.courseName ||<form onSubmit={handleCourseNameSubmitt} className="flex flex-col gap-6 items-left" >
+            <label className="text-sm ">
             <input
             type="text"
-            id="firstName"
+            id="courseName"
             ref={courseNameInput}
             key={currentCourse.courseName}
             defaultValue={currentCourse.courseName}
-            className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 mb-1 mt-2"
+            className="bg-white text-gray-500 h-full rounded-md w-full border-none outline-none p-4"
             />
           </label>
+          <button type="submitt" className="w-min focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Save</button>   
+        </form>}
+      </div>
+
+      <div className="bg-[#e6efe9] p-4 rounded-md mt-4">
+          <div className="flex justify-between mb-4"><p>Subject</p> <button onClick={() => handleToggle("subject")} className="text-gray-800 text-xs px-4 py-1 flex items-center rounded">{editState.subject ? <p className="flex gap-x-3"><MdOutlineModeEdit className="w-6 h-6" /> Edit</p> : <p > Cencel</p>}</button></div> 
+          { !editState.subject || <p className="text-sm text-gray-600">{currentCourse.subject}</p>}
+          {editState.subject ||<form onSubmit={handleCourseNameSubmitt} className="flex flex-col gap-6 items-left">
+            <label className="text-sm">
+            <input
+            type="text"
+            id="Subject"
+            ref={subjectInput}
+            key={currentCourse.subject}
+            defaultValue={currentCourse.subject}
+            className="bg-white text-gray-500 h-full rounded-md w-full border-none outline-none p-4"
+            />
+          </label>
+          <button type="submitt" className="w-min focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Save</button>   
+        </form>}
+      </div>
+
+      <div className="bg-[#e6efe9] px-4 py-2 rounded-md mt-4">
+          <div className="flex justify-between mb-4"><p>Description</p> <button onClick={() => handleToggle("description")} className="text-gray-800 text-xs px-4 py-1 flex items-center rounded">{editState.description ? <p className="flex gap-x-3"><MdOutlineModeEdit className="w-6 h-6" /> Edit</p>: <p > Cencel</p>}</button></div> 
+          { !editState.description || <p className="text-sm text-gray-600">{currentCourse.overview}</p>}
+          {editState.description ||<form onSubmit={handleCourseNameSubmitt} className="flex flex-col gap-6 items-left" >
+          <label className="text-sm">
+            <textarea
+            type="text"
+            id="overview"
+            ref={overviewInput}
+            key={currentCourse.overview}
+            defaultValue={currentCourse.overview}
+            className="bg-white text-gray-500 h-36 w-full border-none outline-none p-4" 
+            />
+          </label>
+          <button type="submitt" className="w-min focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Save</button>   
+        </form>}
+      </div>
+    </div>
+
+    <div className="w-1/2">
+      <div className="flex items-center gap-x-4 mb-8">
+        <div className="p-1 rounded-full bg-green-100"><MdOutlineDashboardCustomize className="w-[30px] h-[30px] fill-green-700" /></div> 
+        <p>Customize your lesson</p>
+      </div> 
+      <div className="bg-[#e6efe9] p-4 rounded-md flex flex-col gap-4">
+          <div className="flex justify-between"><p>Lessons</p> <button onClick={() => handleToggle("lesson")} className="text-gray-800 text-xs px-4 py-1 flex items-center rounded">{editState.lesson ? <p className="flex"><MdOutlineModeEdit className="w-6 h-6" /> Add a lesson</p> : <p > Cencel</p>}</button></div> 
+        <div className="reorderable-list">
+        {items?.map((lesson, index )=> {
+            return(
+                <div 
+                key={index} 
+                draggable
+                onDragStart={()=> handleDragStart(index)} 
+                onDragOver={handleDragOver} 
+                onDrop={()=> handleDrop(index)}  
+                className={"bg-green-300 p-2 rounded-md flex justify-between mb-4"}>
+                  <div className="flex items-center">
+                  <IoMdApps className="h-8 w-8 fill-green-600"/>
+                  <p className="text-xs">{lesson?.title}</p>
+                  </div>
+                  <div className="flex">
+                    <span className="bg-green-600 px-[14px] py-[0px] text-xs text-white leading-8 rounded-full">Draft</span>
+                    <button onClick={() => navTo(lesson._id)} className="text-green-800 text-xs px-4 py-1 flex items-center rounded">{<MdOutlineModeEdit className="w-6 h-6" />}</button>
+                  </div>
+                </div>
+            )
+          }) 
+        }
+        </div>
+
+       
+          {editState.lesson ||<form onSubmit={handleLessonSubmit} className="">
+            <label className="text-sm">
+            <input
+            type="text"
+            id="Subject"
+            ref={lessonInput}
+            key={currentCourse.courseName}
+            defaultValue={currentCourse.courseName}
+            className="bg-white text-gray-500 h-full rounded-md w-full border-none outline-none p-4"
+            />
+          </label>
+          <button type="submitt" className="mt-4 block focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create</button>   
+        </form>}
+      </div>
+    </div>
+      
+        
     
-          <label className="text-sm mr-4 h-12 mt-2">
+          {/* <label className="text-sm mr-4 h-12 mt-2">
             Subject
             <input
             type="text"
@@ -108,9 +315,9 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
             defaultValue={currentCourse.subject}
             className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 mb-1 mt-2"
             />
-          </label> 
+          </label>  */}
 
-          <label className="text-sm mr-4 h-12 mb-10"> 
+          {/* <label className="text-sm mr-4 h-12 mb-10"> 
               Difficulty
               <select
               // onChange={difficultyChangeHandler}
@@ -128,7 +335,7 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
             </label>
 
           <label className="text-sm mr-4 h-12 mt-2">
-            Overview
+            Description
             <textarea
             type="text"
             id="firstName"
@@ -148,8 +355,8 @@ const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation()
             id="imageFull" 
             onChange={changeHandler}/> 
           </label>   
-          <button type="submit" class="mt-4 block focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Save</button>   
-        </form>
-        </>
+          <button type="submit" className="mt-4 block focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Save</button>   
+         */}
+        </div>
   );
 };

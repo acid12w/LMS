@@ -8,8 +8,7 @@ import { MainNaviagtion } from "./components/Layout/MainNaviagtion";
 
 import RequireAuth from "./pages/RequireAuth";
 import Alert from "./components/UI/Alert";
-import PersistLogin from "./pages/PersistLogin";
-
+import PersistLogin from "./pages/PersistLogin"; 
 
 const Home = React.lazy(() => import("./pages/HomePage"));
 const SearchPage = React.lazy(() => import("./pages/SearchPage"));
@@ -23,6 +22,10 @@ const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
 const MessagePage = React.lazy(() => import("./pages/MessagePage"));
 const Landing = React.lazy(() => import("./pages/Landing"));
 const Unauthorized = React.lazy(() => import("./pages/Unauthorized"));
+const LessonForm = React.lazy(() => import("./pages/LessonForm"));
+const CoursesPage = React.lazy(() => import("./pages/CoursesPage"));
+
+
 
 
 
@@ -71,7 +74,9 @@ function App() {
               </Route>
               <Route element={<RequireAuth allowedRole={["instructor"]}/>}>
                 <Route path="/new-course" element={<NewCourse />} />
+                <Route path="/my-courses/" element={<CoursesPage />} />
                 <Route path="/my-course/*" element={<MyCoursePage />} />
+                <Route path="/lesson/:id" element={<LessonForm />} />
               </Route>
             </Route>
       
