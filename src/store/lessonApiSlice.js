@@ -27,10 +27,10 @@ export const lessonApiSlice = apiSlice.injectEndpoints({
         }),
         updateLesson: builder.mutation({
             query: (payload) => ({
-            url: `/lesson/edit/${payload.data.id}`,
+            url: `/lesson/edit/${payload.obj.id}`,
             method: 'PATCH',
-            body: payload.data, 
-            }),
+            body: payload.obj,  
+            }), 
             invalidatesTags: ['Lesson']
         }),
         removeLesson: builder.mutation({

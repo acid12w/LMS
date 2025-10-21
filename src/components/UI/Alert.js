@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { uiActions } from "../../store/ui-slice";
 
-import { BsFillCheckCircleFill } from "react-icons/bs";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { useEffect } from "react";
 
 const Alert = (props) => {
@@ -25,7 +25,7 @@ const Alert = (props) => {
   }
 
   if (props.status === "success") {
-    alertClass = "bg-green-200 text-green-600";
+    alertClass = "bg-green-100 text-green-600";
     message = props.message
   }
 
@@ -33,13 +33,13 @@ const Alert = (props) => {
     <section className="flex justify-center z-10">
       {showAlert && (
         <div
-          className={`flex fixed rounded-md m-auto items-center w-auto rounded-md p-4 text-left font-semibold  z-10 ${
+          className={`flex fixed rounded-md m-auto items-center w-auto p-4 text-left z-10 border-2 border-green-500 rounded-2xl ${
             props.status === "pending"
               ? "bg-blue-300 text-blue-600"
               : alertClass
           }`}
         >
-          <BsFillCheckCircleFill className="mr-2 text-xl" />
+          <IoIosCheckmarkCircleOutline className="mr-2 text-2xl" />
           <h4 className="mr-2">{props.title}</h4>
           <p>{message}</p>
         </div>

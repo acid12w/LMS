@@ -118,7 +118,7 @@ export const CourseForm = () => {
             rated: 1,
             rating: 0,
             thumbNail: imageUrl,
-            imageFull: true, 
+            imageFull: false, 
           }
         ).unwrap()
         .then(() => { 
@@ -144,10 +144,10 @@ export const CourseForm = () => {
 
   return (
     <> 
-    <div className="w-2/3">
+    <div className="w-full md:w-2/3">
         <ImageUpload setImageUrl={setImageUrl} />
     </div>
-      <form onSubmit={handleOnSubmit} className="flex flex-col pb-44 md:w-2/3">
+      <form onSubmit={handleOnSubmit} className="flex flex-col w-full md:w-2/3">
        
       <label className="text-sm h-12 mt-2 mb-10">
           Course name

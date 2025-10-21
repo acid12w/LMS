@@ -22,7 +22,7 @@ export const Comments = ({ lessonId }) => {
                 </div>
             </div>;
   }else{
-    content = <div className="md:pl-10 md:w-11/12">
+    content = <div className=" md:w-11/12">
                 <h4 className="mb-4">Join the discussion</h4>  
                 <CommentForm
                   type={"comment"}

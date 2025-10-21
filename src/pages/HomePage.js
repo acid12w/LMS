@@ -1,7 +1,6 @@
 import CardOverView from "../components/Card/CardOverView";
 import { CardLoader } from "../components/UI/loading/cardLoader";
 import { useGetAllcoursesQuery } from "../store/courseApiSlice";
-import { Link } from "react-router-dom";
 
 import bg1 from '../assets/hero-3.png'
 
@@ -16,9 +15,7 @@ const Home = () => {
     content =<CardLoader/>
     content1 =<CardLoader/>
   }else{ 
-    const comSciData = data.filter(course => course.subject === "com sci");
-    const designData = data.filter(course => course.subject === "design");
-    content = <CardOverView data={comSciData} />
+    const designData = data.filter(course => course.isPublished === true);
     content1 = <CardOverView data={designData} />
   }
 

@@ -100,7 +100,7 @@ const CardItem = ({
           )}
         </div>
         <div className={cardInfoClass}> 
-            <h3 className={`p-2 mr-20 ${bgColor} text-xs text-green-600 rounded`}>
+            <h3 className={`p-2 mr-20 ${bgColor} text-xs text-blue-600 bg-blue-100 rounded`}>
               {subject}
             </h3>
           <div

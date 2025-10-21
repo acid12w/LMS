@@ -27,13 +27,14 @@ const navigate = useNavigate();
 const [updateCourse, {isLoading: isUpdating}] = useUpdateCourseMutation();
 const [addLesson] = useAddLessonMutation(); 
 
-const courseId = params.id;
+const courseId = params["*"];
 
 const {data} = useGetLessonByCourseIdQuery(courseId); 
-const currentCourse = myCourses?.find((course) => course._id === courseId);
+
+const currentCourse = myCourses;
+
 const [image, setImage] = useState();
 
-console.log(data);
 
 useEffect(() => {
     setItems(data)
@@ -46,9 +47,12 @@ useEffect(() => {
     description: true,
     lesson: true,
   }); 
+
+
   
   const [items, setItems] = useState(null);
   const [dragIndex, setDragIndex] = useState(null);
+  
 
   const handleDragOver = (e) => {
     e.preventDefault()
@@ -84,12 +88,15 @@ useEffect(() => {
   const difficultyInput = useRef();
   const lessonInput = useRef();
 
+  console.log(courseNameInput)
+
+
   if(!data){
     return<p>loading</p>;
   }
    
  const navTo = (id) => {
-    navigate(`/lesson/${id}`, {
+    navigate(`/my-lesson/${courseId}/${id}`, {
       replace: true,
     });
   };
@@ -112,19 +119,19 @@ useEffect(() => {
     
     try{
         const data = {};
-        const courseName = courseNameInput.current.value.trim();
+        const courseName = courseNameInput?.current?.value.trim();
         const overview = overviewInput?.current?.value.trim();
         const subject = subjectInput?.current?.value.trim();
         const difficulty = difficultyInput?.current?.value.trim();
 
-        console.log(courseName, '')
 
-        if(courseName !== '' )  data.courseName = courseName;
-        if(overview !== '' )  data.overview = overview; 
-        if(subject !== '' )  data.subject = subject;
+        if(courseName)  data.courseName = courseName;        
+        if(overview)  data.overview = overview; 
+        if(subject)  data.subject = subject;
         // if(difficulty !== '' )  data.courseName = difficulty;
-
         console.log(data)
+
+        data.id = courseId
         
         await updateCourse({data, id: courseId});
 
@@ -136,12 +143,11 @@ useEffect(() => {
           })
       );
     }catch(err){
-      console.log(err)
       dispatch(
         uiActions.showAlert({
           status: "error",
           title: "Error!",
-          message: err.data.message,
+          message: err.data,
         })
     );
     }
@@ -189,9 +195,9 @@ useEffect(() => {
 
 
   return (
-  <div className="flex gap-x-4">
+  <div className="flex gap-x-4 flex-wrap">
     
-    <div className="w-1/2">
+    <div className="w-full md:w-[48%] mb-6">
     <div className="flex items-center gap-x-4 mb-8">
         <div className="p-1 rounded-full bg-green-100"><MdOutlineDashboardCustomize className="w-[30px] h-[30px] fill-green-700" /></div> 
         <p>Customize your course</p>
@@ -253,9 +259,36 @@ useEffect(() => {
           <button type="submitt" className="w-min focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Save</button>   
         </form>}
       </div>
+
+      {/* <div className="bg-[#e6efe9] p-4 rounded-md mt-4">
+          <div className="flex justify-between mb-4"><p>Difficulty</p> <button onClick={() => handleToggle("subject")} className="text-gray-800 text-xs px-4 py-1 flex items-center rounded">{editState.subject ? <p className="flex gap-x-3"><MdOutlineModeEdit className="w-6 h-6" /> Edit</p> : <p > Cencel</p>}</button></div> 
+          { !editState.subject || <p className="text-sm text-gray-600">{currentCourse.subject}</p>}
+          {editState.subject ||<form onSubmit={handleCourseNameSubmitt} className="flex flex-col gap-6 items-left">
+            <label className="text-sm mr-4 h-12 mb-10"> 
+              
+              <select
+              // onChange={difficultyChangeHandler}
+              name="difficulty"
+              id="difficulty"
+              ref={difficultyInput}
+              key={currentCourse.difficulty}
+              defaultValue={currentCourse.difficulty}
+              className="bg-gray-100 text-gray-500 h-full w-full border-none outline-none p-4 focus:text-black"
+              >
+              <option value="beginner" >Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+              </select>
+            </label>
+          <button type="submitt" className="w-min focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Save</button>   
+        </form>}
+      </div> */}
+
+ 
+
     </div>
 
-    <div className="w-1/2">
+    <div className="w-full md:w-[48%]">
       <div className="flex items-center gap-x-4 mb-8">
         <div className="p-1 rounded-full bg-green-100"><MdOutlineDashboardCustomize className="w-[30px] h-[30px] fill-green-700" /></div> 
         <p>Customize your lesson</p>
@@ -271,13 +304,13 @@ useEffect(() => {
                 onDragStart={()=> handleDragStart(index)} 
                 onDragOver={handleDragOver} 
                 onDrop={()=> handleDrop(index)}  
-                className={"bg-green-300 p-2 rounded-md flex justify-between mb-4"}>
+                className={`${lesson.isPublished ? "bg-green-300" : "bg-gray-300"} p-2  rounded-md flex justify-between mb-4`}>
                   <div className="flex items-center">
-                  <IoMdApps className="h-8 w-8 fill-green-600"/>
-                  <p className="text-xs">{lesson?.title}</p>
+                  <IoMdApps className={`h-8 w-8 border-r  cursor-pointer  ${lesson.isPublished ? "fill-green-600 border-green-400 hover:bg-gray-400" : "fill-gray-600 border-gray-400 hover:bg-gray-400"}`}/>
+                  <p className="text-xs ml-4">{lesson?.title}</p>
                   </div>
                   <div className="flex">
-                    <span className="bg-green-600 px-[14px] py-[0px] text-xs text-white leading-8 rounded-full">Draft</span>
+                    <span className={`${lesson.isPublished ? "bg-green-500" : "bg-gray-500"}  px-[14px] py-[0px] text-xs text-white leading-8 rounded-full`}>{lesson.isPublished ? "Published" : "Draft"}</span>
                     <button onClick={() => navTo(lesson._id)} className="text-green-800 text-xs px-4 py-1 flex items-center rounded">{<MdOutlineModeEdit className="w-6 h-6" />}</button>
                   </div>
                 </div>
@@ -294,7 +327,7 @@ useEffect(() => {
             id="Subject"
             ref={lessonInput}
             key={currentCourse.courseName}
-            defaultValue={currentCourse.courseName}
+            defaultValue="lesson"
             className="bg-white text-gray-500 h-full rounded-md w-full border-none outline-none p-4"
             />
           </label>

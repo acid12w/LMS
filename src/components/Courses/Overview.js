@@ -32,22 +32,24 @@ export const Overview = ({
   const overviewPara = parse(bio.substring(0, 200)) + '...';
 
   return (
-    <div className="lg:flex">
-      <div className="flex-auto lg:w-4/5 mb-6">
-        <div className=" text-base leading-8 md:pr-20">{parse(overview)}</div>
-      </div>
-      <div className="p-4 m-auto bg-gray-50 flex flex-col justify-center items-center lg:w-1/3 custom-h-28">
-        <h3 className="pb-3 text-gray-800">About Instructor</h3>
+    <div className="lg:flex flex-col items-start justify-center mb-8">
+      <div className="flex flex-row justify-center items-center mb-6">
         <div
-          className="bg-center bg-cover w-32 h-32 mb-1 rounded-full bg-green-400"
+          className="bg-center bg-cover w-20 h-20 mb-1 rounded-full bg-green-400"
           style={{ backgroundImage: `url(${img})` }}
         ></div>
-        <h3 className="pb-1 text-gray-800 font-bold">{username}</h3>
-        {/* <h4 className="pb-2 text-gray-500">Lecturer</h4> */}
-        <div className="text-left text-gray-500">
-          {overviewPara}
-        </div>
+        <div className="ml-6">
+          <h4 className=" text-gray-500">Instructor</h4>
+          <h3 className=" text-gray-800 font-bold">{username}</h3>
+          <h4 className=" text-gray-500">Adobe certified designer</h4>
+        </div>        
+        
       </div>
+      <div className="text-sm text-gray-8 00 lg:w-4/5 mb-6">
+      <h3 className="text-lg mb-2">Course Details</h3>
+        <p className=" text-sm md:pr-20">{parse(overview)}</p>
+      </div>
+      
     </div>
   );
 };

@@ -23,13 +23,11 @@ const CourseDetail = () => {
   const params = useParams();
   const courseIdParam = params.id;
 
+  console.log(params)
+
   const user = useSelector(
     (state) => state.auth.user
-  );
-
-  console.log(user)
-
- 
+  ); 
   
   const userId = useSelector(
     (state) => state.auth.user.userId
@@ -62,6 +60,8 @@ const CourseDetail = () => {
         </div>;
   }
 
+  console.log(userCourse)
+
   
   
   const userCourseData = userCourse.find(course => course.courseId === courseIdParam);
@@ -92,7 +92,7 @@ const CourseDetail = () => {
       <div className="flex">
         <div className="w-full md:w-9/12">
           <div className="flex justify-between py-4 px-8">
-            <h1 className="text-3xl font-bold">{courseName}:</h1>
+            <h1 className="text-xl">{courseName}:</h1>
           </div>
           <div className="flex items-center py-4 px-8">
             <h3 className="p-2 mr-20 bg-red-300 text-red-600 rounded">
@@ -123,10 +123,15 @@ const CourseDetail = () => {
                 <Route
                   path="overview"
                   element={
-                    <Overview
+                    <div>
+                      <Overview
                       overview={overview}
                       instructorId={instructorId}
                     />
+                    <Comments
+                      lessonId={lessonId}
+                    />
+                    </div>
                   }
                 />
                 <Route

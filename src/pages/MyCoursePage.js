@@ -1,28 +1,43 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { MyCousre } from "../components/courseDashBoard/MyCousre";
+import { CousreFrom } from "../components/courseDashBoard/CourseForm";
+import { PublishedFrom } from "../components/courseDashBoard/PublishedForm";
+import { useUpdateCourseMutation } from "../store/courseApiSlice";
+import { useGetLessonByCourseIdQuery  } from "../store/lessonApiSlice";
+import { useGetCourseByInstructorQuery } from "../store/courseApiSlice";
 
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useGetCourseByInstructorQuery } from "../store/courseApiSlice";
+import { FiAlertTriangle } from "react-icons/fi";
+
 
 const MyCoursePage = () => {
 
   const userId = useSelector((state) => state.auth.user.userId);
 
-
   const [toggleSideNav, setToggleSideNav] = useState(false);
- 
-  const {data} = useGetCourseByInstructorQuery(userId); 
+
+  const [lessonIsPublished, setLessonIsPublished] = useState([]);
+
+  const {data: myCourses} = useGetCourseByInstructorQuery(userId); 
 
   const navigate = useNavigate(); 
 
     const goBack = () => {
-      navigate(-1); // Navigates to the previous page
+      navigate("/my-courses/"); // Navigates to the previous page
     };
-  
-  if(!data){
+    
+  const params = useParams(); 
+  const courseId = params["*"];
+
+  const [updateCourse] = useUpdateCourseMutation();
+  const {data: lessons} = useGetLessonByCourseIdQuery(courseId); 
+
+    
+
+
+  if(!myCourses || !lessons){
     return < div className="w-screen h-screen flex justify-center items-center ">
     <div role="status">
         <svg className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,6 +49,11 @@ const MyCoursePage = () => {
 </div>
   }
 
+  const currentCourse = myCourses?.find((course) => course._id === courseId);
+  const lessonPublished = lessons.some(lesson => lesson.isPublished);
+
+
+
   return (
     <div className="flex">
       <button onClick={() => setToggleSideNav(!toggleSideNav)} type="button" class="absolute left-4 lg:hidden inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
@@ -42,14 +62,20 @@ const MyCoursePage = () => {
         <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
         </svg>
       </button>
-        <div className="w-full p-6 mt-10 h-full">
-          <div>
-            <h2 onClick={()=>{setToggleSideNav(!toggleSideNav)}} className="text-center text-lg font-bold mb-12">My Courses</h2>
+        <div className="w-full p-6 h-full">
+          {lessonPublished || <div className="p-6 mt-10 mb-10 bg-yellow-100 text-yellow-800 flex flex-wrap items-center gap-x-4">
+            <FiAlertTriangle className="h-6 w-6"/><p>You must publish at least one lesson before publishing this course.</p>
+          </div>}
+          <div>                
+            <span className="cursor-p flex items-center mb-8 cursor-pointer" onClick={()=> goBack()}><IoIosArrowRoundBack className="w-6 h-6"/> <p className="text-xs">Back to courses</p></span>
+            <div className="mb-12">
+              <h2 className="text-center text-lg font-bold ">My Courses</h2>
+            </div>
             
-             <div className="">
-                <span className="cursor-p flex items-center mb-8 cursor-pointer" onClick={()=> goBack()}><IoIosArrowRoundBack className="w-6 h-6"/> <p className="text-xs">Back to courses</p></span>
-                <MyCousre myCourses={data} /> 
-            </div> 
+            <div className="h-full">
+                  <CousreFrom myCourses={currentCourse} lessons={lessons} isPublished={currentCourse.isPublished}/>
+                  <PublishedFrom lessonPublished={lessonPublished} updateCourse ={updateCourse} courseId={courseId} currentCourse={currentCourse} lessons={lessons}/>
+            </div>
           
           </div>
         </div>

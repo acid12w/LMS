@@ -14,7 +14,7 @@ export const DropDown = ({ userName, handleLogout, role }) => {
             Profile
           </li>
         </Link>
-        {role || <Link to="/my-courses"> 
+        {role || <Link to="/my-courses/"> 
           <li className="rounded-md text-sm hover:bg-gray-100 text-gray-500 p-2 w-full">
             Dash board
           </li>

@@ -32,7 +32,7 @@ export const CommentForm = (props) => {
       {/* <span className="h-16 w-16 bg-green-700 text-white font-bold rounded-full p-5 mr-4 mt-4">
         AA
       </span> */}
-      <form onSubmit={submitFormHandler} className=" p-2 w-full">
+      <form onSubmit={submitFormHandler} className=" w-full">
         <textarea
           type="text"
           ref={commentText}

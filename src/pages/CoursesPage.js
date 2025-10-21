@@ -16,7 +16,7 @@ const CoursesPage = () => {
       <div className={`w-11/12 md:w-[26em] fixed lg:relative lg:h-auto z-30 bg-white h-full border-r-2 border-gray-50 ${toggleSideNav ? 'translate-x-[0]' : 'translate-x-[-100%]'} lg:translate-x-[0]`}>
           <SideNav setToggleSideNav={setToggleSideNav} toggleSideNav={toggleSideNav}/>
       </div>
-        <div className="w-full md:main p-6 mt-10 h-full bg-gray-50 ">
+        <div className="w-full md:main p-4 md:p-6 mt-10 h-full bg-gray-50 ">
           <CoursesForm />
           <div className="h-[30vh]"></div>
         </div>

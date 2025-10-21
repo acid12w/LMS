@@ -76,7 +76,7 @@ function App() {
                 <Route path="/new-course" element={<NewCourse />} />
                 <Route path="/my-courses/" element={<CoursesPage />} />
                 <Route path="/my-course/*" element={<MyCoursePage />} />
-                <Route path="/lesson/:id" element={<LessonForm />} />
+                <Route path="/my-lesson/:courseId/:LessonId" element={<LessonForm />} />
               </Route>
             </Route>
       

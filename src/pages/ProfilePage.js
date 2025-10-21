@@ -32,7 +32,6 @@ const onHandleSubmit = (e) => {
     
     const updateObj = {};
     if(userNameInput.current.value !== userProfile.currentUsername ) updateObj.username = userNameInput.current.value;
-    if(emailInput.current.value !== userProfile.email)  updateObj.email =  emailInput.current.value; 
     if(bioInput.current.value !== userProfile.bio) updateObj.bio = bioInput.current.value
     if(profileImage != null) updateObj.profileImage = profileImage;
 
@@ -91,17 +90,17 @@ return(
         </div>
     <form onSubmit={onHandleSubmit} className="md:pb-44 w-full md:w-2/3"> 
       
-         <div class="mb-5">
-            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User name</label>
+         <div className="mb-5">
+            <label for="base-input" className="block mb-2 text-sm text-gray-900 dark:text-white">User name</label>
             <input  
             type="text"
             id="firstName"
             required
             ref={userNameInput}
             defaultValue={userProfile.currentUsername}
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
         </div>
-        <label className="text-sm  mb-2 flex flex-col">
+        <label className="text-sm  mb-5 flex flex-col">
             Bio
             <textarea
             type="text"
