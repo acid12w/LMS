@@ -91,10 +91,10 @@ const CourseDetail = () => {
         ))}
       <div className="flex">
         <div className="w-full md:w-9/12">
-          <div className="flex justify-between py-4 px-8">
+          <div className="flex justify-between py-4 px-4 md:px-8">
             <h1 className="text-xl">{courseName}:</h1>
           </div>
-          <div className="flex items-center py-4 px-8">
+          <div className="flex items-center py-4 px-4 md:px-8">
             <h3 className="p-2 mr-20 bg-red-300 text-red-600 rounded">
               {subject}
             </h3>{" "}
@@ -116,7 +116,7 @@ const CourseDetail = () => {
             <h3>{rating.toFixed(1)}</h3>
           </div>
           <YoutubeEmbed embedId={videoId} width={90} height={680}/>
-          <div className="p-1 sm:pl-8 sm:pt-4 ">
+          <div className="p-4 sm:pl-8 sm:pt-4 ">
             <CourseNav />
             <div className="py-12">
               <Routes>

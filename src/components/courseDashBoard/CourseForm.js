@@ -310,7 +310,7 @@ useEffect(() => {
                   <p className="text-xs ml-4">{lesson?.title}</p>
                   </div>
                   <div className="flex">
-                    <span className={`${lesson.isPublished ? "bg-green-500" : "bg-gray-500"}  px-[14px] py-[0px] text-xs text-white leading-8 rounded-full`}>{lesson.isPublished ? "Published" : "Draft"}</span>
+                    <span className={`${lesson.isPublished ? "bg-green-500" : "bg-gray-500"}  pt-4 px-[14px] py-[0px] text-xs text-white leading-8 rounded-full`}>{lesson.isPublished ? "Published" : "Draft"}</span>
                     <button onClick={() => navTo(lesson._id)} className="text-green-800 text-xs px-4 py-1 flex items-center rounded">{<MdOutlineModeEdit className="w-6 h-6" />}</button>
                   </div>
                 </div>

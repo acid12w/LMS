@@ -32,8 +32,8 @@ export const Overview = ({
   const overviewPara = parse(bio.substring(0, 200)) + '...';
 
   return (
-    <div className="lg:flex flex-col items-start justify-center mb-8">
-      <div className="flex flex-row justify-center items-center mb-6">
+    <div className="lg:flex flex-col items-start mb-8">
+      <div className="flex flex-row justify-start items-center mb-6">
         <div
           className="bg-center bg-cover w-20 h-20 mb-1 rounded-full bg-green-400"
           style={{ backgroundImage: `url(${img})` }}

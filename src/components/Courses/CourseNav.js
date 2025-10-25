@@ -24,7 +24,7 @@ export const CourseNav = () => {
       </NavLink> */}
       <NavLink
         to="content"
-        className={(navData) => (navData.isActive ? activeNavStyle : " md:hidden")}
+        className={(navData) => (navData.isActive ? activeNavStyle : " md:hidden py-1 px-2")}
       >
         Content
       </NavLink>

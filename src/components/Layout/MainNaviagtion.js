@@ -108,10 +108,10 @@ export const MainNaviagtion = () => {
         <span className="sr-only">Open main menu</span>
         <FiSearch className="text-gray-600 text-lg " />
     </button>}
-     {isAuth && <button  data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-user" aria-expanded="false">
+     {/* {isAuth && <button  data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-user" aria-expanded="false">
         <span className="sr-only">Open main menu</span>
         <IoMdMenu className="text-gray-600 text-lg " />
-    </button>}
+    </button>} */}
   </div>
  
   <div className={`items-center justify-between ${toggleDropDown ? 'visible' : 'hidden'} w-full md:flex md:w-auto md:order-1`} id="navbar-user">
